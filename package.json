@@ -1,6 +1,37 @@
 {
   "name": "uni",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "author": "Jordan Tart <jordan.tart3@gmail.com> (https://github.com/jtart)",
+  "description": "Tiny framework offering Universal React using React Router.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/jtart/uni",
+  "bugs": {
+    "url": "https://github.com/jtart/uni/issues",
+    "email": "jordan.tart3@gmail.com"
+  },
+  "scripts": {
+    "build": "microbundle",
+    "watch": "microbundle watch",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "react-dom": "^16.4.1",
+    "react-helmet": "^5.2.0",
+    "react-router-config": "^1.0.0-beta.4",
+    "react-router-dom": "^4.3.1"
+  },
+  "devDependencies": {
+    "microbundle": "^0.6.0",
+    "prettier": "^1.14.0"
+  },
+  "peerDependencies": {
+    "react": "^16.4.1",
+    "styled-components": "^3.3.3"
+  },
+  "main": "dist/uni.js",
+  "umd:main": "dist/uni.umd.js",
+  "module": "dist/uni.es.js",
+  "files": [
+    "dist/*"
+  ]
 }
