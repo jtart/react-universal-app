@@ -1,5 +1,5 @@
 {
-  "name": "uni",
+  "name": "@jtart/uni",
   "author": "Jordan Tart <jordan.tart3@gmail.com> (https://github.com/jtart)",
   "description": "Tiny framework offering Universal React using React Router.",
   "version": "0.0.1",
