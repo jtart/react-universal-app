@@ -2,7 +2,7 @@
   "name": "@jtart/uni",
   "author": "Jordan Tart <jordan.tart3@gmail.com> (https://github.com/jtart)",
   "description": "Tiny framework offering Universal React using React Router.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "homepage": "https://github.com/jtart/uni",
   "bugs": {
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "microbundle",
     "watch": "microbundle watch",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "dependencies": {
     "react-dom": "^16.4.1",
