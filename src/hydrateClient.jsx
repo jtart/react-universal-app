@@ -8,15 +8,12 @@ const hydrateClient = routes => {
     window.document.getElementById('server-data').textContent,
   );
 
-  const app = (
+  hydrate(
     <BrowserRouter>
       <App routes={routes} data={data} />
-    </BrowserRouter>
+    </BrowserRouter>,
+    document.getElementById('root'),
   );
-
-  const root = document.getElementById('root');
-
-  hydrate(app, root);
 };
 
 export default hydrateClient;
