@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "microbundle --jsx React.createElement",
-    "watch": "microbundle watch",
+    "dev": "microbundle watch --jsx React.createElement",
     "prepare": "npm run build"
   },
   "dependencies": {
