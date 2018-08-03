@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Root should render a div with injected HTML 1`] = `
+<div
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": <div>
+        Hello!
+      </div>,
+    }
+  }
+  id="root"
+/>
+`;
+
+exports[`Scripts should render scripts for each JS script 1`] = `
+Array [
+  <script
+    defer={true}
+    src="https://example.com/bundle.one.js"
+  />,
+  <script
+    defer={true}
+    src="https://example.com/bundle.two.js"
+  />,
+  <script
+    defer={true}
+    src="undefined"
+  />,
+]
+`;
+
+exports[`ServerData should render a script tag containing data 1`] = `
+<script
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "{\\"item\\":\\"This is some data\\"}",
+    }
+  }
+  id="server-data"
+  type="application/json"
+/>
+`;

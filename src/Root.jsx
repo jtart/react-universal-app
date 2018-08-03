@@ -15,7 +15,7 @@ export const ServerData = ({ data }) => {
 };
 
 export const Scripts = ({ scripts }) =>
-  scripts.map(({ js }) => <script src={`${js}`} defer />);
+  scripts.map(script => <script src={script} defer />);
 
 export const Root = ({ html }) => (
   <div id="root" dangerouslySetInnerHTML={{ __html: html }} />
