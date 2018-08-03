@@ -4,7 +4,8 @@ import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
-import getRoute from './getRoute.js';
+import getRouteAndMatch from './getRouteAndMatch.js';
+
 import App from './App.jsx';
 import defaultDoc from './Document.jsx';
 
@@ -25,20 +26,20 @@ const renderApp = (url, routes, data) => {
   return { html, styles, helmet };
 };
 
-const render = (req, routes, assets, Document = defaultDoc) => {
+const render = async (req, routes, assets, Document = defaultDoc) => {
   const { url } = req;
 
-  const route = getRoute(url, routes);
+  const { route, match } = getRouteAndMatch(url, routes);
 
   if (!route) {
     return { statusCode: 404, html: null };
   }
 
-  const data = route.getInitialProps(req);
+  const data = await route.getInitialProps({ match, req });
 
-  const pageProps = renderApp(url, routes, data);
+  const appProps = renderApp(url, routes, data);
 
-  const doc = <Document assets={assets} data={data} {...pageProps} />;
+  const doc = <Document assets={assets} data={data} {...appProps} />;
 
   const html = renderToStaticMarkup(doc);
 

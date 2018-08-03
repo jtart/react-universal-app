@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 
-import getRoute from './getRoute.js';
+import getRouteAndMatch from './getRouteAndMatch.js';
 
 class App extends Component {
   constructor(props) {
@@ -11,15 +11,17 @@ class App extends Component {
     this.state = { data: this.props.initialData };
   }
 
-  componentDidUpdate({ location: prevLocation }) {
-    const { location, routes } = this.props;
+  async componentDidUpdate({ location: prevLocation }) {
+    const { location } = this.props;
     const navigated = location !== prevLocation;
 
     if (navigated) {
+      const { routes } = this.props;
       const { pathname } = location;
 
-      const route = getRoute(url, routes);
-      const data = route.getInitialProps();
+      const { route, match } = getRouteAndMatch(pathname, routes);
+
+      const data = await route.getInitialProps({ match });
 
       this.setState({ data });
     }
