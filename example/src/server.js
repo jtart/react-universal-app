@@ -9,6 +9,7 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', async (req, res) => {
+    // broken against src (not version on NPM), need to do [assets.client.js]
     const scripts = [{ ...assets.client }];
     const { statusCode, html } = await render(req, routes, scripts);
 
