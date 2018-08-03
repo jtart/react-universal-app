@@ -14,9 +14,9 @@ const Home = ({ data, to, text }) => (
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content="Page description" />
-      <title>Go... {text}</title>
+      <title>{title}</title>
     </Helmet>
-    <StyledHeadline>{data}</StyledHeadline>
+    <StyledHeadline>{title}</StyledHeadline>
     <Link to={to}>Go... {text}</Link>
   </div>
 );

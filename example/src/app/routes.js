@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/home',
     component: Index,
-    getInitialProps: () => ({ data: 'Home', to: '/', text: 'Index' }),
+    getInitialProps: () => ({ title: 'Home', to: '/', text: 'Index' }),
   },
 ];
 
