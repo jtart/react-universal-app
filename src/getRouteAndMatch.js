@@ -8,6 +8,8 @@ const getRouteAndMatch = (url, routes) => {
     return match;
   });
 
+  if (!route && !match) return {};
+
   return { route, match };
 };
 
