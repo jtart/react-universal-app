@@ -2,7 +2,7 @@
   "name": "@jtart/uni",
   "author": "Jordan Tart <jordan.tart3@gmail.com> (https://github.com/jtart)",
   "description": "Tiny framework offering Universal React using React Router.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "homepage": "https://github.com/jtart/uni",
   "bugs": {
