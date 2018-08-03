@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/jtart/uni.svg?style=svg)](https://circleci.com/gh/jtart/uni)
 [![gzip size](http://img.badgesize.io/https://unpkg.com/@jtart/uni/dist/uni.es.js?compression=gzip)](https://unpkg.com/@jtart/uni/dist/uni.es.js)
+[![Greenkeeper badge](https://badges.greenkeeper.io/jtart/uni.svg)](https://greenkeeper.io/)
 
 uni is a Universal React library; uni leverages React Router.
 
