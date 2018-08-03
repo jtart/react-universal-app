@@ -8,10 +8,10 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@jtart/uni": "0.0.4",
     "express": "^4.16.3",
-    "razzle": "^2.2.0",
-    "react": "^16.4.1",
-    "styled-components": "^3.3.3",
-    "@jtart/uni": "^0.0.3"
+    "razzle": "^2.4.0",
+    "react": "^16.4.2",
+    "styled-components": "^3.4.0"
   }
 }
