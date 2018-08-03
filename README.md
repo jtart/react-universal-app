@@ -34,6 +34,18 @@ const routes = [
 export default routes;
 ```
 
+```JavaScript
+// app/components/Home.js
+
+const Index = ({ foo }) => (
+  <div>
+    <h1>{foo}</h1>
+  </div>
+)
+
+export default Index;
+```
+
 #### getInitialProps
 
 Like Next.JS and After.JS, uni uses a `getInitialProps` function. However in contrast to the aforementioned libraries, `getInitialProps` is defined in the route configuration, not the component.
@@ -46,18 +58,6 @@ A `ctx` object is passed to `getInitialProps`, which includes:
 
 - `match`: React Router's [match](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/match.md) object
 - `req`: An express-like request object - **only passed on the server**
-
-```JavaScript
-// app/components/Home.js
-
-const Index = ({ foo }) => (
-  <div>
-    <h1>{foo}</h1>
-  </div>
-)
-
-export default Index;
-```
 
 ### Client
 
