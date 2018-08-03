@@ -23,10 +23,6 @@ Array [
     defer={true}
     src="https://example.com/bundle.two.js"
   />,
-  <script
-    defer={true}
-    src="undefined"
-  />,
 ]
 `;
 
