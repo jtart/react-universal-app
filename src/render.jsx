@@ -8,7 +8,7 @@ import getInitialProps from './getInitialProps.js';
 import App from './App.jsx';
 import defaultDoc from './Document.jsx';
 
-const renderPage = (url, routes, data) => {
+const renderApp = (url, routes, data) => {
   const sheet = new ServerStyleSheet();
 
   const html = renderToString(
@@ -20,30 +20,22 @@ const renderPage = (url, routes, data) => {
   );
 
   const styles = sheet.getStyleElement();
+  const helmet = Helmet.renderStatic();
 
-  return { html, styles };
+  return { html, styles, helmet };
 };
 
 const render = (req, routes, assets, Document = defaultDoc) => {
   const { url } = req;
+
   const data = getInitialProps(url, routes, req);
+  const pageProps = renderApp(url, routes, data);
 
-  const { html, styles } = renderPage(url, routes, data);
-  const helmet = Helmet.renderStatic();
-
-  const doc = (
-    <Document
-      assets={assets}
-      html={html}
-      data={data}
-      helmet={helmet}
-      styles={styles}
-    />
-  );
+  const doc = <Document assets={assets} data={data} {...pageProps} />;
 
   const renderedDoc = renderToStaticMarkup(doc);
 
   return renderedDoc;
 };
 
-export default renderPage;
+export default render;
