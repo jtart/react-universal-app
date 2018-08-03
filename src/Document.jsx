@@ -1,7 +1,7 @@
 import React from 'react';
 import { ServerData, Scripts, Root } from './Root.jsx';
 
-const Document = ({ scripts, html, data, helmet, styles }) => {
+const Document = ({ helmet, styles, html, data, scripts }) => {
   const htmlAttrs = helmet.htmlAttributes.toComponent();
   const bodyAttrs = helmet.bodyAttributes.toComponent();
 
