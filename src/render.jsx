@@ -8,10 +8,10 @@ import getInitialProps from './getInitialProps.js';
 import App from './App.jsx';
 import defaultDoc from './Document.jsx';
 
-const renderContent = (url, routes, data) => {
+const renderPage = (url, routes, data) => {
   const sheet = new ServerStyleSheet();
 
-  const content = renderToString(
+  const html = renderToString(
     <StaticRouter location={url} context={{}}>
       <StyleSheetManager sheet={sheet.instance}>
         <App routes={routes} initialData={data} />
@@ -21,29 +21,29 @@ const renderContent = (url, routes, data) => {
 
   const styles = sheet.getStyleElement();
 
-  return { content, styles };
+  return { html, styles };
 };
 
-const renderPage = (req, routes, assets, Document = defaultDoc) => {
+const render = (req, routes, assets, Document = defaultDoc) => {
   const { url } = req;
   const data = getInitialProps(url, routes, req);
 
-  const { content, styles } = renderContent(url, routes, data);
+  const { html, styles } = renderPage(url, routes, data);
   const helmet = Helmet.renderStatic();
 
   const doc = (
     <Document
       assets={assets}
-      content={content}
+      html={html}
       data={data}
       helmet={helmet}
       styles={styles}
     />
   );
 
-  const html = renderToStaticMarkup(doc);
+  const renderedDoc = renderToStaticMarkup(doc);
 
-  return html;
+  return renderedDoc;
 };
 
 export default renderPage;

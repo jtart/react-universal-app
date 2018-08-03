@@ -19,9 +19,9 @@ const Scripts = ({ assets }) =>
     <script key={key} src={`${assets[key].js}`} defer />
   ));
 
-const Root = ({ content, data, assets }) => (
+const Root = ({ html, data, assets }) => (
   <Fragment>
-    <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
+    <div id="root" dangerouslySetInnerHTML={{ __html: html }} />
     <ServerData data={data} />
     <Scripts assets={assets} />
   </Fragment>

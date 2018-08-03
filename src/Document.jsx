@@ -1,7 +1,7 @@
 import React from 'react';
 import Root from './Root.jsx';
 
-const Document = ({ assets, content, data, helmet, styles }) => {
+const Document = ({ assets, html, data, helmet, styles }) => {
   const htmlAttrs = helmet.htmlAttributes.toComponent();
   const bodyAttrs = helmet.bodyAttributes.toComponent();
 
@@ -14,7 +14,7 @@ const Document = ({ assets, content, data, helmet, styles }) => {
         {styles}
       </head>
       <body {...bodyAttrs}>
-        <Root content={content} data={data} assets={assets} />
+        <Root html={html} data={data} assets={assets} />
       </body>
     </html>
   );
