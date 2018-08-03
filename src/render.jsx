@@ -26,7 +26,7 @@ const renderApp = (url, routes, data) => {
   return { html, styles, helmet };
 };
 
-const render = async (req, routes, assets, Document = defaultDoc) => {
+const render = async (req, routes, scripts, Document = defaultDoc) => {
   const { url } = req;
 
   const { route, match } = getRouteAndMatch(url, routes);
@@ -39,7 +39,7 @@ const render = async (req, routes, assets, Document = defaultDoc) => {
 
   const appProps = renderApp(url, routes, data);
 
-  const doc = <Document assets={assets} data={data} {...appProps} />;
+  const doc = <Document scripts={scripts} data={data} {...appProps} />;
 
   const html = renderToStaticMarkup(doc);
 
