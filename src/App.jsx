@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 
-import getInitialProps from './getInitialProps.js';
+import getRoute from './getRoute.js';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +18,8 @@ class App extends Component {
     if (navigated) {
       const { pathname } = location;
 
-      const data = getInitialProps(pathname, routes);
+      const route = getRoute(url, routes);
+      const data = route.getInitialProps();
 
       this.setState({ data });
     }

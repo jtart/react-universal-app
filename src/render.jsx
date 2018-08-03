@@ -4,7 +4,7 @@ import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
-import getInitialProps from './getInitialProps.js';
+import getRoute from './getRoute.js';
 import App from './App.jsx';
 import defaultDoc from './Document.jsx';
 
@@ -28,14 +28,21 @@ const renderApp = (url, routes, data) => {
 const render = (req, routes, assets, Document = defaultDoc) => {
   const { url } = req;
 
-  const data = getInitialProps(url, routes, req);
+  const route = getRoute(url, routes);
+
+  if (!route) {
+    return { statusCode: 404, html: null };
+  }
+
+  const data = route.getInitialProps(req);
+
   const pageProps = renderApp(url, routes, data);
 
   const doc = <Document assets={assets} data={data} {...pageProps} />;
 
-  const renderedDoc = renderToStaticMarkup(doc);
+  const html = renderToStaticMarkup(doc);
 
-  return renderedDoc;
+  return { statusCode: 200, html };
 };
 
 export default render;
