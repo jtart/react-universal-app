@@ -9,11 +9,11 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Install node packages
-          command: npm install
+          command: npm install --ignore-scripts
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
       - run:
           name: Run tests
-          command: npm test
+          command: npm run test:ci
