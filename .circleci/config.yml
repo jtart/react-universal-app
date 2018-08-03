@@ -5,14 +5,11 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - run:
-          name: NPM update
-          command: 'sudo npm install -g npm@latest'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Install node modules
-          command: npm install
+          command: npm install --ignore-scripts
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
