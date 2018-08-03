@@ -17,7 +17,7 @@
     "example": "cd example && npm run setup && npm run start",
     "prepare": "npm run build",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci --coverage --coverageReporters=text-lcov | coveralls"
   },
   "dependencies": {
     "react-dom": "^16.4.2",
@@ -35,7 +35,6 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
-    "install-peers": "^1.0.2",
     "jest": "^23.4.2",
     "microbundle": "^0.6.0",
     "prettier": "^1.14.0",
@@ -46,8 +45,8 @@
     "wait-on": "^2.1.0"
   },
   "peerDependencies": {
-    "react": "^16.4.1",
-    "styled-components": "^3.3.3"
+    "react": "^16.4.2",
+    "styled-components": "^3.4.0"
   },
   "main": "dist/uni.js",
   "umd:main": "dist/uni.umd.js",

@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/jtart-uni
     docker:
       - image: circleci/node:10
     steps:
