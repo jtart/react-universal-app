@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
-const ServerData = ({ data }) => {
+export const ServerData = ({ data }) => {
   const serialisedProps = JSON.stringify(data).replace(/\//g, '\\/');
 
   return (
@@ -14,17 +14,9 @@ const ServerData = ({ data }) => {
   );
 };
 
-const Scripts = ({ assets }) =>
-  Object.keys(assets).map(key => (
-    <script key={key} src={`${assets[key].js}`} defer />
-  ));
+export const Scripts = ({ scripts }) =>
+  scripts.map(({ js }) => <script src={`${js}`} defer />);
 
-const Root = ({ html, data, assets }) => (
-  <Fragment>
-    <div id="root" dangerouslySetInnerHTML={{ __html: html }} />
-    <ServerData data={data} />
-    <Scripts assets={assets} />
-  </Fragment>
+export const Root = ({ html }) => (
+  <div id="root" dangerouslySetInnerHTML={{ __html: html }} />
 );
-
-export default Root;
