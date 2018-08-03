@@ -7,7 +7,7 @@ const StyledHeadline = styled.h1`
   color: red;
 `;
 
-const Home = ({ data, to, text }) => (
+const Index = ({ title, to, text }) => (
   <div>
     <Helmet>
       <html lang="en-GB" />
@@ -21,4 +21,4 @@ const Home = ({ data, to, text }) => (
   </div>
 );
 
-export default Home;
+export default Index;

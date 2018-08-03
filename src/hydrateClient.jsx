@@ -10,7 +10,7 @@ const hydrateClient = routes => {
 
   hydrate(
     <BrowserRouter>
-      <App routes={routes} data={data} />
+      <App routes={routes} initialData={data} />
     </BrowserRouter>,
     document.getElementById('root'),
   );

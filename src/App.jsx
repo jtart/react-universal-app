@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: this.props.data };
+    this.state = { data: this.props.initialData };
   }
 
   componentDidUpdate({ location: prevLocation }) {

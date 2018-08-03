@@ -14,7 +14,7 @@ const renderContent = (url, routes, data) => {
   const content = renderToString(
     <StaticRouter location={url} context={{}}>
       <StyleSheetManager sheet={sheet.instance}>
-        <App routes={routes} data={data} />
+        <App routes={routes} initialData={data} />
       </StyleSheetManager>
     </StaticRouter>,
   );

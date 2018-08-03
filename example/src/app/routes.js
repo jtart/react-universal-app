@@ -1,7 +1,7 @@
 import Index from './components/Index';
 
 const indexGetInitialProps = () => ({
-  data: 'Index',
+  title: 'Index',
   to: '/home',
   text: 'Home',
 });
