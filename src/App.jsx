@@ -8,21 +8,20 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...props };
+    this.state = { data: this.props.data };
   }
 
-  static getDerivedStateFromProps({ routes, location }, prevState) {
-    const navigated = location !== prevState.location;
+  componentDidUpdate({ location: prevLocation }) {
+    const { location, routes } = this.props;
+    const navigated = location !== prevLocation;
 
     if (navigated) {
       const { pathname } = location;
 
       const data = getInitialProps(pathname, routes);
 
-      return { data, location };
+      this.setState({ data });
     }
-
-    return { ...prevState };
   }
 
   render() {
