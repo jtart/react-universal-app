@@ -4,6 +4,7 @@ import { ServerData, Scripts, Root } from './Root';
 describe('ServerData', () => {
   it('should render a script tag containing data', () => {
     const data = { item: 'This is some data' };
+
     const wrapper = shallow(<ServerData data={data} />);
     expect(wrapper).toMatchSnapshot();
   });
