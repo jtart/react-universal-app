@@ -42,6 +42,11 @@ This provides a clearer seperation of concerns and agnosticism between component
 
 `getInitialProps` is an async function that called is internally by uni when a route matches. uni will inject the returned data as props into route's defined component.
 
+A `ctx` object is passed to `getInitialProps`, which includes:
+
+- `match`: React Router's [match](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/match.md) object
+- `req`: An express-like request object - **only passed on the server**
+
 ```JavaScript
 // app/components/Home.js
 
