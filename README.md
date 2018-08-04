@@ -103,3 +103,34 @@ To render your app on a server, use `render`, passing:
   res.status(statusCode).send(html);
   ...
 ```
+
+## Example
+
+There is a simple example provided in `./example`. It uses [razzle](https://github.com/jaredpalmer/razzle/), and is used in integration tests. The application has 3 routes: `/`, `/home` and `/param/:id`.
+
+### Usage
+
+You can install `@jtart/uni` from local source code or from NPM. The former is incredibly useful for local development, especially when used in conjunction with the development build of uni and this example. There is development and production build scripts provided for the example.
+
+#### Installing from local source code
+
+To install uni locally, follow these steps:
+
+1. CD to `./example`
+2. Run `npm install`
+3. Run `npm run link-local-uni` - setups up required symlinks
+
+#### Installing from NPM
+
+To install uni from NPM, follow these steps:
+
+1. CD to `./example`
+2. Run `npm run unlink-local-uni` - ensure any symlinks are removed
+3. Run `npm install`
+
+#### Starting
+
+You can start the example in a development or production environment. To start the example in...
+
+- development: run `npm run dev`
+- production: run `npm run build && npm run start`

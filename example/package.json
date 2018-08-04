@@ -1,6 +1,8 @@
 {
   "name": "uni-example",
   "scripts": {
+    "link-local-uni": "npm link ../ && cd .. && npm link example/node_modules/react && npm link example/node_modules/styled-components",
+    "unlink-local-uni": "npm link ../ && cd .. && npm unlink example/node_modules/react && npm unlink example/node_modules/styled-components",
     "dev": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
