@@ -1,7 +1,6 @@
 {
   "name": "uni-example",
   "scripts": {
-    "setup": "npm install && npm link ../ && cd .. && npm link example/node_modules/react && npm link example/node_modules/styled-components",
     "dev": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",

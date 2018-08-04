@@ -12,10 +12,11 @@
   "scripts": {
     "build": "microbundle --jsx React.createElement",
     "dev": "microbundle watch --jsx React.createElement",
-    "dev:with-example": "concurrently -k -n \"EXAMPLE,UNI\" -c \"red,blue\" \"npm run example\" \"npm run dev:wait-for-3000\"",
     "dev:wait-for-3000": "wait-on http://localhost:3000 && npm run dev",
-    "example": "cd example && npm run setup && npm run start",
-    "prepare": "npm run build",
+    "dev:example-dev-with-local-uni": "concurrently -k -n \"EXAMPLE,UNI\" -c \"red,blue\" \"npm run example:dev-with-local-uni\" \"npm run dev:wait-for-3000\"",
+    "example:dev-with-local-uni": "cd example && npm install && npm link ../ && npm run dev",
+    "example:prod": "cd example && rm -rf node_modules && npm unlink ../ && npm install --production && npm run build && npm start",
+    "prePublishOnly": "npm run build",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage --coverageReporters=text-lcov | coveralls"
   },
