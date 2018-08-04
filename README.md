@@ -106,7 +106,7 @@ To render your app on a server, use `render`, passing:
 
 ## Example
 
-There is a simple example provided in `./example`. It uses [razzle](https://github.com/jaredpalmer/razzle/), and is used in integration tests. The application has 3 routes: `/`, `/home` and `/param/:id`.
+There is a simple example provided in `./example`. It uses [razzle](https://github.com/jaredpalmer/razzle/), and is used in integration tests. The application has 3 routes: `/`, `/home`, and `/param/:id`.
 
 ### Usage
 
