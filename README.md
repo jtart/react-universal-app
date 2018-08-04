@@ -83,7 +83,7 @@ To render your app on a server, use `render`, passing:
 
 - an express-like request object
 - your app routes array
-- your assets array. This is an array of objects, which has a `js` attribute that is URL pointing to some client-side JavaScript
+- an array of script URLs - an array of URLs pointing of the client-side JavaScript bundle
 
 ```JavaScript
   // server.js
@@ -92,15 +92,13 @@ To render your app on a server, use `render`, passing:
   import routes from 'app/routes';
 
   ...
-  const assets = [
-    {
-      js: 'https://example.com/bundle.js'
-    }
-  ]
+  get('/*', async (req, res) => {
+    const scripts = [ 'https://example.com/bundle.js' ];
 
-  const { statusCode, html } = await render(req, routes, assets);
+    const { statusCode, html } = await render(req, routes, scripts);
 
-  res.status(statusCode).send(html);
+    res.status(statusCode).send(html);
+  });
   ...
 ```
 
