@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 import getRouteAndMatch from './getRouteAndMatch.js';
+import loadInitialProps from './loadInitialProps.js';
 
 import App from './App.jsx';
 import defaultDoc from './Document.jsx';
@@ -35,7 +36,7 @@ const render = async (req, routes, scripts, Document = defaultDoc) => {
     return { statusCode: 404, html: null };
   }
 
-  const data = await route.getInitialProps({ match, req });
+  const data = await loadInitialProps(route, { match, req });
 
   const appProps = renderApp(url, routes, data);
 

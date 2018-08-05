@@ -3,6 +3,7 @@ import { renderRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 
 import getRouteAndMatch from './getRouteAndMatch.js';
+import loadInitialProps from './loadInitialProps.js';
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class App extends Component {
 
       const { route, match } = getRouteAndMatch(pathname, routes);
 
-      const data = await route.getInitialProps({ match });
+      const data = await loadInitialProps(route, { match });
 
       this.setState({ data });
     }
