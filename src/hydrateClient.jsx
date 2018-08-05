@@ -5,14 +5,14 @@ import App from './App.jsx';
 
 const hydrateClient = routes => {
   const data = JSON.parse(
-    window.document.getElementById('server-data').textContent,
+    window.document.getElementById('uni-data').textContent,
   );
 
   hydrate(
     <BrowserRouter>
       <App routes={routes} initialData={data} />
     </BrowserRouter>,
-    document.getElementById('root'),
+    document.getElementById('__uni__'),
   );
 };
 
