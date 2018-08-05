@@ -16,7 +16,7 @@
     "dev:example-dev": "concurrently -k -n \"EXAMPLE,UNI\" -c \"red,blue\" \"npm run example:dev\" \"npm run dev:wait-for-3000\"",
     "example:dev": "cd example && npm run dev",
     "example:prod": "cd example && npm run start",
-    "prePublishOnly": "npm run build",
+    "prepare": "npm run build",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage --coverageReporters=text-lcov | coveralls"
   },
