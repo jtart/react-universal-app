@@ -1,19 +1,13 @@
 import React from 'react';
 import { ServerData, Scripts, Root } from './Root.jsx';
 
-const Document = ({ helmet, styles, html, data, scripts }) => {
-  const htmlAttrs = helmet.htmlAttributes.toComponent();
-  const bodyAttrs = helmet.bodyAttributes.toComponent();
+const Document = ({ head, html, data, scripts }) => {
+  const { attributes, tags } = head;
 
   return (
-    <html {...htmlAttrs}>
-      <head>
-        {helmet.title.toComponent()}
-        {helmet.meta.toComponent()}
-        {helmet.link.toComponent()}
-        {styles}
-      </head>
-      <body {...bodyAttrs}>
+    <html {...attributes.html}>
+      <head>{tags}</head>
+      <body {...attributes.body}>
         <Root html={html} />
         <ServerData data={data} />
         <Scripts scripts={scripts} />

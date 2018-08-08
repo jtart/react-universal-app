@@ -10,11 +10,13 @@ import loadInitialProps from './loadInitialProps.js';
 import App from './App.jsx';
 import defaultDoc from './Document.jsx';
 
-const renderApp = (url, routes, data) => {
+const renderApp = (req, routes, match) => {
+  const data = await loadInitialProps(route, { match, req });
+
   const sheet = new ServerStyleSheet();
 
   const html = renderToString(
-    <StaticRouter location={url} context={{}}>
+    <StaticRouter location={req.url} context={{}}>
       <StyleSheetManager sheet={sheet.instance}>
         <App routes={routes} initialData={data} />
       </StyleSheetManager>
@@ -24,23 +26,31 @@ const renderApp = (url, routes, data) => {
   const styles = sheet.getStyleElement();
   const helmet = Helmet.renderStatic();
 
-  return { html, styles, helmet };
+  const head = {
+    attributes: {
+      html: helmet.htmlAttributes.toComponent();
+      body: helmet.bodyAttributes.toComponent();
+    },
+    tags: [
+      helmet.title.toComponent(),
+      helmet.meta.toComponent(),
+      helmet.link.toComponent(),
+    ],
+  };
+
+  return { html, styles, head, data };
 };
 
 const render = async (req, routes, scripts, Document = defaultDoc) => {
-  const { url } = req;
-
-  const { route, match } = getRouteAndMatch(url, routes);
+  const { route, match } = getRouteAndMatch(req.url, routes);
 
   if (!route) {
     return { statusCode: 404, html: null };
   }
 
-  const data = await loadInitialProps(route, { match, req });
+  const appProps = renderApp(req, routes, match);
 
-  const appProps = renderApp(url, routes, data);
-
-  const doc = <Document scripts={scripts} data={data} {...appProps} />;
+  const doc = <Document scripts={scripts} {...appProps} />;
 
   const html = renderToStaticMarkup(doc);
 
