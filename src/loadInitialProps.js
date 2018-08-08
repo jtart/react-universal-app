@@ -1,9 +1,6 @@
-const loadInitialProps = async (route, ctx) => {
-  if (!Object.prototype.hasOwnProperty(route, 'getInitialProps')) {
-    return {};
-  }
-
-  return await route.getInitialProps(ctx);
-};
+const loadInitialProps = async (route, ctx) =>
+  Object.prototype.hasOwnProperty(route, 'getInitialProps')
+    ? await route.getInitialProps(ctx)
+    : {};
 
 export default loadInitialProps;
