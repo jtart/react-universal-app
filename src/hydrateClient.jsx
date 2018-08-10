@@ -4,13 +4,13 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 
 const hydrateClient = routes => {
-  const { textContent } = JSON.parse(
-    window.document.getElementById('uni-data'),
+  const data = JSON.parse(
+    window.document.getElementById('uni-data').textContent,
   );
 
   hydrate(
     <BrowserRouter>
-      <App routes={routes} initialData={textContent} />
+      <App routes={routes} initialData={data} />
     </BrowserRouter>,
     document.getElementById('__uni__'),
   );
