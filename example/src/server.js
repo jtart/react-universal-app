@@ -1,6 +1,7 @@
 import express from 'express';
 import { render } from '@jtart/uni';
 import routes from './app/routes';
+import withWrapper from './withWrapper';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -11,7 +12,12 @@ server
   .get('/*', async (req, res) => {
     const scripts = [assets.client.js];
 
-    const { statusCode, html } = await render(req, routes, scripts);
+    const { statusCode, html } = await render(
+      req,
+      routes,
+      scripts,
+      withWrapper,
+    );
 
     res.status(statusCode).send(html);
   });
