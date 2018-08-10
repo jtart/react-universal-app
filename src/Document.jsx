@@ -1,8 +1,8 @@
 import React from 'react';
 import { ServerData, Scripts, Root } from './Root.jsx';
 
-const Document = ({ head, html, data, scripts }) => {
-  const { attributes, tags } = head;
+const Document = ({ meta, html, data, scripts }) => {
+  const { attributes, tags } = meta;
 
   return (
     <html {...attributes.html}>
