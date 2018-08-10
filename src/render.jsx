@@ -2,7 +2,6 @@ import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 import getRouteAndMatch from './getRouteAndMatch.js';
 import loadInitialProps from './loadInitialProps.js';
@@ -10,51 +9,66 @@ import loadInitialProps from './loadInitialProps.js';
 import App from './App.jsx';
 import defaultDoc from './Document.jsx';
 
-const renderApp = (req, routes, match) => {
-  const data = await loadInitialProps(route, { match, req });
+const defaultWithWrapper = props => App => <App {...props} />;
 
-  const sheet = new ServerStyleSheet();
+const renderMeta = () => {
+  const {
+    htmlAttributes,
+    bodyAttributes,
+    title,
+    meta,
+    link,
+  } = Helmet.renderStatic();
 
+  return {
+    attributes: {
+      html: htmlAttributes.toComponent(),
+      body: bodyAttributes.toComponent(),
+    },
+    tags: [title.toComponent(), meta.toComponent(), link.toComponent()],
+  };
+};
+
+function renderApp(url, routes, data, withWrapper) {
   const html = renderToString(
-    <StaticRouter location={req.url} context={{}}>
-      <StyleSheetManager sheet={sheet.instance}>
-        <App routes={routes} initialData={data} />
-      </StyleSheetManager>
+    <StaticRouter location={url} context={{}}>
+      {withWrapper.call(this, <App initialData={data} routes={routes} />)}
     </StaticRouter>,
   );
 
-  const styles = sheet.getStyleElement();
-  const helmet = Helmet.renderStatic();
+  const meta = renderMeta();
 
-  const head = {
-    attributes: {
-      html: helmet.htmlAttributes.toComponent();
-      body: helmet.bodyAttributes.toComponent();
-    },
-    tags: [
-      helmet.title.toComponent(),
-      helmet.meta.toComponent(),
-      helmet.link.toComponent(),
-    ],
-  };
+  if (Object.hasOwnProperty.call(withWrapper, 'getMetaTags')) {
+    const wrapperTags = withWrapper.getMetaTags.call(this);
 
-  return { html, styles, head, data };
-};
+    meta.tags = [...meta.tags, ...wrapperTags];
+  }
 
-const render = async (req, routes, scripts, Document = defaultDoc) => {
+  return { html, meta, meta, data };
+}
+
+async function render(
+  req,
+  routes,
+  scripts,
+  withWrapper = defaultWithWrapper,
+  Document = defaultDoc,
+) {
   const { route, match } = getRouteAndMatch(req.url, routes);
 
   if (!route) {
     return { statusCode: 404, html: null };
   }
 
-  const appProps = renderApp(req, routes, match);
+  const data = await loadInitialProps(route, { match, req });
+
+  const appProps = renderApp(req.url, routes, data, withWrapper);
 
   const doc = <Document scripts={scripts} {...appProps} />;
 
   const html = renderToStaticMarkup(doc);
 
   return { statusCode: 200, html };
-};
+}
 
 export default render;
