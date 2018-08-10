@@ -42,12 +42,10 @@
     "react": "^16.4.2",
     "react-test-renderer": "^16.4.2",
     "regenerator-runtime": "^0.12.1",
-    "styled-components": "^3.4.0",
     "wait-on": "^2.1.0"
   },
   "peerDependencies": {
-    "react": "^16.4.2",
-    "styled-components": "^3.4.0"
+    "react": "^16.4.2"
   },
   "main": "dist/uni.js",
   "umd:main": "dist/uni.umd.js",

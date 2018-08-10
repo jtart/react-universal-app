@@ -1,15 +1,15 @@
 {
   "name": "uni-example",
   "scripts": {
-    "link-local-uni": "npm link ../ && cd .. && npm link example/node_modules/react && npm link example/node_modules/styled-components",
-    "unlink-local-uni": "npm link ../ && cd .. && npm unlink example/node_modules/react && npm unlink example/node_modules/styled-components",
+    "link-local-uni": "npm link ../ && cd .. && npm link example/node_modules/react",
+    "unlink-local-uni": "npm unlink ../ && cd .. && npm unlink example/node_modules/react",
     "dev": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
-    "@jtart/uni": "latest",
+    "@jtart/uni": "^0.0.6",
     "express": "^4.16.3",
     "razzle": "^2.4.0",
     "react": "^16.4.2",
