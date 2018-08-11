@@ -13,14 +13,11 @@ class App extends Component {
   }
 
   async componentDidUpdate({ location: prevLocation }) {
-    const { location } = this.props;
-    const navigated = location !== prevLocation;
-
-    if (navigated) {
-      const { routes } = this.props;
-      const { pathname } = location;
-
-      const { route, match } = getRouteAndMatch(pathname, routes);
+    if (this.props.location !== prevLocation) {
+      const { route, match } = getRouteAndMatch(
+        this.props.location.pathname,
+        this.props.routes,
+      );
 
       const data = await loadInitialProps(route, { match });
 
@@ -29,10 +26,7 @@ class App extends Component {
   }
 
   render() {
-    const { data } = this.state;
-    const { routes } = this.props;
-
-    return renderRoutes(routes, { ...data });
+    return renderRoutes(this.props.routes, { ...this.state.data });
   }
 }
 

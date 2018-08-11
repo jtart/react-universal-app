@@ -3,11 +3,12 @@ import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import defaultWithWrapper from './defaultWithWrapper.js';
-import { fetchData } from './ServerData.jsx';
 import App from './App.jsx';
 
 const hydrateClient = (routes, withWrapper = defaultWithWrapper) => {
-  const data = fetchData('__UNI_DATA__');
+  const data = JSON.parse(
+    window.document.getElementById('__UNI_DATA__').textContent,
+  );
 
   hydrate(
     withWrapper(
