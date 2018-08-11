@@ -1,21 +1,21 @@
 import React from 'react';
+import Helmet from 'react-helmet';
+
 import ServerData from './ServerData.jsx';
 import { Scripts, Root } from './Root.jsx';
 
-const Document = ({ meta, html, data, scripts }) => {
-  const { attributes, tags } = meta;
+const Document = ({ additional, html, data, scripts }) => {
+  const helmet = Helmet.renderStatic();
 
   return (
-    <html {...attributes.html}>
+    <html {...helmet.htmlAttributes.toComponent()}>
       <head>
-        <React.Fragment>
-          {tags.title}
-          {tags.meta}
-          {tags.links}
-          {tags.additional}
-        </React.Fragment>
+        {helmet.title.toComponent()}
+        {helmet.meta.toComponent()}
+        {helmet.link.toComponent()}
+        {additional}
       </head>
-      <body {...attributes.body}>
+      <body {...helmet.bodyAttributes.toComponent()}>
         <Root html={html} />
         <ServerData id="__UNI_DATA__" data={data} />
         <Scripts scripts={scripts} />
