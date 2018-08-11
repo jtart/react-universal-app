@@ -5,7 +5,7 @@ function withWrapper(App) {
   return this.sheet.collectStyles(App);
 }
 
-withWrapper.getMetaTags = function() {
+withWrapper.getTags = function() {
   const styles = this.sheet.getStyleElement();
   return [styles];
 };

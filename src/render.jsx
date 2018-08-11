@@ -38,8 +38,8 @@ function renderApp(url, routes, data, withWrapper) {
 
   const meta = renderMeta();
 
-  if (Object.hasOwnProperty.call(withWrapper, 'getMetaTags')) {
-    const wrapperTags = withWrapper.getMetaTags.call(this);
+  if (Object.hasOwnProperty.call(withWrapper, 'getTags')) {
+    const wrapperTags = withWrapper.getTags.call(this);
 
     meta.tags = [...meta.tags, ...wrapperTags];
   }
