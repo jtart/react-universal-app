@@ -1,27 +1,37 @@
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ServerData } from '@jtart/uni';
+import fetch from 'node-fetch';
 
-function withWrapper(App) {
+async function withWrapper(App) {
   this.sheet = new ServerStyleSheet();
 
   this.client = new ApolloClient({
     ssrMode: true,
     link: createHttpLink({
       uri: 'https://fakerql.com/graphql',
+      fetch: fetch,
     }),
     cache: new InMemoryCache(),
   });
 
-  return (
-    <ApolloProvider client={client}>
+  const apolloApp = (
+    <ApolloProvider client={this.client}>
       {this.sheet.collectStyles(App)}
     </ApolloProvider>
   );
+
+  try {
+    await getDataFromTree(apolloApp);
+  } catch (error) {
+    console.log(error);
+  }
+
+  return apolloApp;
 }
 
 withWrapper.getTags = function() {
