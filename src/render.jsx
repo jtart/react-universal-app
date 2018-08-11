@@ -7,7 +7,7 @@ import getRouteAndMatch from './getRouteAndMatch.js';
 import loadInitialProps from './loadInitialProps.js';
 
 import App from './App.jsx';
-import defaultDoc from './Document.jsx';
+import Document from './Document.jsx';
 
 const defaultWithWrapper = props => App => <App {...props} />;
 
@@ -47,13 +47,7 @@ function renderApp(url, routes, data, withWrapper) {
   return { html, meta, meta, data };
 }
 
-async function render(
-  req,
-  routes,
-  scripts,
-  withWrapper = defaultWithWrapper,
-  Document = defaultDoc,
-) {
+async function render(req, routes, scripts, withWrapper = defaultWithWrapper) {
   const { route, match } = getRouteAndMatch(req.url, routes);
 
   if (!route) {
