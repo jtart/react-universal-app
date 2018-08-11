@@ -10,9 +10,11 @@ const hydrateClient = (routes, withWrapper = defaultWithWrapper) => {
   const data = fetchData('__UNI_DATA__');
 
   hydrate(
-    <BrowserRouter>
-      {withWrapper(<App routes={routes} initialData={data} />)}
-    </BrowserRouter>,
+    withWrapper(
+      <BrowserRouter>
+        <App routes={routes} initialData={data} />
+      </BrowserRouter>,
+    ),
     document.getElementById('__uni__'),
   );
 };

@@ -1,4 +1,5 @@
 import Index from './components/Index';
+import Apollo from './components/Apollo';
 
 const indexGetInitialProps = async () => ({
   title: 'Index',
@@ -26,6 +27,10 @@ const routes = [
       to: '/',
       text: 'Index',
     }),
+  },
+  {
+    path: '/apollo',
+    component: Apollo,
   },
 ];
 
