@@ -28,11 +28,14 @@ const renderMeta = () => {
   };
 };
 
-function renderApp(url, routes, data, withWrapper) {
+async function renderApp(url, routes, data, withWrapper) {
   const html = renderToString(
-    <StaticRouter location={url} context={{}}>
-      {withWrapper.call(this, <App initialData={data} routes={routes} />)}
-    </StaticRouter>,
+    await withWrapper.call(
+      this,
+      <StaticRouter location={url} context={{}}>
+        <App initialData={data} routes={routes} />
+      </StaticRouter>,
+    ),
   );
 
   const meta = renderMeta();
@@ -55,7 +58,7 @@ async function render(req, routes, scripts, withWrapper = defaultWithWrapper) {
 
   const data = await loadInitialProps(route, { match, req });
 
-  const appProps = renderApp(req.url, routes, data, withWrapper);
+  const appProps = await renderApp(req.url, routes, data, withWrapper);
 
   const doc = <Document scripts={scripts} {...appProps} />;
 
