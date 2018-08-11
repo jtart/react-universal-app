@@ -7,7 +7,14 @@ const Document = ({ meta, html, data, scripts }) => {
 
   return (
     <html {...attributes.html}>
-      <head>{tags}</head>
+      <head>
+        <React.Fragment>
+          {tags.title}
+          {tags.meta}
+          {tags.links}
+          {tags.additional}
+        </React.Fragment>
+      </head>
       <body {...attributes.body}>
         <Root html={html} />
         <ServerData id="__UNI_DATA__" data={data} />

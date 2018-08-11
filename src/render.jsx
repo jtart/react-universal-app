@@ -24,7 +24,12 @@ const renderMeta = () => {
       html: htmlAttributes.toComponent(),
       body: bodyAttributes.toComponent(),
     },
-    tags: [title.toComponent(), meta.toComponent(), link.toComponent()],
+    tags: {
+      title: title.toComponent(),
+      meta: meta.toComponent(),
+      links: link.toComponent(),
+      additional: []
+    },
   };
 };
 
@@ -43,7 +48,7 @@ async function renderApp(url, routes, data, withWrapper) {
   if (Object.hasOwnProperty.call(withWrapper, 'getTags')) {
     const wrapperTags = withWrapper.getTags.call(this);
 
-    meta.tags = [...meta.tags, ...wrapperTags];
+    meta.tags.additional.push(...wrapperTags);
   }
 
   return { html, meta, meta, data };
