@@ -4,7 +4,6 @@
     "start": "razzle build && NODE_ENV=production node build/server.js"
   },
   "dependencies": {
-    "@jtart/uni": "latest",
     "apollo-cache-inmemory": "^1.2.7",
     "apollo-client": "^2.3.8",
     "apollo-link-http": "^1.5.4",
