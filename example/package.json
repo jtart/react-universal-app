@@ -1,15 +1,13 @@
 {
   "name": "uni-example",
   "scripts": {
-    "link-local-uni": "npm link ../ && cd .. && npm link example/node_modules/react",
-    "unlink-local-uni": "npm unlink ../ && cd .. && npm unlink example/node_modules/react",
     "dev": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
-    "@jtart/uni": "^0.0.6",
+    "@jtart/uni": "file:../",
     "apollo-cache-inmemory": "^1.2.7",
     "apollo-client": "^2.3.8",
     "apollo-link-http": "^1.5.4",

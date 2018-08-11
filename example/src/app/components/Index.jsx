@@ -1,13 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { Link } from '@jtart/uni';
 
-const StyledHeadline = styled.h1`
-  color: red;
-`;
-
-const Index = ({ title, to, text }) => (
+const Index = ({ title, link }) => (
   <div>
     <Helmet>
       <html lang="en-GB" />
@@ -16,8 +11,15 @@ const Index = ({ title, to, text }) => (
       <meta name="description" content="Page description" />
       <title>{title}</title>
     </Helmet>
-    <StyledHeadline>{title}</StyledHeadline>
-    <Link to={to}>Go... {text}</Link>
+    <h1>{title}</h1>
+    <ul>
+      <li>
+        <Link to={link.to}>{link.text} page</Link>
+      </li>
+      <li>
+        <Link to="/apollo">Apollo page</Link>
+      </li>
+    </ul>
   </div>
 );
 
