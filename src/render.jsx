@@ -3,13 +3,12 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
+import defaultWithWrapper from './defaultWithWrapper.js';
 import getRouteAndMatch from './getRouteAndMatch.js';
 import loadInitialProps from './loadInitialProps.js';
 
 import App from './App.jsx';
 import Document from './Document.jsx';
-
-const defaultWithWrapper = props => App => <App {...props} />;
 
 const renderMeta = () => {
   const {

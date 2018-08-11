@@ -1,14 +1,17 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App.jsx';
-import { fetchData } from './ServerData.jsx';
 
-const hydrateClient = routes => {
+import defaultWithWrapper from './defaultWithWrapper.js';
+import { fetchData } from './ServerData.jsx';
+import App from './App.jsx';
+
+const hydrateClient = (routes, withWrapper = defaultWithWrapper) => {
   const data = fetchData('__UNI_DATA__');
+
   hydrate(
     <BrowserRouter>
-      <App routes={routes} initialData={data} />
+      {withWrapper(<App routes={routes} initialData={data} />)}
     </BrowserRouter>,
     document.getElementById('__uni__'),
   );
