@@ -9,7 +9,7 @@ exports[`Root should render a div with injected HTML 1`] = `
       </div>,
     }
   }
-  id="root"
+  id="__uni__"
 />
 `;
 
@@ -24,16 +24,4 @@ Array [
     src="https://example.com/bundle.two.js"
   />,
 ]
-`;
-
-exports[`ServerData should render a script tag containing data 1`] = `
-<script
-  dangerouslySetInnerHTML={
-    Object {
-      "__html": "{\\"item\\":\\"This is some data\\"}",
-    }
-  }
-  id="server-data"
-  type="application/json"
-/>
 `;
