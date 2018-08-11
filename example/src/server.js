@@ -9,11 +9,11 @@ const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-  .get('/*', async (req, res) => {
+  .get('/*', async ({ url }, res) => {
     const scripts = [assets.client.js];
 
     const { statusCode, html } = await render(
-      req,
+      url,
       routes,
       scripts,
       withWrapper,

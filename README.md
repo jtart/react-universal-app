@@ -60,7 +60,6 @@ This provides a clearer seperation of concerns and agnosticism between component
 A `ctx` object is passed to `getInitialProps`, which includes:
 
 - `match`: React Router's [match](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/match.md) object
-- `req`: An express-like request object - **only passed on the server**
 
 ### Client
 
@@ -81,7 +80,7 @@ To setup client hydration, use `hydrateClient`, passing:
 
 To render your app on a server, use `render`, passing:
 
-- an express-like request object
+- a [Node.JS HTTP URL-like object](https://nodejs.org/api/http.html#http_message_url)
 - your app routes array
 - an array of script URLs - an array of URLs pointing of the client-side JavaScript bundle
 
@@ -92,10 +91,10 @@ To render your app on a server, use `render`, passing:
   import routes from 'app/routes';
 
   ...
-  get('/*', async (req, res) => {
+  get('/*', async ({ url }, res) => {
     const scripts = [ 'https://example.com/bundle.js' ];
 
-    const { statusCode, html } = await render(req, routes, scripts);
+    const { statusCode, html } = await render(url, routes, scripts);
 
     res.status(statusCode).send(html);
   });

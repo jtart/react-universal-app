@@ -49,16 +49,16 @@ async function renderApp(url, routes, data, withWrapper) {
   return { html, meta, meta, data };
 }
 
-async function render(req, routes, scripts, withWrapper = defaultWithWrapper) {
-  const { route, match } = getRouteAndMatch(req.url, routes);
+async function render(url, routes, scripts, withWrapper = defaultWithWrapper) {
+  const { route, match } = getRouteAndMatch(url, routes);
 
   if (!route) {
     return { statusCode: 404, html: null };
   }
 
-  const data = await loadInitialProps(route, { match, req });
+  const data = await loadInitialProps(route, { match });
 
-  const appProps = await renderApp(req.url, routes, data, withWrapper);
+  const appProps = await renderApp(url, routes, data, withWrapper);
 
   const doc = <Document scripts={scripts} {...appProps} />;
 
