@@ -1,5 +1,6 @@
 import React from 'react';
-import { ServerData, Scripts, Root } from './Root.jsx';
+import ServerData from './ServerData.jsx';
+import { Scripts, Root } from './Root.jsx';
 
 const Document = ({ meta, html, data, scripts }) => {
   const { attributes, tags } = meta;
@@ -9,7 +10,7 @@ const Document = ({ meta, html, data, scripts }) => {
       <head>{tags}</head>
       <body {...attributes.body}>
         <Root html={html} />
-        <ServerData data={data} />
+        <ServerData id="__UNI_DATA__" data={data} />
         <Scripts scripts={scripts} />
       </body>
     </html>
