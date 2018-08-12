@@ -6,7 +6,7 @@ import { Link } from '@jtart/uni';
 const Apollo = () => (
   <div>
     <h1>GraphQL w/ Apollo</h1>
-    <Link to="/">Index</Link>
+    <Link to="/">Home</Link>
     <Query
       query={gql`
         {
