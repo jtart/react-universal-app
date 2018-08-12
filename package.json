@@ -11,14 +11,17 @@
   },
   "scripts": {
     "build": "microbundle --jsx React.createElement",
+    "cypress": "cypress run",
+    "cypress:interactive": "cypress open",
     "dev": "microbundle watch --jsx React.createElement",
-    "dev:wait-for-3000": "wait-on http://localhost:3000 && npm run dev",
-    "dev:example-dev": "concurrently -k -n \"EXAMPLE,UNI\" -c \"red,blue\" \"npm run example:dev\" \"npm run dev:wait-for-3000\"",
+    "dev:example-dev": "concurrently -k -n \"EXAMPLE,UNI\" -c \"red,blue\" \"npm run example:dev\" \"npm run wait-for-3000 && npm run dev\"",
     "example:dev": "cd example && npm run dev",
-    "example:prod": "cd example && npm run start",
+    "example:prod": "cd example && npm run build && npm run start",
     "prepare": "npm run build",
     "test": "jest --watch",
-    "test:ci": "jest --ci --coverage --coverageReporters=text-lcov | coveralls"
+    "test:ci": "jest --ci --coverage --coverageReporters=text-lcov | coveralls",
+    "test:e2e": "concurrently -k -n \"APP,CYPRESS\" -c \"red,blue\" \"npm run example:prod\" \"npm run wait-for-3000 && npm run cypress\" --success first",
+    "wait-for-3000": "wait-on http://localhost:3000"
   },
   "dependencies": {
     "react-dom": "^16.4.2",
@@ -33,6 +36,7 @@
     "babel-preset-react": "^6.24.1",
     "concurrently": "^3.6.1",
     "coveralls": "^3.0.2",
+    "cypress": "^3.0.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
