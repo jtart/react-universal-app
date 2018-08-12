@@ -1,10 +1,12 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from '@jtart/uni';
 
 const Apollo = () => (
   <div>
     <h1>GraphQL w/ Apollo</h1>
+    <Link to="/">Index</Link>
     <Query
       query={gql`
         {
@@ -20,8 +22,8 @@ const Apollo = () => (
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error :(</p>;
 
-          return data.allPosts.map(({ id, title, body }) => (
-            <div key={id}>
+        return data.allPosts.map(({ id, title, body }) => (
+          <div key={id}>
             <h2>{title}</h2>
             <p>{body}</p>
           </div>

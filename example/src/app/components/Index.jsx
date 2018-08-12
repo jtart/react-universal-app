@@ -9,13 +9,15 @@ const Index = ({ title, link }) => (
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content="Page description" />
-      <title>{title}</title>
+      {title ? <title>{title}</title> : null}
     </Helmet>
-    <h1>{title}</h1>
+    <h1>{title ? title : 'Loading...'}</h1>
     <ul>
-      <li>
-        <Link to={link.to}>{link.text} page</Link>
-      </li>
+      {link ? (
+        <li>
+          <Link to={link.to}>{link.text} page</Link>
+        </li>
+      ) : null}
       <li>
         <Link to="/apollo">Apollo page</Link>
       </li>
