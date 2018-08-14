@@ -17,10 +17,12 @@ exports[`Scripts should render scripts for each JS script 1`] = `
 Array [
   <script
     defer={true}
+    key="script-https://example.com/bundle.one.js"
     src="https://example.com/bundle.one.js"
   />,
   <script
     defer={true}
+    key="script-https://example.com/bundle.two.js"
     src="https://example.com/bundle.two.js"
   />,
 ]
