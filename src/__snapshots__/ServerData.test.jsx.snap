@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ServerData should a render script with serialised props 1`] = `
+<script
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "{\\"data\\":{\\"entry\\":\\"This is some data!\\"}}",
+    }
+  }
+  id="idOne"
+  type="application/json"
+/>
+`;
