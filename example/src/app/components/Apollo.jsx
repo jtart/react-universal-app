@@ -22,12 +22,16 @@ const Apollo = () => (
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error :(</p>;
 
-        return data.allPosts.map(({ id, title, body }) => (
-          <div key={id}>
-            <h2>{title}</h2>
-            <p>{body}</p>
-          </div>
-        ));
+        return (
+          <ul>
+            {data.allPosts.map(({ id, title, body }) => (
+              <li key={id}>
+                <h2>{title}</h2>
+                <p>{body}</p>
+              </li>
+            ))}
+          </ul>
+        );
       }}
     </Query>
   </div>
