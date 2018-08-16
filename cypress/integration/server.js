@@ -1,0 +1,42 @@
+describe('Server', () => {
+  describe('index route', () => {
+    it('should return HTML', () => {
+      cy.visit('/');
+      cy.get('h1').should('contain', 'Index');
+    });
+  });
+
+  describe('styledComponents route', () => {
+    it('should return HTML that is styled', () => {
+      cy.visit('/styledComponents');
+
+      const Header = cy.get('h1');
+
+      Header.should('contain', 'Styled Components');
+      Header.should('have.css', 'color').and('eq', 'rgb(255, 0, 0)');
+    });
+  });
+
+  describe('apollo route', () => {
+    it('should return HTML', () => {
+      cy.visit('/apollo');
+
+      cy.get('h1').should('contain', 'GraphQL w/ Apollo');
+
+      cy.get('ul')
+        .children()
+        .should('have.length', 5);
+    });
+  });
+
+  describe('non-existent route', () => {
+    it('should return a 404', () => {
+      cy.request({
+        url: '/notFound',
+        failOnStatusCode: false,
+      }).then(({ status }) => {
+        expect(status).to.eq(404);
+      });
+    });
+  });
+});
