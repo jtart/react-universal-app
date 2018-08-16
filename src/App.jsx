@@ -13,7 +13,7 @@ export class App extends Component {
   }
 
   async componentDidUpdate({ location: prevLocation }) {
-    if (this.props.location !== prevLocation) {
+    if (this.props.location.pathname !== prevLocation.pathname) {
       const { route, match } = getRouteAndMatch(
         this.props.location.pathname,
         this.props.routes,
