@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import getRouteAndMatch from './getRouteAndMatch.js';
 import loadInitialProps from './loadInitialProps.js';
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
 
