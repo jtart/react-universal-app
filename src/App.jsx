@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 
@@ -18,6 +18,10 @@ export class App extends Component {
         this.props.location.pathname,
         this.props.routes,
       );
+
+      if (!route || !match) {
+        return;
+      }
 
       const data = await loadInitialProps(route, { match });
 

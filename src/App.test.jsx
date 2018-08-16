@@ -40,9 +40,24 @@ describe('App', () => {
       it('should not call set state with new data', () => {
         wrapper.setProps({ location: { pathname: 'pathnameOne' } });
 
+        expect.assertions(3);
         expect(getRouteAndMatch.default).not.toHaveBeenCalled();
         expect(loadInitialProps.default).not.toHaveBeenCalled();
         expect(setStateSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('different location', () => {
+      describe('no route or match', () => {
+        it('should not call set state with new data', () => {
+          const pathname = 'pathnameTwo';
+          wrapper.setProps({ location: { pathname } });
+
+          expect.assertions(3);
+          expect(getRouteAndMatch.default).toHaveBeenCalledWith(pathname, []);
+          expect(loadInitialProps.default).not.toHaveBeenCalled();
+          expect(setStateSpy).not.toHaveBeenCalled();
+        });
       });
     });
   });
