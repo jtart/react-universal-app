@@ -15,6 +15,7 @@ describe('App', () => {
       </BrowserRouter>,
     );
 
+    expect(reactRouterConfig.renderRoutes).toHaveBeenCalledTimes(1);
     expect(reactRouterConfig.renderRoutes).toHaveBeenCalledWith([], {
       data: 'Some of it',
     });
