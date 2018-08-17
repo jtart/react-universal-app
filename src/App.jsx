@@ -19,13 +19,16 @@ export class App extends Component {
         this.props.routes,
       );
 
-      if (!route || !match) {
-        return;
+      if (route) {
+        try {
+          const data = await loadInitialProps(route, {
+            match,
+          });
+          this.setState({ data });
+        } catch (error) {
+          console.log(error);
+        }
       }
-
-      const data = await loadInitialProps(route, { match });
-
-      this.setState({ data });
     }
   }
 
