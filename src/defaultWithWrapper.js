@@ -1,3 +1,3 @@
-const defaultWithWrapper = App => App;
+const defaultWithWrapper = async App => App;
 
 export default defaultWithWrapper;
