@@ -1,0 +1,15 @@
+{
+  "name": "uni-example-basic",
+  "scripts": {
+    "dev": "razzle start",
+    "build": "razzle build",
+    "test": "razzle test --env=jsdom",
+    "start": "NODE_ENV=production node build/server.js"
+  },
+  "dependencies": {
+    "@jtart/uni": "file:../../",
+    "express": "^4.16.3",
+    "razzle": "^2.4.0",
+    "react": "^16.4.2"
+  }
+}
