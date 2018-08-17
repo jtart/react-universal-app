@@ -8,11 +8,21 @@
 
 uni is a tiny library that provides sensible interfaces for writing Universal React components and a single-page application.
 
+## Philosophy
+
+Next.JS, After.JS, Rogue, etc, are great libraries for creating Universal React application. However, the differing ways they handle routing/data fetchin and their points of flexibility isn't for me.
+
 uni uses React Router 4, which is a great foundation for serving pages as components and providing route configuration.
+
+uni provides very familiar interface for data fetching, `getInitialProps`. In contrast to other libraries, `getInitialProps` is defined alongside route configuration, which brings great benefit. It provides a consiseness and seperation of concerns; introducing agnosticism between route configuration/data fetching and components, while having an implicit benefit of reducing the barrier to entry for newer React developers.
+
+uni is unopinionated and flexible. It gives a consumer the ability to plugin any library they please to their application with comparate ease.
+
+Finally, uni is tiny.
 
 ## Getting Started
 
-To get started quickly, view the [example applications](https://github.com/jtart/uni/tree/master/examples). These applications give a concise depiction of how to integrate build an application using uni.
+To get started quickly, view the [example applications](https://github.com/jtart/uni/tree/master/examples). These applications give a concise depiction of how to build an application using uni.
 
 Alternatively, follow the steps below to get started.
 
@@ -160,7 +170,7 @@ To render your app on a server, uni exposes a `render` function.
 - `url` - a [Node.JS HTTP URL-like object](https://nodejs.org/api/http.html#http_message_url)
 - `routes` - an array of React Router routes
 - `scripts` - an array of URLs that that will be used to create deferred script tags. These scripts likely contain a client-side bundle of the React application, but don't have to be
-- `?serverWrapper` - a wrapper HOC component that is used on the server-side render. see [wrappers](#wrappers) for more information. Optional
+- `?serverWrapper` - an optional HOC that wraps the React application in the server-side render. See [wrappers](#wrappers) for more information
 
 ```JavaScript
   // server.js
@@ -182,22 +192,24 @@ To render your app on a server, uni exposes a `render` function.
 
 ### Client
 
-To setup client hydration, use `hydrateClient`, passing:
+To re-hydrate your React application on the client, uni exposes a `hydrateClient` function.
 
-- your app routes array
+#### `hydrateClient(routes, ?clientWrapper)`
+`hydrateClient` is a synchronous function that will re-hydrate your React application that was rendered on the server by `render`.
+
+`hydrateClient` accepts the following arguments:
+- `routes` - an array of React Router routes
+- `?clientWrapper` - an optional HOC that wraps the client-side React application. See [wrappers](#wrappers) for more information
 
 ```JavaScript
   // client.js
 
   import { hydrateClient } from "@jtart/uni";
-  import routes from "app/routes";
+  import routes from "./app/routes";
+  import clientWrapper from "./wrappers/client";
 
-  hydrateClient(routes);
+  hydrateClient(routes, clientWrapper);
 ```
 
 ### Wrappers
 [Information on wrappers to come]
-
-## Example
-
-There is a simple example provided in `./example`. It uses [razzle](https://github.com/jaredpalmer/razzle/), and is used in integration tests. See the README for more information.
