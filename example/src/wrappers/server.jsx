@@ -7,7 +7,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ServerData } from '@jtart/uni';
 import fetch from 'node-fetch';
 
-async function withWrapper(App) {
+async function serverWrapper(App) {
   this.sheet = new ServerStyleSheet();
 
   this.client = new ApolloClient({
@@ -34,7 +34,7 @@ async function withWrapper(App) {
   return apolloApp;
 }
 
-withWrapper.getTags = function() {
+serverWrapper.getTags = function() {
   const styles = this.sheet.getStyleElement();
 
   const initialApolloData = this.client.extract();
@@ -42,4 +42,4 @@ withWrapper.getTags = function() {
   return [styles, <ServerData id="__APOLLO_DATA__" data={initialApolloData} />];
 };
 
-export default withWrapper;
+export default serverWrapper;

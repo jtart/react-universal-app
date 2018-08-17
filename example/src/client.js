@@ -1,8 +1,8 @@
 import { hydrateClient } from '@jtart/uni';
 import routes from './app/routes';
-import withClientWrapper from './withClientWrapper';
+import clientWrapper from './wrappers/client';
 
-hydrateClient(routes, withClientWrapper);
+hydrateClient(routes, clientWrapper);
 
 if (module.hot) {
   module.hot.accept();

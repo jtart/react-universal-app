@@ -1,7 +1,7 @@
 import express from 'express';
 import { render } from '@jtart/uni';
 import routes from './app/routes';
-import withWrapper from './withWrapper';
+import serverWrapper from './wrappers/server';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -16,7 +16,7 @@ server
       url,
       routes,
       scripts,
-      withWrapper,
+      serverWrapper,
     );
 
     res.status(statusCode).send(html);

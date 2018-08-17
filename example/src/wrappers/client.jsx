@@ -4,7 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-const withClientWrapper = App => {
+const clientWrapper = App => {
   const data = JSON.parse(
     window.document.getElementById('__APOLLO_DATA__').textContent,
   );
@@ -20,4 +20,4 @@ const withClientWrapper = App => {
   return <ApolloProvider client={client}>{App}</ApolloProvider>;
 };
 
-export default withClientWrapper;
+export default clientWrapper;
