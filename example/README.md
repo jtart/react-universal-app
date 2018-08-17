@@ -6,9 +6,15 @@ The app implements an SPA and uses styled components and graphQL. It uses [Razzl
 
 ## Usage
 
-Run `npm run dev`, this bundles server and client JS and starts a server on [localhost:3000/](http://localhost:3000/).
+Run `npm run dev`. This bundles server and client JS and starts a server on [localhost:3000](http://localhost:3000/).
 
 The app has 3 routes:
-- `/`: a basic page with some links to the below routes
-- `/styledComponents`: a page that includes styled components (just a header), with the styles being server-side rendered
-- `/apollo`: a page that uses GraphQL w/ Apollo, with the data being server-side rendered
+- `/` - a basic page with some links to the below routes
+- `/styledComponents` - a page that includes styled components (just a header)
+- `/apollo` - a page that uses GraphQL w/ Apollo
+
+The styles/graphQL data for `styled-components` and `apollo` are server-side rendered if requests are made directly to those routes. If the routes are clicked to through the client-side application, the styles/data is client-side rendered.
+
+See the wrappers for how these libraries are integrated with `uni`:
+- [client-side wrapper](https://github.com/jtart/uni/blob/master/example/src/withClientWrapper.jsx) - used for Apollo
+- [server-side wrapper](https://github.com/jtart/uni/blob/master/example/src/withWrapper.js) - used for styled-components/Apollo
