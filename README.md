@@ -6,9 +6,7 @@
 [![gzip size](http://img.badgesize.io/https://unpkg.com/@jtart/uni/dist/uni.es.js?compression=gzip)](https://unpkg.com/@jtart/uni/dist/uni.es.js)
 [![CircleCI status](https://circleci.com/gh/jtart/uni.svg?style=svg)](https://circleci.com/gh/jtart/uni)
 
-uni is a Universal React library; uni leverages React Router.
-
-uni is tiny; uni is 1kb.
+uni is a tiny library that provides sensible interfaces for writing Universal React components and a single-page application.
 
 ## Usage
 
@@ -101,33 +99,9 @@ To render your app on a server, use `render`, passing:
   ...
 ```
 
+### Wrappers
+[Information on wrappers to come]
+
 ## Example
 
-There is a simple example provided in `./example`. It uses [razzle](https://github.com/jaredpalmer/razzle/), and is used in integration tests. The application has 3 routes: `/`, `/home`, and `/param/:id`.
-
-### Usage
-
-You can install `@jtart/uni` from local source code or from NPM. The former is incredibly useful for local development, especially when used in conjunction with the development build of uni and this example. There is development and production build scripts provided for the example.
-
-#### Installing from local source code
-
-To install uni locally, follow these steps:
-
-1. CD to `./example`
-2. Run `npm install`
-3. Run `npm run link-local-uni` - setups up required symlinks
-
-#### Installing from NPM
-
-To install uni from NPM, follow these steps:
-
-1. CD to `./example`
-2. Run `npm run unlink-local-uni` - ensure any symlinks are removed
-3. Run `npm install`
-
-#### Starting
-
-You can start the example in a development or production environment. To start the example in...
-
-- development: run `npm run dev`
-- production: run `npm run build && npm run start`
+There is a simple example provided in `./example`. It uses [razzle](https://github.com/jaredpalmer/razzle/), and is used in integration tests. See the README for more information.
