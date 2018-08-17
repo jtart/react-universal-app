@@ -10,13 +10,13 @@ uni is a tiny library that provides sensible interfaces for writing Universal Re
 
 ## Philosophy
 
-Next.JS, After.JS, Rogue, etc, are great libraries for creating Universal React application. However, the differing ways they handle routing/data fetchin and their points of flexibility isn't for me.
+Next.JS, After.JS, etc, are great libraries for creating a Universal React application. However, the differing ways they handle routing/data fetching, and their points of flexibility, just aren't for me.
 
 uni uses React Router 4, which is a great foundation for serving pages as components and providing route configuration.
 
-uni provides very familiar interface for data fetching, `getInitialProps`. In contrast to other libraries, `getInitialProps` is defined alongside route configuration, which brings great benefit. It provides a consiseness and seperation of concerns; introducing agnosticism between route configuration/data fetching and components, while having an implicit benefit of reducing the barrier to entry for newer React developers.
+uni provides very familiar interface for data fetching, `getInitialProps`. In contrast to other libraries, `getInitialProps` is defined alongside route configuration. This provides a consiseness, introducing a seperation of concerns and agnosticism between route configuration/data fetching and components, while having an implicit benefit of reducing the barrier to entry for newer React developers.
 
-uni is unopinionated and flexible. It gives a consumer the ability to plugin any library they please to their application with comparate ease.
+uni is unopinionated and flexible. It gives a consumer the ability to plugin any library they please to their React application with comparate ease and without feeling like they are overriding the core mechanics of uni.
 
 ## Getting Started
 
