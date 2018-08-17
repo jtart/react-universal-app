@@ -8,8 +8,11 @@
 
 uni is a tiny library that provides sensible interfaces for writing Universal React components and a single-page application.
 
-## Usage
+uni uses React Router 4, which is a great foundation for serving pages as components and providing route configuration.
 
+uni leverages React Router router configuration for data fetching, and provides simple interfaces for providing extensibility. 
+
+## Usage
 ### App
 
 uni uses React Router 4. Define your [routes](https://www.npmjs.com/package/react-router-config#route-configuration-shape) in an array and export them.
