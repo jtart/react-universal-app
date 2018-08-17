@@ -15,6 +15,7 @@ The app has 3 routes:
 
 The styles/graphQL data for `styled-components` and `apollo` are server-side rendered if requests are made directly to those routes. If the routes are clicked to through the client-side application, the styles/data is client-side rendered.
 
-See the wrappers for how these libraries are integrated with `uni`:
+### Wrappers
+See [wrappers](https://github.com/jtart/uni/tree/master/example/src/wrappers) for an indication on how (these) libraries are integrated with `uni`. Wrappers are optional HOCs, that enable extensibility of `uni`, and your consuming application. 
 - [client-side wrapper](https://github.com/jtart/uni/blob/master/example/src/withClientWrapper.jsx) - used for Apollo
 - [server-side wrapper](https://github.com/jtart/uni/blob/master/example/src/withWrapper.js) - used for styled-components/Apollo
