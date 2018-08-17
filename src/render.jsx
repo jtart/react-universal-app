@@ -10,7 +10,7 @@ import App from './App.jsx';
 import Document from './Document.jsx';
 
 async function renderApp(url, routes, data, withWrapper) {
-  const html = renderToString(
+  const appHTML = renderToString(
     await withWrapper.call(
       this,
       <StaticRouter location={url} context={{}}>
@@ -19,15 +19,15 @@ async function renderApp(url, routes, data, withWrapper) {
     ),
   );
 
-  const additional = [];
+  const additionalHeadProps = [];
 
   if (Object.hasOwnProperty.call(withWrapper, 'getAdditionalHeadProps')) {
     const wrapperTags = withWrapper.getAdditionalHeadProps.call(this);
 
-    additional.push(...wrapperTags);
+    additionalHeadProps.push(...wrapperTags);
   }
 
-  return { html, additional, data };
+  return { appHTML, additionalHeadProps };
 }
 
 async function render(url, routes, scripts, withWrapper = defaultWithWrapper) {
@@ -39,10 +39,20 @@ async function render(url, routes, scripts, withWrapper = defaultWithWrapper) {
 
   const data = await loadInitialProps(route, { match });
 
-  const appProps = await renderApp(url, routes, data, withWrapper);
+  const { appHTML, additionalHeadProps } = await renderApp(
+    url,
+    routes,
+    data,
+    withWrapper,
+  );
 
   const html = renderToStaticMarkup(
-    <Document scripts={scripts} {...appProps} />,
+    <Document
+      additionalHeadProps={additionalHeadProps}
+      appHTML={appHTML}
+      data={data}
+      scripts={scripts}
+    />,
   );
 
   return { statusCode: 200, html };

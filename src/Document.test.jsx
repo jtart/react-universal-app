@@ -26,16 +26,16 @@ describe('Document', () => {
   it('should render correctly', () => {
     const doc = (
       <Document
-        additional={[
+        additionalHeadProps={[
           <style key="s-1" data-test-styles-one />,
           <style key="s-2" data-test-styles-two />,
         ]}
-        html={<h1>This is some html</h1>}
+        appHTML={<h1>This is some html</h1>}
         data={{ data: 'This is some data!' }}
         scripts={['https://example.com/one.js', 'https://example.com/two.js']}
       />
     );
-    const wrapper = mount(doc);
+    const wrapper = shallow(doc);
     expect(wrapper).toMatchSnapshot();
   });
 });

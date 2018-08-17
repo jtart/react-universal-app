@@ -1,114 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Document should render correctly 1`] = `
-<Document
-  additional={
-    Array [
-      <style
-        data-test-styles-one={true}
-      />,
-      <style
-        data-test-styles-two={true}
-      />,
-    ]
-  }
-  data={
-    Object {
-      "data": "This is some data!",
-    }
-  }
-  html={
-    <h1>
-      This is some html
-    </h1>
-  }
-  scripts={
-    Array [
-      "https://example.com/one.js",
-      "https://example.com/two.js",
-    ]
-  }
+<html
+  lang="en_GB"
 >
-  <html
-    lang="en_GB"
+  <head>
+    <title />
+    <meta />
+    <link
+      key="l-1"
+    />
+    <link
+      key="l-2"
+    />
+    <style
+      data-test-styles-one={true}
+      key="s-1"
+    />
+    <style
+      data-test-styles-two={true}
+      key="s-2"
+    />
+  </head>
+  <body
+    dir="ltr"
   >
-    <head>
-      <title />
-      <meta />
-      <link
-        key="l-1"
-      />
-      <link
-        key="l-2"
-      />
-      <style
-        data-test-styles-one={true}
-        key="s-1"
-      />
-      <style
-        data-test-styles-two={true}
-        key="s-2"
-      />
-    </head>
-    <body
-      dir="ltr"
-    >
-      <Root
-        html={
-          <h1>
-            This is some html
-          </h1>
+    <Root
+      html={
+        <h1>
+          This is some html
+        </h1>
+      }
+    />
+    <ServerData
+      data={
+        Object {
+          "data": "This is some data!",
         }
-      >
-        <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": <h1>
-                This is some html
-              </h1>,
-            }
-          }
-          id="__uni__"
-        />
-      </Root>
-      <ServerData
-        data={
-          Object {
-            "data": "This is some data!",
-          }
-        }
-        id="__UNI_DATA__"
-      >
-        <script
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "{\\"data\\":\\"This is some data!\\"}",
-            }
-          }
-          id="__UNI_DATA__"
-          type="application/json"
-        />
-      </ServerData>
-      <Scripts
-        scripts={
-          Array [
-            "https://example.com/one.js",
-            "https://example.com/two.js",
-          ]
-        }
-      >
-        <script
-          defer={true}
-          key="script-https://example.com/one.js"
-          src="https://example.com/one.js"
-        />
-        <script
-          defer={true}
-          key="script-https://example.com/two.js"
-          src="https://example.com/two.js"
-        />
-      </Scripts>
-    </body>
-  </html>
-</Document>
+      }
+      id="__UNI_DATA__"
+    />
+    <Scripts
+      scripts={
+        Array [
+          "https://example.com/one.js",
+          "https://example.com/two.js",
+        ]
+      }
+    />
+  </body>
+</html>
 `;
