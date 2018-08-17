@@ -21,8 +21,8 @@ async function renderApp(url, routes, data, withWrapper) {
 
   const additional = [];
 
-  if (Object.hasOwnProperty.call(withWrapper, 'getTags')) {
-    const wrapperTags = withWrapper.getTags.call(this);
+  if (Object.hasOwnProperty.call(withWrapper, 'getAdditionalHeadProps')) {
+    const wrapperTags = withWrapper.getAdditionalHeadProps.call(this);
 
     additional.push(...wrapperTags);
   }

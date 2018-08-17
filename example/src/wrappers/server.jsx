@@ -34,7 +34,7 @@ async function serverWrapper(App) {
   return apolloApp;
 }
 
-serverWrapper.getTags = function() {
+serverWrapper.getAdditionalHeadProps = function() {
   const styles = this.sheet.getStyleElement();
 
   const initialApolloData = this.client.extract();
