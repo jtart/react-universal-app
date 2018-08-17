@@ -28,7 +28,7 @@ describe('App', () => {
     getRouteAndMatchSpy = spyOn(getRouteAndMatch, 'default');
   });
 
-  it('should return rendered routes with initial data', () => {
+  it('should return rendered routes', () => {
     expect.assertions(5);
     expect(getRouteAndMatchSpy).not.toHaveBeenCalled();
     expect(loadInitialPropsSpy).not.toHaveBeenCalled();
