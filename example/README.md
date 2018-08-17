@@ -16,8 +16,8 @@ The app has 3 routes:
 The styles/graphQL data are server-side rendered if requests are made directly to those routes. If the routes are clicked through to on the client-side application, the styles/data is client-side rendered.
 
 ### Wrappers
-Wrappers are optional HOCs that enable the plugin of libraries to your application.
-
-See [wrappers](https://github.com/jtart/uni/tree/master/example/src/wrappers) for an indication on how they are implemented. 
+Wrappers are optional HOCs that enable the plugin of libraries to your application. See [wrappers](https://github.com/jtart/uni/tree/master/example/src/wrappers) for an indication on how styled-components and Apollo are implemented:
 - [client-side wrapper](https://github.com/jtart/uni/blob/master/example/src/withClientWrapper.jsx) - used for Apollo
 - [server-side wrapper](https://github.com/jtart/uni/blob/master/example/src/withWrapper.js) - used for styled-components/Apollo
+
+See [here](https://github.com/jtart/uni/blob/master/README.md#wrappers) for more information on wrappers.
