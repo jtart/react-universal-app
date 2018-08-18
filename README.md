@@ -32,7 +32,7 @@ npm install @jtart/uni react react-dom react-helmet
 
 The following gives information on how to setup routing and data fetching in the main React application. Once you have setup your routes, you can pass them to the client and server uni APIs. 
 
-### Routing
+#### Routing
 
 uni uses React Router 4, which is a great foundation for serving pages as components and providing route configuration. To define your routes, create some [route configuration](https://www.npmjs.com/package/react-router-config#route-configuration-shape) and export them.
 
@@ -66,14 +66,14 @@ const Home = () => (
 export default Home;
 ```
 
-#### Data Fetching
+##### Data Fetching
 Similar to other libraries, uni utilises a `getInitialProps` function for data-fetching on the route component. However in contrast to other libraries, `getInitialProps` is defined in the route configuration, not the component.
 
 This provides a clear seperation of concerns and agnosticism between route configuration/data fetching and components. Your React components are just React components, and you can swap components on routes as much as you please.
 
 This has an implicit benefit of reducing the barrier to entry for development for new React developers as the flow of data in the application is clear and defined.
 
-##### `await getInitialProps(ctx): { data }`
+###### `await getInitialProps(ctx): { data }`
 `getInitialProps` is an asynchronous function that is defined on the configuration of a route. It called is internally by uni when a route matches, and the returned data is passed as props to the route's defined component. `getInitialProps` is optional.
 
 A `ctx` object is passed to `getInitialProps`, which includes:
