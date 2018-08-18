@@ -6,7 +6,7 @@
 [![gzip size](http://img.badgesize.io/https://unpkg.com/@jtart/uni/dist/uni.es.js?compression=gzip)](https://unpkg.com/@jtart/uni/dist/uni.es.js)
 [![CircleCI status](https://circleci.com/gh/jtart/uni.svg?style=svg)](https://circleci.com/gh/jtart/uni)
 
-uni is a tiny library that provides sensible interfaces for writing Universal React components and a single-page application.
+uni is a tiny library that provides sensible interfaces for creating Universal React components and building a single-page application.
 
 ## Philosophy
 
