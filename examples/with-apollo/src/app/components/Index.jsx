@@ -6,7 +6,7 @@ const Index = ({ title, link }) => (
   <div>
     <Helmet>{title ? <title>{title}</title> : null}</Helmet>
     <h1>{title ? title : 'Loading...'}</h1>
-    <Link to={link.to}>{link.text} page</Link>
+    {link ? <Link to={link.to}>{link.text} page</Link> : null}
   </div>
 );
 

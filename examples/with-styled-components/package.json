@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
-    "@jtart/uni": "file:../../",
+    "@jtart/uni": "latest",
     "express": "^4.16.3",
     "razzle": "^2.4.0",
     "react": "^16.4.2",

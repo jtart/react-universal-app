@@ -2,7 +2,6 @@ import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
-import defaultWithWrapper from './defaultWithWrapper.js';
 import getRouteAndMatch from './getRouteAndMatch.js';
 import loadInitialProps from './loadInitialProps.js';
 
@@ -30,7 +29,7 @@ async function renderApp(url, routes, data, withWrapper) {
   return { appHTML, additionalHeadProps };
 }
 
-async function render(url, routes, scripts, withWrapper = defaultWithWrapper) {
+async function render(url, routes, scripts, withWrapper = async App => App) {
   const { route, match } = getRouteAndMatch(url, routes);
 
   if (!route) {

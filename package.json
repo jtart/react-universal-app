@@ -2,7 +2,7 @@
   "name": "@jtart/uni",
   "author": "Jordan Tart <jordan.tart3@gmail.com> (https://github.com/jtart)",
   "description": "Tiny framework offering Universal React using React Router.",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "license": "MIT",
   "homepage": "https://github.com/jtart/uni",
   "bugs": {
@@ -38,7 +38,7 @@
     "concurrently": "^3.6.1",
     "coveralls": "^3.0.2",
     "cypress": "^3.1.0",
-    "enzyme": "^3.3.0",
+    "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
     "jest": "^23.4.2",
