@@ -245,9 +245,11 @@ uni allows your to plugin libraries into the lifecycle of the uni application th
 A server wrapper is an asyncronhous HOC that is used on a server-side render only. An example use-case could be the creation of some inital state, styles, etc, which can be injected into the `head` of the HTML Document on the server-side render, through the `getAdditionalHeadProps` function.
 
 ##### `getAdditionalHeadProps: [data]`
-`getAdditionalHeadProps` is a synchronous function that is called after the React application has been rendered, but before it is injected into the main HTML document. It serves as an optional escape hatch for injecting additional props into the `head` of the document that are generated within the server wrapper. For must head tag, you should see 
+`getAdditionalHeadProps` is a synchronous function that is called after the React application has been rendered, but before it is injected into the main HTML document.
 
 These props might be script tags containing initial JSON data. For these purposes, uni exposes a `ServerData` component, which serialises passed JSON data - pass the JSON in the `data` prop, and give it an `id`, which can be used in the client wrapper to return the initial server-side fetched data.
+
+`getAdditionalHeadProps` serves as an optional escape hatch for injecting additional props into the `head` of the document that are generated within the server wrapper. For most head tags, you should see [managing the docunent head](#managing-the-document-head).
 
 ```JavaScript
 // ./wrappers/server.jsx
