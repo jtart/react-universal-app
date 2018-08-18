@@ -10,11 +10,11 @@ uni is a tiny library that provides sensible interfaces for creating Universal R
 
 ## Philosophy
 
-Next.JS, After.JS, etc, are great libraries for creating a Universal React application. However, the differing ways they handle routing/data fetching, and their points of flexibility, just aren't for me.
+uni aims to provide an agnosticism between routing/data-fetching and components. It defines data-fetching alongside route configuration, which provides a concise implementation and a clear seperation of concerns. This also reduces the barrier to entry for newer React developers. Your React components are just React components.
 
-uni provides a very familiar interface for data fetching. However, uni makes a distinction between data fetching and components, and defines data fetching alongside route configuration. This provides a concise implementation; introducing a seperation of concerns and agnosticism between route configuration/data fetching and components, while having an implicit benefit of reducing the barrier to entry for newer React developers. Your React components are just React components.
+uni aims to be unopinionated and flexible. It provides sensible interfaces for wrapping uni, which gives you the ability to plugin any library you want to extend your React application with comparate ease, and without feeling like you are overriding the core mechanics of uni.
 
-uni is unopinionated and flexible. It gives a consumer the ability to plugin any library they please to their React application with comparate ease and without feeling like they are overriding the core mechanics of uni.
+uni aims to be as small as possible. It provides just the right out of scaffolding needed to get your SPA with Universal React components out the door, without making a big impact on your bundle size.
 
 ## Getting Started
 
@@ -34,9 +34,7 @@ The following gives information on how to setup routing and data fetching in the
 
 ### Routing
 
-uni uses React Router 4, which is a great foundation for serving pages as components and providing route configuration.
-
-To define your routes, create some [route configuration](https://www.npmjs.com/package/react-router-config#route-configuration-shape) and export them.
+uni uses React Router 4, which is a great foundation for serving pages as components and providing route configuration. To define your routes, create some [route configuration](https://www.npmjs.com/package/react-router-config#route-configuration-shape) and export them.
 
 Note: uni currently only supports a single top-level of routing.
 
@@ -71,14 +69,16 @@ export default Home;
 #### Data Fetching
 Similar to other libraries, uni utilises a `getInitialProps` function for data-fetching on the route component. However in contrast to other libraries, `getInitialProps` is defined in the route configuration, not the component.
 
-This provides a clear seperation of concerns and agnosticism between route configuration/data fetching and components. This has an implicit benefit of reducing the barrier to entry for development; a static `getInitialProps` on a component has the potential to be extremely confusing to a beginner React developer who is still learning the ropes of the React lifecycle and ecosystem.
+This provides a clear seperation of concerns and agnosticism between route configuration/data fetching and components. Your React components are just React components, and you can swap components on routes as much as you please.
+
+This has an implicit benefit of reducing the barrier to entry for development for new React developers as the flow of data in the application is clear and defined.
 
 ##### `await getInitialProps(ctx): { data }`
-`getInitialProps` is an asynchronous function that is defined on the configuration of a route. It called is internally by uni when a route matches, and the returned data is passed as props to the route's defined component.
+`getInitialProps` is an asynchronous function that is defined on the configuration of a route. It called is internally by uni when a route matches, and the returned data is passed as props to the route's defined component. `getInitialProps` is optional.
 
 A `ctx` object is passed to `getInitialProps`, which includes:
 
-- `match`: React Router's [match](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/match.md) object
+- `match` - React Router's [match](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/match.md) object
 
 ```JavaScript
 // app/routes.js
@@ -112,7 +112,7 @@ export default Home;
 
 #### Parameterized Routing
 
-uni supports parameterized routing in React Router, and because `getInitialProps` is defined on the route it is a breeze.
+uni supports React Router's parameterized routing. As data-fetching is defined on the route, parameterized routing is a breeze, and can be handled very cleanly.
 
 ```JavaScript
 // app/routes.js
@@ -238,16 +238,16 @@ To re-hydrate your React application on the client, uni exposes a `hydrateClient
   hydrateClient(routes, clientWrapper);
 ```
 
-### Wrappers
-A wrapper is an asyncronhous higher-order component that extends the functionality of the main React application, usually through the integration of libraries or state management tools. There are two types of wrappers: `server` and `client`.
+### Plugging in libraries
+uni allows your to plugin libraries into the lifecycle of the uni application through providing interfaces known as wrappers. A wrapper is a higher-order component that extends the functionality of the main React application, usually through the integration of libraries or state management tools. There are two types of wrappers: `server` and `client`.
 
 #### Server
-A server wrapper is an asyncronhous HOC that is used, obviously, on a server-side render. An example use-case could be the creation of some inital state, styles, etc. This data can be injected into the `head` of the HTML Document on the server-side render, through the `getAdditionalHeadProps` function.
+A server wrapper is an asyncronhous HOC that is used on a server-side render only. An example use-case could be the creation of some inital state, styles, etc, which can be injected into the `head` of the HTML Document on the server-side render, through the `getAdditionalHeadProps` function.
 
 ##### `getAdditionalHeadProps: [data]`
 `getAdditionalHeadProps` is a synchronous function that is called after the React application has been rendered, but before it is injected into the main HTML document. It serves as a hatch for injecting additional props into the `head` of the document. 
 
-These props might be script tag containing initial JSON data. For these purposes, uni exposes a `ServerData` component, which serialises passed JSON data - pass the JSON in the `data` prop, and give it an `id`. This `id` can be used in the client wrapper to return the initial server-side fetched data.
+These props might be script tags containing initial JSON data. For these purposes, uni exposes a `ServerData` component, which serialises passed JSON data - pass the JSON in the `data` prop, and give it an `id`, which can be used in the client wrapper to return the initial server-side fetched data.
 
 ```JavaScript
 // ./wrappers/server.jsx
@@ -279,7 +279,7 @@ export default serverWrapper;
 **NOTE: Lexical Scope - the server wrapper and `getAdditionalHeadProps` functions must not be arrow functions if you wish to bind objects to `this`.**
 
 ### Client
-A client wrapper is a syncronhous HOC that wraps the main React application when it is being re-hydrated after it was server-side rendered. An example use-case could be wrapping the app in a state managaemnet library, and hydrating it with some initial state that was created on the server.
+A client wrapper is a syncronhous HOC that wraps the main React application when it is being hydrated on the client after it was rendered on the server. An example use-case could be wrapping the app in a state management library, and hydrating the client-side application with some initial state that was created on the server.
 
 ```JavaScript
 // ./wrappers/client.jsx
