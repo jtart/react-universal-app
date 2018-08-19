@@ -26,7 +26,7 @@ describe('Document', () => {
   it('should render correctly', () => {
     const doc = (
       <Document
-        additionalHeadProps={[
+        additionalHeadElements={[
           <style key="s-1" data-test-styles-one />,
           <style key="s-2" data-test-styles-two />,
         ]}

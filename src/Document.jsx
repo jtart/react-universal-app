@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import ServerData from './ServerData.jsx';
 import { Scripts, Root } from './Root.jsx';
 
-const Document = ({ additionalHeadProps, appHTML, data, scripts }) => {
+const Document = ({ additionalHeadElements, appHTML, data, scripts }) => {
   const helmet = Helmet.renderStatic();
 
   return (
@@ -13,7 +13,7 @@ const Document = ({ additionalHeadProps, appHTML, data, scripts }) => {
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
         {helmet.link.toComponent()}
-        {additionalHeadProps}
+        {additionalHeadElements}
       </head>
       <body {...helmet.bodyAttributes.toComponent()}>
         <Root html={appHTML} />

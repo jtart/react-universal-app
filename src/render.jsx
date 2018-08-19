@@ -18,15 +18,15 @@ async function renderApp(url, routes, data, withWrapper) {
     ),
   );
 
-  const additionalHeadProps = [];
+  const additionalHeadElements = [];
 
-  if (Object.hasOwnProperty.call(withWrapper, 'getAdditionalHeadProps')) {
-    const wrapperTags = withWrapper.getAdditionalHeadProps.call(this);
+  if (Object.hasOwnProperty.call(withWrapper, 'getAdditionalHeadElements')) {
+    const wrapperElements = withWrapper.getAdditionalHeadElements.call(this);
 
-    additionalHeadProps.push(...wrapperTags);
+    additionalHeadElements.push(...wrapperElements);
   }
 
-  return { appHTML, additionalHeadProps };
+  return { appHTML, additionalHeadElements };
 }
 
 async function render(url, routes, scripts, withWrapper = async App => App) {
@@ -38,7 +38,7 @@ async function render(url, routes, scripts, withWrapper = async App => App) {
 
   const data = await loadInitialProps(route, { match });
 
-  const { appHTML, additionalHeadProps } = await renderApp(
+  const { appHTML, additionalHeadElements } = await renderApp(
     url,
     routes,
     data,
@@ -47,7 +47,7 @@ async function render(url, routes, scripts, withWrapper = async App => App) {
 
   const html = renderToStaticMarkup(
     <Document
-      additionalHeadProps={additionalHeadProps}
+      additionalHeadElements={additionalHeadElements}
       appHTML={appHTML}
       data={data}
       scripts={scripts}
