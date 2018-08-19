@@ -10,11 +10,11 @@ uni is a tiny library that provides sensible interfaces for creating Universal R
 
 ## Philosophy
 
-uni aims to provide an agnosticism between routing/data-fetching and components. It defines data-fetching alongside route configuration, which provides a concise implementation and a clear seperation of concerns. This also reduces the barrier to entry for newer React developers. Your React components are just React components.
+**uni aims to provide an agnosticism between routing/data fetching and components.** It defines data fetching alongside route configuration, which provides a concise implementation and a clear seperation of concerns. This also reduces the barrier to entry for newer React developers. Your React components are just React components.
 
-uni aims to be unopinionated and flexible. It provides sensible interfaces for wrapping uni, which gives you the ability to plugin any library you want to extend your React application with comparate ease, and without feeling like you are overriding the core mechanics of uni.
+**uni aims to be unopinionated and flexible.** It doesn't make assumptions about where or how you will setup your application, and gives you the ability to plugin any library you want to extend your React application with comparate ease, and without feeling like you are overriding the core mechanics of uni.
 
-uni aims to be as small as possible. It provides just the right out of scaffolding needed to get your SPA with Universal React components out the door, without making a big impact on your bundle size.
+**uni aims to be as small as possible.** It provides just the right out of scaffolding needed to get your server-side rendered SPA with Universal React components out the door.
 
 ## Getting Started
 
@@ -30,7 +30,7 @@ npm install @jtart/uni react react-dom react-helmet
 
 ### App
 
-The following gives information on how to setup routing and data fetching in the main React application. Once you have setup your routes, you can pass them to the client and server uni APIs. 
+The following gives information on how to setup routing and data fetching in the main React application. Once you have setup your routes, you can pass them to APIs that uni provides for server-side rendering and client-side hydration.
 
 #### Routing
 
@@ -66,14 +66,14 @@ const Home = () => (
 export default Home;
 ```
 
-##### Data Fetching
-Similar to other libraries, uni utilises a `getInitialProps` function for data-fetching on the route component. However in contrast to other libraries, `getInitialProps` is defined in the route configuration, not the component.
+#### Data Fetching
+uni provides a very familiar `getInitialProps` for data fetching, which is defined in the route configuration.
 
 This provides a clear seperation of concerns and agnosticism between route configuration/data fetching and components. Your React components are just React components, and you can swap components on routes as much as you please.
 
 This has an implicit benefit of reducing the barrier to entry for development for new React developers as the flow of data in the application is clear and defined.
 
-###### `await getInitialProps(ctx): { data }`
+##### `await getInitialProps(ctx): { data }`
 `getInitialProps` is an asynchronous function that is defined on the configuration of a route. It called is internally by uni when a route matches, and the returned data is passed as props to the route's defined component. `getInitialProps` is optional.
 
 A `ctx` object is passed to `getInitialProps`, which includes:
@@ -112,7 +112,7 @@ export default Home;
 
 #### Parameterized Routing
 
-uni supports React Router's parameterized routing. As data-fetching is defined on the route, parameterized routing is a breeze, and can be handled very cleanly.
+uni supports React Router's parameterized routing. As data fetching is defined on the route, parameterized routing is a breeze, and can be handled very cleanly.
 
 ```JavaScript
 // app/routes.js
@@ -158,7 +158,7 @@ export default Home;
 ```
 
 #### Managing the document head
-uni delegates to [react-helmet](https://github.com/nfl/react-helmet) for managing the head tags of the document. uni manages the render and injection of react-helmet head tags on the server, so all you need to do is create the tags!
+uni delegates to [react-helmet](https://github.com/nfl/react-helmet) for managing the head elements of the document. uni manages the render and injection of react-helmet head elements on the server, so all you need to do is create the elements!
 
 ```JavaScript
 // app/components/Home.js
@@ -188,16 +188,16 @@ export default Home;
 
 ### Server
 
-To render your app on a server, uni exposes a `render` function.
+uni doesn't make assumptions about what your server setup will look like, and which gives you the power to setup as you please. It provides you with a single API for the server, `render`, which will return a statusCode and HTML.
 
 #### `await render(url, routes, scripts, ?serverWrapper): { statusCode, html }`
-`render` is an asynchronous function that will render your React application and return you a status code and HTML, for you to do with as you wish.
+`render` is an asynchronous function that will render your React application and return a status code and HTML. If uni fails to render, a status code and `null` HTML will be returned.
 
 `render` accepts the following arguments:
 - `url` - a [Node.JS HTTP URL-like object](https://nodejs.org/api/http.html#http_message_url)
 - `routes` - an array of React Router routes
-- `scripts` - an array of URLs that that will be used to create deferred script tags. These scripts likely contain a client-side bundle of the React application, but don't have to be
-- `?serverWrapper` - an optional HOC that wraps the React application in the server-side render. See [wrappers](#wrappers) for more information
+- `scripts` - an array of URLs that that will be used to create deferred script elements, injected below the main body of the page. These scripts likely contain a client-side bundle of the React application, but don't have to
+- `?serverWrapper` - an optional HOC that wraps the React application in the server-side render. See [plugging in libraries](#plugging-in-libraries) for more information on wrappers
 
 ```JavaScript
   // server.js
@@ -219,14 +219,14 @@ To render your app on a server, uni exposes a `render` function.
 
 ### Client
 
-To re-hydrate your React application on the client, uni exposes a `hydrateClient` function.
+To hydrate your React application on the client, uni exposes a `hydrateClient` function. Hydration will take data that was used on the server for the server-side render, and inject it as initial data into the client-side React application.
 
 #### `hydrateClient(routes, ?clientWrapper)`
-`hydrateClient` is a synchronous function that will re-hydrate your React application that was rendered on the server by `render`. `hydrateClient` is optional if you don't want to build a single-page application.
+`hydrateClient` is a synchronous function that will hydrate your React application that was rendered on the server by `render`. `hydrateClient` is optional if you don't want to build a single-page application.
 
 `hydrateClient` accepts the following arguments:
 - `routes` - an array of React Router routes
-- `?clientWrapper` - an optional HOC that wraps the client-side React application. See [wrappers](#wrappers) for more information
+- `?clientWrapper` - an optional HOC that wraps the client-side React application. See [plugging in libraries](#plugging-in-libraries) for more information on wrappers
 
 ```JavaScript
   // client.js
@@ -239,17 +239,17 @@ To re-hydrate your React application on the client, uni exposes a `hydrateClient
 ```
 
 ### Plugging in libraries
-uni allows your to plugin libraries into the lifecycle of the uni application through providing interfaces known as wrappers. A wrapper is a higher-order component that extends the functionality of the main React application, usually through the integration of libraries or state management tools. There are two types of wrappers: `server` and `client`.
+uni allows you to plugin libraries into the lifecycle of the uni application through interfaces known as `wrappers`. A wrapper is a higher-order component that extends the functionality of the main React application, usually through the integration of libraries or state management tools. There are two types of wrappers: `server` and `client`.
 
 #### Server
-A server wrapper is an asyncronhous HOC that is used on a server-side render only. An example use-case could be the creation of some inital state, styles, etc, which can be injected into the `head` of the HTML Document on the server-side render, through the `getAdditionalHeadProps` function.
+A server wrapper is an asynchronous HOC that is used on a server-side render. An example use-case could be the creation of some inital state, styles, etc, which can be injected into the `head` of the HTML Document on the server-side render, through the `getAdditionalHeadProps` function.
 
 ##### `getAdditionalHeadProps: [data]`
 `getAdditionalHeadProps` is a synchronous function that is called after the React application has been rendered, but before it is injected into the main HTML document.
 
-These props might be script tags containing initial JSON data. For these purposes, uni exposes a `ServerData` component, which serialises passed JSON data - pass the JSON in the `data` prop, and give it an `id`, which can be used in the client wrapper to return the initial server-side fetched data.
+`getAdditionalHeadProps` serves as an optional escape hatch for injecting additional elements into the `head` of the document that are generated within the server wrapper. For most head elements, you should see [managing the docunent head](#managing-the-document-head).
 
-`getAdditionalHeadProps` serves as an optional escape hatch for injecting additional props into the `head` of the document that are generated within the server wrapper. For most head tags, you should see [managing the docunent head](#managing-the-document-head).
+These elements might be script elements containing initial JSON data. For these purposes, uni exposes a `ServerData` component, which serialises passed JSON data - pass the JSON in the `data` prop, and give it an `id`, which can be used in the client wrapper to return the initial server-side fetched data.
 
 ```JavaScript
 // ./wrappers/server.jsx
@@ -278,10 +278,10 @@ serverWrapper.getAdditionalHeadProps = function() {
 export default serverWrapper;
 ```
 
-**NOTE: Lexical Scope - the server wrapper and `getAdditionalHeadProps` functions must not be arrow functions if you wish to bind objects to `this`.**
+**NOTE: the server wrapper and `getAdditionalHeadProps` functions must not be arrow functions if you wish to bind objects to `this`.**
 
 ### Client
-A client wrapper is a syncronhous HOC that wraps the main React application when it is being hydrated on the client after it was rendered on the server. An example use-case could be wrapping the app in a state management library, and hydrating the client-side application with some initial state that was created on the server.
+A client wrapper is a synchronous HOC that wraps the main React application when it is being hydrated on the client, after it was rendered on the server. An example use-case could be wrapping the app in a state management library, and hydrating the client-side application with some initial state that was created on the server.
 
 ```JavaScript
 // ./wrappers/client.jsx
