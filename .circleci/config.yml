@@ -17,4 +17,4 @@ jobs:
             - ./node_modules
       - run:
           name: Run tests
-          command: npm run test:ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+          command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
