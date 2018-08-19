@@ -1,12 +1,5 @@
 import getRouteAndMatch from './getRouteAndMatch';
-
-const mockMatch = { match: 'yay!' };
-
-jest.mock('react-router-dom', () => ({
-  matchPath: jest
-    .fn()
-    .mockImplementation((url, route) => (url === route ? mockMatch : false)),
-}));
+import * as reactRouterConfig from 'react-router-config';
 
 const getRouteAndMatchTest = (mockURL, expectedResult) => {
   expect(getRouteAndMatch(mockURL, ['urlOne', 'urlTwo', 'urlThree'])).toEqual(
@@ -16,20 +9,21 @@ const getRouteAndMatchTest = (mockURL, expectedResult) => {
 
 describe('getRouteAndMatch', () => {
   describe('matched route', () => {
-    it('should return an object containing route and match', () => {
-      const mockURL = 'urlTwo';
+    it('should return first returned item', () => {
+      const match = { match: true };
+      reactRouterConfig.matchRoutes = jest
+        .fn()
+        .mockReturnValue([match, { match: false }]);
 
-      const expectedResult = { match: mockMatch, route: mockURL };
-
-      getRouteAndMatchTest(mockURL, expectedResult);
+      getRouteAndMatchTest('urlTwo', { match: true });
     });
   });
 
   describe('no matched route', () => {
     it('should return an empty object', () => {
-      const expectedResult = {};
+      reactRouterConfig.matchRoutes = jest.fn().mockReturnValue([]);
 
-      getRouteAndMatchTest('urlFour', expectedResult);
+      getRouteAndMatchTest('urlFour', {});
     });
   });
 });
