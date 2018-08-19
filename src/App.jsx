@@ -9,7 +9,12 @@ export class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: this.props.initialData };
+    this.state = {
+      data: this.props.initialData,
+      loading: false,
+      error: null,
+      loadInitialPropsPromise: null,
+    };
   }
 
   async componentDidUpdate({ location: prevLocation }) {
@@ -20,20 +25,42 @@ export class App extends Component {
       );
 
       if (route) {
-        try {
-          const data = await loadInitialProps(route, {
+        this.setState({
+          data: null,
+          loading: true,
+          error: null,
+          loadInitialPropsPromise: loadInitialProps(route, {
             match,
-          });
-          this.setState({ data });
-        } catch (error) {
-          console.log(error);
-        }
+          }),
+        });
+      }
+    }
+
+    if (this.state.loading) {
+      try {
+        const data = await this.state.loadInitialPropsPromise;
+        this.setState({
+          data,
+          loading: false,
+          error: null,
+          loadInitialPropsPromise: null,
+        });
+      } catch (error) {
+        this.setState({
+          loading: false,
+          error: error,
+          loadInitialPropsPromise: null,
+        });
       }
     }
   }
 
   render() {
-    return renderRoutes(this.props.routes, { ...this.state.data });
+    return renderRoutes(this.props.routes, {
+      data: this.state.data,
+      loading: this.state.loading,
+      error: this.state.error,
+    });
   }
 }
 
