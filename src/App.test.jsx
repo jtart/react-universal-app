@@ -33,10 +33,11 @@ describe('App', () => {
     expect(getRouteAndMatchSpy).not.toHaveBeenCalled();
     expect(loadInitialPropsSpy).not.toHaveBeenCalled();
     expect(reactRouterConfig.renderRoutes).toHaveBeenCalledTimes(1);
-    expect(reactRouterConfig.renderRoutes).toHaveBeenCalledWith(
-      [],
-      initialData,
-    );
+    expect(reactRouterConfig.renderRoutes).toHaveBeenCalledWith([], {
+      data: initialData,
+      error: null,
+      loading: false,
+    });
     expect(wrapper).toMatchSnapshot();
   });
 
