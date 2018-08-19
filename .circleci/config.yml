@@ -16,8 +16,6 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          shell: /bin/bash -o pipefail
           name: Run tests
           command: npm run test:ci
-      - run:
-          name: Collect test coverage
-          command: npm run coveralls
