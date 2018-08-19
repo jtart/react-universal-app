@@ -10,11 +10,19 @@ uni is a tiny library that provides sensible interfaces for creating Universal R
 
 ## Philosophy
 
-**uni aims to provide an agnosticism between routing/data fetching and components.** It defines data fetching alongside route configuration, which provides a concise implementation and a clear seperation of concerns. This also reduces the barrier to entry for newer React developers. Your React components are just React components.
+**uni aims to provide an agnosticism between routing/data fetching and components.**
 
-**uni aims to be unopinionated and flexible.** It doesn't make assumptions about where or how you will setup your application, and gives you the ability to plugin any library you want to extend your React application with comparate ease, and without feeling like you are overriding the core mechanics of uni.
+It defines data fetching alongside route configuration, which provides a concise implementation and a clear seperation of concerns. This also reduces the barrier to entry for newer React developers. Your React components are just React components.
 
-**uni aims to be as small as possible.** It provides just the right out of scaffolding needed to get your server-side rendered SPA with Universal React components out the door.
+**uni aims to be unopinionated and flexible where it matters.**
+
+It does make assumptions on some things, i.e. `react-router` for routing, `react-helmet` for document head management, but these assumptions only follow best and common practices that are followed in the wider React ecosystem. 
+
+Most importantly, it doesn't make assumptions where it matters. It allows you to setup your application as you please, and gives you the ability to plugin code to extend your React application with comparate ease, and without feeling like you are overriding the core mechanics of uni.
+
+**uni aims to be as small as possible.**
+
+It provides just the right out of scaffolding needed to get your server-side rendered SPA with Universal React components out the door, without making a big impact on your bundle size.
 
 ## Getting Started
 
@@ -36,7 +44,7 @@ The following gives information on how to setup routing and data fetching in the
 
 uni uses React Router 4, which is a great foundation for serving pages as components and providing route configuration. To define your routes, create some [route configuration](https://www.npmjs.com/package/react-router-config#route-configuration-shape) and export them.
 
-Note: uni currently only supports a single top-level of routing.
+Note: uni currently only supports a single top-level of routing, and does not support redirects.
 
 ```JavaScript
 // app/routes.js
@@ -48,7 +56,6 @@ const routes = [
     exact: true,
     component: Home,
   },
-  ...
 ];
 
 export default routes;
@@ -67,6 +74,7 @@ export default Home;
 ```
 
 #### Data Fetching
+
 uni provides a very familiar `getInitialProps` for data fetching, which is defined in the route configuration.
 
 This provides a clear seperation of concerns and agnosticism between route configuration/data fetching and components. Your React components are just React components, and you can swap components on routes as much as you please.
@@ -74,6 +82,7 @@ This provides a clear seperation of concerns and agnosticism between route confi
 This has an implicit benefit of reducing the barrier to entry for development for new React developers as the flow of data in the application is clear and defined.
 
 ##### `await getInitialProps(ctx): { data }`
+
 `getInitialProps` is an asynchronous function that is defined on the configuration of a route. It called is internally by uni when a route matches, and the returned data is passed as props to the route's defined component. `getInitialProps` is optional.
 
 A `ctx` object is passed to `getInitialProps`, which includes:
@@ -86,13 +95,13 @@ import Home from 'components/Home';
 
 const routes = [
   {
-    ...
+    path: '/',
+    exact: true,
+    component: Home,
     getInitialProps: await (ctx) => {
       return { title: 'Home!' };;
     },
-    ...
   },
-  ...
 ];
 
 export default routes;
@@ -112,7 +121,7 @@ export default Home;
 
 #### Parameterized Routing
 
-uni supports React Router's parameterized routing. As data fetching is defined on the route, parameterized routing is a breeze, and can be handled very cleanly.
+uni supports parameterized routing from `react-router`. As data fetching is defined on the route, parameterized routing is a breeze, and can be handled very cleanly.
 
 ```JavaScript
 // app/routes.js
@@ -122,6 +131,7 @@ const routes = [
   {
     path: '/:id',
     exact: true,
+    component: Home,
     getInitialProps: await ({ match }) => {
       const { id } = match.params;
       const response = await fetch(`/someApi/${id}`);
@@ -129,9 +139,7 @@ const routes = [
       
       return { title: 'Home!', data };;
     },
-    ...
   },
-  ...
 ];
 
 export default routes;
@@ -157,8 +165,38 @@ const Home = ({ title }) => (
 export default Home;
 ```
 
+#### Links
+
+uni provides a wrapper around [`react-router-dom`'s `Link` component](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/Link.md#link) for navigation around your application.
+
+```JavaScript
+// app/components/Home.js
+
+import { Link } from '@jtart/uni';
+
+const Home = ({ title }) => (
+  <div>
+    <h1>{title}</h1>
+    {
+      data.map(({ title, description }) => (
+        <div>
+          <h2>{title}</h2>
+          <p>{description}</p>
+        </div>
+      )
+    }
+    <Link to='/another-page'>Another page</Link>
+  </div>
+)
+
+export default Home;
+```
+
+In the example above, the path in the `Link` matches the route defined above in [Parameterized Routing](#parameterized-routing). Internally uni will call `getInitialProps` on that route with the `another-page` id param.
+
 #### Managing the document head
-uni delegates to [react-helmet](https://github.com/nfl/react-helmet) for managing the head elements of the document. uni manages the render and injection of react-helmet head elements on the server, so all you need to do is create the elements!
+
+uni delegates to [`react-helmet`](https://github.com/nfl/react-helmet) for managing the head elements of the document. uni manages server-side render and injection of `react-helmet` head elements, so all you need to do is create the elements! `react-helmet` magic will take care of all client-side head management.
 
 ```JavaScript
 // app/components/Home.js
@@ -191,6 +229,7 @@ export default Home;
 uni doesn't make assumptions about what your server setup will look like, and which gives you the power to setup as you please. It provides you with a single API for the server, `render`, which will return a statusCode and HTML.
 
 #### `await render(url, routes, scripts, ?serverWrapper): { statusCode, html }`
+
 `render` is an asynchronous function that will render your React application and return a status code and HTML. If uni fails to render, a status code and `null` HTML will be returned.
 
 `render` accepts the following arguments:
@@ -239,12 +278,15 @@ To hydrate your React application on the client, uni exposes a `hydrateClient` f
 ```
 
 ### Plugging in libraries
+
 uni allows you to plugin libraries into the lifecycle of the uni application through interfaces known as `wrappers`. A wrapper is a higher-order component that extends the functionality of the main React application, usually through the integration of libraries or state management tools. There are two types of wrappers: `server` and `client`.
 
 #### Server
+
 A server wrapper is an asynchronous HOC that is used on a server-side render. An example use-case could be the creation of some inital state, styles, etc, which can be injected into the `head` of the HTML Document on the server-side render, through the `getAdditionalHeadProps` function.
 
 ##### `getAdditionalHeadProps: [data]`
+
 `getAdditionalHeadProps` is a synchronous function that is called after the React application has been rendered, but before it is injected into the main HTML document.
 
 `getAdditionalHeadProps` serves as an optional escape hatch for injecting additional elements into the `head` of the document that are generated within the server wrapper. For most head elements, you should see [managing the docunent head](#managing-the-document-head).
@@ -281,6 +323,7 @@ export default serverWrapper;
 **NOTE: the server wrapper and `getAdditionalHeadProps` functions must not be arrow functions if you wish to bind objects to `this`.**
 
 ### Client
+
 A client wrapper is a synchronous HOC that wraps the main React application when it is being hydrated on the client, after it was rendered on the server. An example use-case could be wrapping the app in a state management library, and hydrating the client-side application with some initial state that was created on the server.
 
 ```JavaScript
