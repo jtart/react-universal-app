@@ -10,9 +10,9 @@ export class App extends Component {
     super(props);
 
     this.state = {
-      data: this.props.initialData,
+      data: this.props.initialData || null,
       loading: false,
-      error: null,
+      error: this.props.error || null,
       loadInitialPropsPromise: null,
     };
   }
