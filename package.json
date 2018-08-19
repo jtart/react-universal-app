@@ -17,9 +17,10 @@
     "integration:start": "cd integration && npm run build && npm run start",
     "prepare": "npm run build",
     "test:unit": "jest --watch",
-    "test:unit:ci": "jest --ci --coverage --coverageReporters=text-lcov | coveralls",
+    "test:unit:ci": "jest --ci --coverage --coverageReporters=text-lcov",
     "test": "npm run test:unit",
     "test:ci": "npm run test:unit:ci",
+    "coveralls": "coveralls",
     "test:e2e": "concurrently -k -n \"APP,CYPRESS\" -c \"red,blue\" \"npm run integration:start\" \"npm run wait-for-3000 && npm run cypress\" --success first",
     "test:e2e:interactive": "concurrently -k -n \"APP,CYPRESS\" -c \"red,blue\" \"npm run integration:start\" \"npm run wait-for-3000 && npm run cypress:interactive\"",
     "wait-for-3000": "wait-on http://localhost:3000"
