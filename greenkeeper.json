@@ -3,8 +3,17 @@
     "uni": {
       "packages": ["package.json"]
     },
-    "example": {
-      "packages": ["example/package.json"]
+    "integration": {
+      "packages": ["integration/package.json"]
+    },
+    "example-basic": {
+      "packages": ["examples/basic/package.json"]
+    },
+    "example-with-apollo": {
+      "packages": ["examples/with-apollo/package.json"]
+    },
+    "example-with-styled-components": {
+      "packages": ["examples/with-styled-components/package.json"]
     }
   }
 }
