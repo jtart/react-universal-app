@@ -7,7 +7,6 @@ export default async function(
   url,
   routes,
   data,
-  error,
   withWrapper = async App => App,
 ) {
   let app;
@@ -16,11 +15,11 @@ export default async function(
     app = await withWrapper.call(
       this,
       <StaticRouter location={url} context={{}}>
-        <App initialData={data} error={error} routes={routes} />
+        <App initialData={data} routes={routes} />
       </StaticRouter>,
     );
   } catch (error) {
-    return { error };
+    throw error;
   }
 
   const appHTML = renderToString(app);

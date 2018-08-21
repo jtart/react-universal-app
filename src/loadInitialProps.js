@@ -6,7 +6,7 @@ const loadInitialProps = async (route, ctx) => {
   try {
     return await route.getInitialProps(ctx);
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 

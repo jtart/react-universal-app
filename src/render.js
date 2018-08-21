@@ -11,17 +11,12 @@ export default async function(url, routes, scripts, withWrapper = null) {
   }
 
   let data = null;
-  let error = null;
+  let renderedApp;
   try {
     data = await loadInitialProps(route, { match });
+    renderedApp = await renderApp(url, routes, data, withWrapper);
   } catch (error) {
-    error = error;
-  }
-
-  const renderedApp = await renderApp(url, routes, data, error, withWrapper);
-
-  if (renderedApp.error) {
-    return { statusCode: 500, error: renderedApp.error };
+    return { statusCode: 500, error };
   }
 
   const html = createDocument(
