@@ -12,17 +12,16 @@ server
   .get('/*', async ({ url }, res) => {
     const scripts = [assets.client.js];
 
-    const { statusCode, html } = await render(
-      url,
-      routes,
-      scripts,
-      serverWrapper,
-    );
-
-    if (typeof html === undefined || html === null) {
-      res.sendStatus(statusCode);
-    } else {
+    try {
+      const { statusCode, html } = await render(
+        url,
+        routes,
+        scripts,
+        serverWrapper,
+      );
       res.status(statusCode).send(html);
+    } catch (error) {
+      res.sendStatus(404);
     }
   });
 
