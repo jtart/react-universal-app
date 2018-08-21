@@ -6,11 +6,17 @@ const StyledHeadline = styled.h1`
   color: red;
 `;
 
-const StyledComponents = ({ link }) => (
-  <div>
-    <StyledHeadline>Styled Components</StyledHeadline>
-    <Link to={link.to}>{link.text}</Link>
-  </div>
-);
+const StyledComponents = ({ loading, error, data }) => {
+  if (loading) return 'Loading!';
+  if (error) return 'Error';
+  if (data) {
+    return (
+      <div>
+        <StyledHeadline>Styled Components</StyledHeadline>
+        <Link to={data.link.to}>{data.link.text}</Link>
+      </div>
+    );
+  }
+};
 
 export default StyledComponents;

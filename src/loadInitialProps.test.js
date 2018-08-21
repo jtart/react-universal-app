@@ -11,16 +11,34 @@ describe('loadInitialProps', () => {
 
   describe('getInitialProps function on route', () => {
     it('should call getInitialProps with passed ctx and return value', async () => {
-      const returnedValue = 'Some data!';
-
       const route = {
-        getInitialProps: jest.fn().mockImplementation(ctx => ctx),
-      }
+        getInitialProps: jest
+          .fn()
+          .mockImplementation(() => Promise.resolve('Some data!')),
+      };
 
-      const initialProps = await loadInitialProps(route, returnedValue);
+      const initialProps = await loadInitialProps(route, {});
 
       expect(route.getInitialProps).toHaveBeenCalledTimes(1);
-      expect(initialProps).toEqual(returnedValue);
+      expect(initialProps).toEqual('Some data!');
+    });
+
+    describe('error on getInitialProps call', () => {
+      it('should throw an error', async () => {
+        const route = {
+          getInitialProps: jest
+            .fn()
+            .mockImplementation(() => Promise.reject('Error!')),
+        };
+
+        try {
+          await loadInitialProps(route, {});
+        } catch (error) {
+          expect(error).toEqual('Error!');
+        }
+
+        expect(route.getInitialProps).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

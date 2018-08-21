@@ -9,14 +9,28 @@ export default async function(
   data,
   withWrapper = async App => App,
 ) {
-  const appHTML = renderToString(
-    await withWrapper.call(
+  let app;
+
+  try {
+    app = await withWrapper.call(
       this,
       <StaticRouter location={url} context={{}}>
         <App initialData={data} routes={routes} />
       </StaticRouter>,
-    ),
-  );
+    );
+  } catch (error) {
+    throw error;
+  }
+
+  const appHTML = renderToString(app);
+
+  if (
+    typeof appHTML === 'undefined' ||
+    appHTML === null ||
+    appHTML.length === 0
+  ) {
+    throw new Error(`No HTML rendered for ${url}.`);
+  }
 
   const additionalHeadElements = [];
 

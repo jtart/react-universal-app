@@ -12,14 +12,17 @@ server
   .get('/*', async ({ url }, res) => {
     const scripts = [assets.client.js];
 
-    const { statusCode, html } = await render(
-      url,
-      routes,
-      scripts,
-      serverWrapper,
-    );
-
-    res.status(statusCode).send(html);
+    try {
+      const { statusCode, html } = await render(
+        url,
+        routes,
+        scripts,
+        serverWrapper,
+      );
+      res.status(statusCode).send(html);
+    } catch (error) {
+      res.sendStatus(404);
+    }
   });
 
 export default server;

@@ -33,10 +33,11 @@ describe('App', () => {
     expect(getRouteAndMatchSpy).not.toHaveBeenCalled();
     expect(loadInitialPropsSpy).not.toHaveBeenCalled();
     expect(reactRouterConfig.renderRoutes).toHaveBeenCalledTimes(1);
-    expect(reactRouterConfig.renderRoutes).toHaveBeenCalledWith(
-      [],
-      initialData,
-    );
+    expect(reactRouterConfig.renderRoutes).toHaveBeenCalledWith([], {
+      data: initialData,
+      error: null,
+      loading: false,
+    });
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -69,9 +70,8 @@ describe('App', () => {
       });
 
       describe('rejected loadInitialProps', () => {
-        it('should console log the error', async () => {
+        it('should set state to the error', async () => {
           const error = 'Error!';
-          spyOn(global.console, 'log');
 
           getRouteAndMatch.default = jest
             .fn()
@@ -84,9 +84,27 @@ describe('App', () => {
 
           await loadInitialProps.default;
 
-          expect.assertions(2);
-          expect(global.console.log).toBeCalledWith(error);
-          expect(setStateSpy).not.toBeCalled();
+          expect.assertions(3);
+
+          // why is state being called 3 times?
+          expect(setStateSpy).toHaveBeenNthCalledWith(1, {
+            data: null,
+            error: null,
+            loadInitialPropsPromise: expect.any(Promise),
+            loading: true,
+          });
+
+          expect(setStateSpy).toHaveBeenNthCalledWith(2, {
+            error,
+            loadInitialPropsPromise: null,
+            loading: false,
+          });
+
+          expect(setStateSpy).toHaveBeenNthCalledWith(2, {
+            error,
+            loadInitialPropsPromise: null,
+            loading: false,
+          });
         });
       });
 
@@ -108,11 +126,33 @@ describe('App', () => {
 
           await loadInitialProps.default;
 
-          expect.assertions(2);
+          expect.assertions(4);
+
           expect(loadInitialProps.default).toHaveBeenCalledWith(route, {
             match,
           });
-          expect(setStateSpy).toBeCalledWith({ data });
+
+          // why is state being called 3 times?
+          expect(setStateSpy).toHaveBeenNthCalledWith(4, {
+            data: null,
+            error: null,
+            loadInitialPropsPromise: expect.any(Promise),
+            loading: true,
+          });
+
+          expect(setStateSpy).toHaveBeenNthCalledWith(5, {
+            data,
+            error: null,
+            loadInitialPropsPromise: null,
+            loading: false,
+          });
+
+          expect(setStateSpy).toHaveBeenNthCalledWith(6, {
+            data,
+            error: null,
+            loadInitialPropsPromise: null,
+            loading: false,
+          });
         });
       });
     });

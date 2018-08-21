@@ -7,19 +7,24 @@ export default async function(url, routes, scripts, withWrapper = null) {
   const { route, match } = getRouteAndMatch(url, routes);
 
   if (!route) {
-    return { statusCode: 404, html: null };
+    throw new Error(`No route was found for ${url}.`);
   }
 
-  const data = await loadInitialProps(route, { match });
+  let data = null;
+  let renderedApp;
+  try {
+    data = await loadInitialProps(route, { match });
+    renderedApp = await renderApp(url, routes, data, withWrapper);
+  } catch (error) {
+    throw error;
+  }
 
-  const { appHTML, additionalHeadElements } = await renderApp(
-    url,
-    routes,
+  const html = createDocument(
+    renderedApp.appHTML,
     data,
-    withWrapper,
+    scripts,
+    renderedApp.additionalHeadElements,
   );
-
-  const html = createDocument(appHTML, data, scripts, additionalHeadElements);
 
   return { statusCode: 200, html };
 }
