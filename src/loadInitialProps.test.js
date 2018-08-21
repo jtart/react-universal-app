@@ -24,17 +24,20 @@ describe('loadInitialProps', () => {
     });
 
     describe('error on getInitialProps call', () => {
-      it('should return error', async () => {
+      it('should throw an error', async () => {
         const route = {
           getInitialProps: jest
             .fn()
             .mockImplementation(() => Promise.reject('Error!')),
         };
 
-        const initialProps = await loadInitialProps(route, {});
+        try {
+          await loadInitialProps(route, {});
+        } catch (error) {
+          expect(error).toEqual('Error!');
+        }
 
         expect(route.getInitialProps).toHaveBeenCalledTimes(1);
-        expect(initialProps).toEqual('Error!');
       });
     });
   });
