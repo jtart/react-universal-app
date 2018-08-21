@@ -7,7 +7,7 @@ export default async function(url, routes, scripts, withWrapper = null) {
   const { route, match } = getRouteAndMatch(url, routes);
 
   if (!route) {
-    return { statusCode: 404, html: null };
+    throw new Error(`No route was found for ${url}.`);
   }
 
   let data = null;
@@ -16,7 +16,7 @@ export default async function(url, routes, scripts, withWrapper = null) {
     data = await loadInitialProps(route, { match });
     renderedApp = await renderApp(url, routes, data, withWrapper);
   } catch (error) {
-    return { statusCode: 500, error };
+    throw error;
   }
 
   const html = createDocument(

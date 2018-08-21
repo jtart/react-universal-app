@@ -24,6 +24,14 @@ export default async function(
 
   const appHTML = renderToString(app);
 
+  if (
+    typeof appHTML === 'undefined' ||
+    appHTML === null ||
+    appHTML.length === 0
+  ) {
+    throw new Error(`No HTML rendered for ${url}.`);
+  }
+
   const additionalHeadElements = [];
 
   if (Object.hasOwnProperty.call(withWrapper, 'getAdditionalHeadElements')) {
