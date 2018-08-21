@@ -19,7 +19,11 @@ server
       serverWrapper,
     );
 
-    res.status(statusCode).send(html);
+    if (typeof html === undefined || html === null) {
+      res.sendStatus(statusCode);
+    } else {
+      res.status(statusCode).send(html);
+    }
   });
 
 export default server;
