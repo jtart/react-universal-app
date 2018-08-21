@@ -8,8 +8,8 @@ import hydrateClient from './hydrateClient';
 reactDom.hydrate = jest.fn();
 
 const mockSpan = document.createElement('span');
-mockSpan.textContent = '{"data":"Data!"}';
 global.window.document.getElementById = jest.fn().mockReturnValue(mockSpan);
+global.window.__UNI_DATA__ = { data: 'Data!' };
 
 describe('hydrateClient', () => {
   describe('with no passed wrapper', () => {
@@ -18,7 +18,7 @@ describe('hydrateClient', () => {
 
       expect(reactDom.hydrate).toHaveBeenCalledWith(
         <BrowserRouter>
-          <App routes={['routes']} initialData={{ data: 'Data!' }} />
+          <App routes={['routes']} initialData={global.window.__UNI_DATA__} />
         </BrowserRouter>,
         mockSpan,
       );
