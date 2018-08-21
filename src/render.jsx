@@ -1,12 +1,12 @@
 import React from 'react';
-import { renderToString, renderToStaticMarkup } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
 import getRouteAndMatch from './getRouteAndMatch.js';
 import loadInitialProps from './loadInitialProps.js';
 
 import App from './App.jsx';
-import Document from './Document.jsx';
+import createDocument from './createDocument.js';
 
 async function renderApp(url, routes, data, withWrapper) {
   const appHTML = renderToString(
@@ -45,14 +45,7 @@ async function render(url, routes, scripts, withWrapper = async App => App) {
     withWrapper,
   );
 
-  const html = renderToStaticMarkup(
-    <Document
-      additionalHeadElements={additionalHeadElements}
-      appHTML={appHTML}
-      data={data}
-      scripts={scripts}
-    />,
-  );
+  const html = createDocument(appHTML, data, scripts, additionalHeadElements);
 
   return { statusCode: 200, html };
 }

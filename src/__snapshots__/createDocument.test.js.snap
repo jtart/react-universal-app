@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createDocument should render correctly a string containing a HTML document 1`] = `
+"
+    <!DOCTYPE html>
+    <html>
+      <head function() {
+        return fn.apply(this, arguments);
+      }>
+        function() {
+        return fn.apply(this, arguments);
+      }
+        function() {
+        return fn.apply(this, arguments);
+      }
+        function() {
+        return fn.apply(this, arguments);
+      }
+        <style key=\\"s-1\\" data-test-styles-one /><style key=\\"s-2\\" data-test-styles-two />
+      </head>
+      <body function() {
+        return fn.apply(this, arguments);
+      }>
+        <div id=\\"__uni__\\"><h1>This is some html</h1></div>
+        <script>window.__UNI_DATA__ = {\\"data\\":\\"This is some data!\\"}</script>
+        <script src=\\"https://example.com/one.js\\" defer></script><script src=\\"https://example.com/two.js\\" defer></script>
+      </body>
+    </html>
+  "
+`;
