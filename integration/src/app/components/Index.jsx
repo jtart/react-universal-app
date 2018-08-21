@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { Link } from '@jtart/uni';
+import { Link } from 'react-router-dom';
 
 const Index = ({ loading, error, data }) => {
   if (loading) return 'Loading!';

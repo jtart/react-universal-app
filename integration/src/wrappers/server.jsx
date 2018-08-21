@@ -4,7 +4,6 @@ import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ServerData } from '@jtart/uni';
 import fetch from 'node-fetch';
 
 async function serverWrapper(App) {
@@ -35,11 +34,18 @@ async function serverWrapper(App) {
 }
 
 serverWrapper.getAdditionalHeadElements = function() {
-  const styles = this.sheet.getStyleElement();
+  const styles = this.sheet.getStyleTags();
 
   const initialApolloData = this.client.extract();
+  const serialisedData = JSON.stringify(initialApolloData).replace(
+    /</g,
+    '\\u003c',
+  );
 
-  return [styles, <ServerData id="__APOLLO_DATA__" data={initialApolloData} />];
+  return [
+    ...styles,
+    `<script>window.__APOLLO_DATA__ = ${serialisedData}</script>`,
+  ];
 };
 
 export default serverWrapper;

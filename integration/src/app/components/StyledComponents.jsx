@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from '@jtart/uni';
+import { Link } from 'react-router-dom';
 
 const StyledHeadline = styled.h1`
   color: red;

@@ -5,14 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 
 const hydrateClient = (routes, withWrapper = App => App) => {
-  const data = JSON.parse(
-    window.document.getElementById('__UNI_DATA__').textContent,
-  );
-
   hydrate(
     withWrapper(
       <BrowserRouter>
-        <App routes={routes} initialData={data} />
+        <App routes={routes} initialData={window.__UNI_DATA__} />
       </BrowserRouter>,
     ),
     document.getElementById('__uni__'),
