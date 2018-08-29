@@ -3,6 +3,7 @@ describe('Server', () => {
     it('should return HTML', () => {
       cy.visit('/');
       cy.get('h1').should('contain', 'Index');
+      cy.title().should('contain', 'Index');
     });
   });
 

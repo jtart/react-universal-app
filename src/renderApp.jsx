@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './App.jsx';
 
 export default async function(
@@ -11,12 +12,16 @@ export default async function(
 ) {
   let app;
 
+  const helmetContext = {};
+
   try {
     app = await withWrapper.call(
       this,
-      <StaticRouter location={url} context={{}}>
-        <App initialData={data} routes={routes} />
-      </StaticRouter>,
+      <HelmetProvider context={helmetContext}>
+        <StaticRouter location={url} context={{}}>
+          <App initialData={data} routes={routes} />
+        </StaticRouter>
+      </HelmetProvider>,
     );
   } catch (error) {
     throw error;
@@ -32,6 +37,8 @@ export default async function(
     throw new Error(`No HTML rendered for ${url}.`);
   }
 
+  const { helmet } = helmetContext;
+
   const additionalHeadElements = [];
 
   if (Object.hasOwnProperty.call(withWrapper, 'getAdditionalHeadElements')) {
@@ -40,5 +47,5 @@ export default async function(
     additionalHeadElements.push(...wrapperElements);
   }
 
-  return { appHTML, additionalHeadElements };
+  return { appHTML, additionalHeadElements, helmet };
 }

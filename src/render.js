@@ -11,20 +11,15 @@ export default async function(url, routes, scripts, withWrapper = null) {
   }
 
   let data = null;
-  let renderedApp;
+  let app;
   try {
     data = await loadInitialProps(route, { match });
-    renderedApp = await renderApp(url, routes, data, withWrapper);
+    app = await renderApp(url, routes, data, withWrapper);
   } catch (error) {
     throw error;
   }
 
-  const html = createDocument(
-    renderedApp.appHTML,
-    data,
-    scripts,
-    renderedApp.additionalHeadElements,
-  );
+  const html = createDocument(app, data, scripts);
 
   return { statusCode: 200, html };
 }

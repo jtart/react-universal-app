@@ -1,7 +1,8 @@
-import Helmet from 'react-helmet';
-
-const createDocument = (appHTML, data, scripts, additionalHeadElements) => {
-  const helmet = Helmet.renderStatic();
+const createDocument = (
+  { appHTML, additionalHeadElements, helmet },
+  data,
+  scripts,
+) => {
   const serialisedData = JSON.stringify(data).replace(/</g, '\\u003c');
 
   return `
