@@ -7,7 +7,7 @@ const routes = [
     path: '/',
     exact: true,
     component: Index,
-    getInitialProps: async () => ({
+    getInitialData: async () => ({
       title: 'Index',
       link: {
         to: '/styledComponents',
@@ -18,7 +18,7 @@ const routes = [
   {
     path: '/styledComponents',
     component: StyledComponents,
-    getInitialProps: async () => ({ link: { to: '/', text: 'Home' } }),
+    getInitialData: async () => ({ link: { to: '/', text: 'Home' } }),
   },
   {
     path: '/apollo',

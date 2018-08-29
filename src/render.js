@@ -1,5 +1,5 @@
 import getRouteAndMatch from './getRouteAndMatch.js';
-import loadInitialProps from './loadInitialProps.js';
+import loadInitialData from './loadInitialData.js';
 import renderApp from './renderApp.jsx';
 import createDocument from './createDocument.js';
 
@@ -13,7 +13,7 @@ export default async function(url, routes, scripts, withWrapper = null) {
   let data = null;
   let app;
   try {
-    data = await loadInitialProps(route, { match });
+    data = await loadInitialData(route, { match });
     app = await renderApp(url, routes, data, withWrapper);
   } catch (error) {
     throw error;

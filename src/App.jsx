@@ -3,7 +3,7 @@ import { renderRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 
 import getRouteAndMatch from './getRouteAndMatch.js';
-import loadInitialProps from './loadInitialProps.js';
+import loadInitialData from './loadInitialData.js';
 
 export class App extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export class App extends Component {
       data: this.props.initialData,
       loading: false,
       error: null,
-      loadInitialPropsPromise: null,
+      loadInitialDataPromise: null,
     };
   }
 
@@ -29,7 +29,7 @@ export class App extends Component {
           data: null,
           loading: true,
           error: null,
-          loadInitialPropsPromise: loadInitialProps(route, {
+          loadInitialDataPromise: loadInitialData(route, {
             match,
           }),
         });
@@ -38,18 +38,18 @@ export class App extends Component {
 
     if (this.state.loading) {
       try {
-        const data = await this.state.loadInitialPropsPromise;
+        const data = await this.state.loadInitialDataPromise;
         this.setState({
           data,
           loading: false,
           error: null,
-          loadInitialPropsPromise: null,
+          loadInitialDataPromise: null,
         });
       } catch (error) {
         this.setState({
           loading: false,
           error: error,
-          loadInitialPropsPromise: null,
+          loadInitialDataPromise: null,
         });
       }
     }

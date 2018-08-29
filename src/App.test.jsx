@@ -1,13 +1,13 @@
 import React from 'react';
 import { App } from './App';
 import * as reactRouterConfig from 'react-router-config';
-import * as loadInitialProps from './loadInitialProps';
+import * as loadInitialData from './loadInitialData';
 import * as getRouteAndMatch from './getRouteAndMatch.js';
 
 describe('App', () => {
   let wrapper;
   let setStateSpy;
-  let loadInitialPropsSpy;
+  let loadInitialDataSpy;
   let getRouteAndMatchSpy;
   const initialData = { data: 'Some initial data' };
 
@@ -24,14 +24,14 @@ describe('App', () => {
       />,
     );
     setStateSpy = jest.spyOn(wrapper.instance(), 'setState');
-    loadInitialPropsSpy = spyOn(loadInitialProps, 'default');
+    loadInitialDataSpy = spyOn(loadInitialData, 'default');
     getRouteAndMatchSpy = spyOn(getRouteAndMatch, 'default');
   });
 
   it('should return rendered routes', () => {
     expect.assertions(5);
     expect(getRouteAndMatchSpy).not.toHaveBeenCalled();
-    expect(loadInitialPropsSpy).not.toHaveBeenCalled();
+    expect(loadInitialDataSpy).not.toHaveBeenCalled();
     expect(reactRouterConfig.renderRoutes).toHaveBeenCalledTimes(1);
     expect(reactRouterConfig.renderRoutes).toHaveBeenCalledWith([], {
       data: initialData,
@@ -48,7 +48,7 @@ describe('App', () => {
 
         expect.assertions(3);
         expect(getRouteAndMatchSpy).not.toHaveBeenCalled();
-        expect(loadInitialPropsSpy).not.toHaveBeenCalled();
+        expect(loadInitialDataSpy).not.toHaveBeenCalled();
         expect(setStateSpy).not.toHaveBeenCalled();
       });
     });
@@ -64,25 +64,25 @@ describe('App', () => {
 
           expect.assertions(3);
           expect(getRouteAndMatch.default).toHaveBeenCalledWith(pathname, []);
-          expect(loadInitialPropsSpy).not.toHaveBeenCalled();
+          expect(loadInitialDataSpy).not.toHaveBeenCalled();
           expect(setStateSpy).not.toHaveBeenCalled();
         });
       });
 
-      describe('rejected loadInitialProps', () => {
+      describe('rejected loadInitialData', () => {
         it('should set state to the error', async () => {
           const error = 'Error!';
 
           getRouteAndMatch.default = jest
             .fn()
             .mockReturnValue({ route: 'route', match: 'match' });
-          loadInitialProps.default = jest
+          loadInitialData.default = jest
             .fn()
             .mockImplementation(() => Promise.reject(error));
 
           wrapper.setProps({ location: { pathname: 'pathnameThree' } });
 
-          await loadInitialProps.default;
+          await loadInitialData.default;
 
           expect.assertions(3);
 
@@ -90,19 +90,19 @@ describe('App', () => {
           expect(setStateSpy).toHaveBeenNthCalledWith(1, {
             data: null,
             error: null,
-            loadInitialPropsPromise: expect.any(Promise),
+            loadInitialDataPromise: expect.any(Promise),
             loading: true,
           });
 
           expect(setStateSpy).toHaveBeenNthCalledWith(2, {
             error,
-            loadInitialPropsPromise: null,
+            loadInitialDataPromise: null,
             loading: false,
           });
 
           expect(setStateSpy).toHaveBeenNthCalledWith(2, {
             error,
-            loadInitialPropsPromise: null,
+            loadInitialDataPromise: null,
             loading: false,
           });
         });
@@ -118,17 +118,17 @@ describe('App', () => {
           getRouteAndMatch.default = jest
             .fn()
             .mockReturnValue({ route, match });
-          loadInitialProps.default = jest
+          loadInitialData.default = jest
             .fn()
             .mockImplementation(async () => data);
 
           wrapper.setProps({ location: { pathname } });
 
-          await loadInitialProps.default;
+          await loadInitialData.default;
 
           expect.assertions(4);
 
-          expect(loadInitialProps.default).toHaveBeenCalledWith(route, {
+          expect(loadInitialData.default).toHaveBeenCalledWith(route, {
             match,
           });
 
@@ -136,21 +136,21 @@ describe('App', () => {
           expect(setStateSpy).toHaveBeenNthCalledWith(4, {
             data: null,
             error: null,
-            loadInitialPropsPromise: expect.any(Promise),
+            loadInitialDataPromise: expect.any(Promise),
             loading: true,
           });
 
           expect(setStateSpy).toHaveBeenNthCalledWith(5, {
             data,
             error: null,
-            loadInitialPropsPromise: null,
+            loadInitialDataPromise: null,
             loading: false,
           });
 
           expect(setStateSpy).toHaveBeenNthCalledWith(6, {
             data,
             error: null,
-            loadInitialPropsPromise: null,
+            loadInitialDataPromise: null,
             loading: false,
           });
         });
