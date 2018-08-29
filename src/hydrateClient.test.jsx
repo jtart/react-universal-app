@@ -1,6 +1,7 @@
 import React from 'react';
 import reactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
 import App from './App';
 import hydrateClient from './hydrateClient';
@@ -17,9 +18,11 @@ describe('hydrateClient', () => {
       hydrateClient(['routes']);
 
       expect(reactDom.hydrate).toHaveBeenCalledWith(
-        <BrowserRouter>
-          <App routes={['routes']} initialData={global.window.__UNI_DATA__} />
-        </BrowserRouter>,
+        <HelmetProvider context={{}}>
+          <BrowserRouter>
+            <App routes={['routes']} initialData={global.window.__UNI_DATA__} />
+          </BrowserRouter>
+        </HelmetProvider>,
         mockSpan,
       );
     });
