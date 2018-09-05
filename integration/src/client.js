@@ -17,10 +17,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache().restore(window.__APOLLO_DATA__),
 });
 
+const data = window.__UNI_DATA__;
+
 const App = (
   <HelmetProvider>
     <ApolloProvider client={client}>
-      <ClientUni routes={routes} />
+      <ClientUni data={data} routes={routes} />
     </ApolloProvider>
   </HelmetProvider>
 );

@@ -2,18 +2,10 @@ import React from 'react';
 import { ClientUni, ServerUni } from './Wrappers';
 
 describe('ClientUni', () => {
-  describe('no uni data on window', () => {
-    it('should render as exepcted', () => {
-      const wrapper = shallow(<ClientUni routes={['someRoute']} />);
-
-      expect(wrapper).toMatchSnapshot();
-    });
-  });
-
   it('should render as exepcted', () => {
-    window.__UNI_DATA__ = 'someData!';
-
-    const wrapper = shallow(<ClientUni routes={['someRoute']} />);
+    const wrapper = shallow(
+      <ClientUni data="someData!" routes={['someRoute']} />,
+    );
 
     expect(wrapper).toMatchSnapshot();
   });
@@ -40,7 +32,7 @@ describe('ServerUni', () => {
         url="someUrl"
         routes={['someRoute']}
         data="somePassedData"
-        routerContext="someRouterContext"
+        routerContext={{ context: 'someRouterContext' }}
       />,
     );
 
