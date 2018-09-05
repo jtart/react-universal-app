@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClientUni no uni data on window should render as exepcted 1`] = `
+<BrowserRouter>
+  <withRouter(App)
+    initialData={Object {}}
+    routes={
+      Array [
+        "someRoute",
+      ]
+    }
+  />
+</BrowserRouter>
+`;
+
+exports[`ClientUni should render as exepcted 1`] = `
+<BrowserRouter>
+  <withRouter(App)
+    initialData="someData!"
+    routes={
+      Array [
+        "someRoute",
+      ]
+    }
+  />
+</BrowserRouter>
+`;
+
+exports[`ServerUni no passed routerContext should render as exepcted 1`] = `
+<StaticRouter
+  basename=""
+  context={Object {}}
+  location="someUrl"
+>
+  <withRouter(App)
+    initialData="somePassedData"
+    routes={
+      Array [
+        "someRoute",
+      ]
+    }
+  />
+</StaticRouter>
+`;
+
+exports[`ServerUni should render as exepcted 1`] = `
+<StaticRouter
+  basename=""
+  context="someRouterContext"
+  location="someUrl"
+>
+  <withRouter(App)
+    initialData="somePassedData"
+    routes={
+      Array [
+        "someRoute",
+      ]
+    }
+  />
+</StaticRouter>
+`;
