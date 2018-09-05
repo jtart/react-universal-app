@@ -2,7 +2,6 @@ import { Component } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 
-import getRouteAndMatch from './getRouteAndMatch.js';
 import loadInitialData from './loadInitialData.js';
 
 export class App extends Component {
@@ -19,21 +18,17 @@ export class App extends Component {
 
   async componentDidUpdate({ location: prevLocation }) {
     if (this.props.location.pathname !== prevLocation.pathname) {
-      const { route, match } = getRouteAndMatch(
+      const initialData = loadInitialData(
         this.props.location.pathname,
         this.props.routes,
       );
 
-      if (route) {
-        this.setState({
-          data: null,
-          loading: true,
-          error: null,
-          loadInitialDataPromise: loadInitialData(route, {
-            match,
-          }),
-        });
-      }
+      this.setState({
+        data: null,
+        loading: true,
+        error: null,
+        loadInitialDataPromise: initialData,
+      });
     }
 
     if (this.state.loading) {
