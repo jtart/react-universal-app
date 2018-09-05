@@ -25,9 +25,6 @@
     "wait-for-3000": "wait-on http://localhost:3000"
   },
   "dependencies": {
-    "react-dom": "^16.4.2",
-    "react-helmet": "^5.2.0",
-    "react-helmet-async": "0.1.0",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1"
   },
@@ -46,6 +43,7 @@
     "microbundle": "^0.6.0",
     "prettier": "^1.14.0",
     "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-test-renderer": "^16.4.2",
     "regenerator-runtime": "^0.12.1",
     "wait-on": "^2.1.0"
