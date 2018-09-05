@@ -5,49 +5,55 @@
 [![gzip size](http://img.badgesize.io/https://unpkg.com/@jtart/uni/dist/uni.es.js?compression=gzip)](https://unpkg.com/@jtart/uni/dist/uni.es.js)
 [![CircleCI status](https://circleci.com/gh/jtart/uni.svg?style=svg)](https://circleci.com/gh/jtart/uni)
 
-uni is a tiny library that provides sensible interfaces for creating Universal React components and building a single-page application.
+uni is a library that enables the building of a single-page application with universal React components and React Router.
 
-## Philosophy
+## Project goals
 
-**uni aims to provide an agnosticism between routing/data fetching and components.**
+The goals of uni are very simple:
 
-It defines data fetching alongside route configuration, which provides a concise implementation and a clear seperation of concerns. This also reduces the barrier to entry for newer React developers. Your React components are just React components.
+- Simplicity in building an SPA with universal React components
+- Flexibility in building an SPA with universal React components
 
-**uni aims to be unopinionated and flexible where it matters.**
+**Simplicity**
+uni provides 2 React components:
 
-It does make assumptions on some things, i.e. `react-router` for routing, `react-helmet` for document head management, but these assumptions only follow best and common practices that are followed in the wider React ecosystem. 
+1. for the server, just pass it some initial data and routes, and render the thing
+2. for the client, just pass it the data your rendered on the serve and the same routes you passed to the server component, and hydrate the thing
 
-Most importantly, it doesn't make assumptions where it matters. It allows you to setup your application as you please, and gives you the ability to plugin code to extend your React application with comparate ease, and without feeling like you are overriding the core mechanics of uni.
+It also provides a single data-fetching API. This data-fetching API is defined next to your your routes.
 
-**uni aims to be as small as possible.**
+**Flexibility**
+uni doesn't do much.
 
-It provides just the right out of scaffolding needed to get your server-side rendered SPA with Universal React components out the door, without making a big impact on your bundle size.
+It gives you a couple of React components for rendering your routes, and doesn't force you to render or hydrate your app in any particular way. You can render however you want!
+
+It gives you a single data-fetching API, which is defined on your routes. This means you can build your app components in anyway you want, and your React components are just React components.
 
 ## Getting Started
 
-To get started quickly, view the [example applications](https://github.com/jtart/uni/tree/master/examples). These applications give a concise depiction of how to build an application using uni.
+To get started quickly, view the [example applications](https://github.com/jtart/uni/tree/master/examples). These applications give an example of how you might create an application using uni.
 
 Alternatively, follow the steps below to get started.
 
 ### Installation
 
 ```bash
-npm install @jtart/uni react react-dom react-helmet
+npm install @jtart/uni react react-dom
 ```
 
 ### App
 
-The following gives information on how to setup routing and data fetching in the main React application. Once you have setup your routes, you can pass them to APIs that uni provides for server-side rendering and client-side hydration.
+The following gives information on how to setup routing and data fetching in your main React application. Once you have setup your routes, you can pass them to React components that uni provides for server-side rendering and client-side hydration.
 
 #### Routing
 
 uni uses React Router 4, which is a great foundation for serving pages as components and providing route configuration. To define your routes, create some [route configuration](https://www.npmjs.com/package/react-router-config#route-configuration-shape) and export them.
 
-Note: uni currently only supports a single top-level of routing, and does not support redirects.
+Note: uni currently only supports a single top-level of routing.
 
 ```JavaScript
-// app/routes.js
-import Home from 'components/Home';
+// ./app/routes.js
+import Home from './components/Home';
 
 const routes = [
   {
@@ -61,7 +67,7 @@ export default routes;
 ```
 
 ```JavaScript
-// app/components/Home.js
+// ./app/components/Home.js
 
 const Home = () => (
   <div>
@@ -74,30 +80,38 @@ export default Home;
 
 #### Data Fetching
 
-uni provides a very familiar `getInitialProps` for data fetching, which is defined in the route configuration.
+uni provides a very familiar `getInitialData` for data fetching, which is defined in the route configuration.
 
 This provides a clear seperation of concerns and agnosticism between route configuration/data fetching and components. Your React components are just React components, and you can swap components on routes as much as you please.
 
 This has an implicit benefit of reducing the barrier to entry for development for new React developers as the flow of data in the application is clear and defined.
 
-##### `await getInitialProps(ctx): { data }`
+##### `await getInitialData(ctx): { data }`
 
-`getInitialProps` is an asynchronous function that is defined on the configuration of a route. It called is internally by uni when a route matches, and the returned data is passed as props to the route's defined component. `getInitialProps` is optional.
+`getInitialData` is an **optional** asynchronous function that is defined on the configuration of a route. This API is used for fetching data from an external API, or just returning some initial data to a route's component based on some other variable.
 
-A `ctx` object is passed to `getInitialProps`, which includes:
+A `ctx` object is passed to `getInitialData`, which includes:
 
 - `match` - React Router's [match](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/match.md) object
 
+On the server, `getInitialData` is called explicitly by you through `loadInitialData` (see below), with the response passed to the server component.
+
+On the client, it is called internally and the returned data is passed to the route's defined component. On the client, uni has 3 states in the lifecycle of `getInitialData` that are passed to the route's component:
+
+- `loading` (`boolean`) - `loading` will be `true` if `getInitialData` has not responded yet, probably because it is busy fetching from your API. Otherwise, it is `false`
+- `data` (`object`) - once uni has your data, it will be passed in the `data` prop. Otherwise, it is `null`
+- `error` (`Error`) - if the process for getting your initial data throws an error, it will be passed to your component to handle. Otherwise, it is `null`
+
 ```JavaScript
 // app/routes.js
-import Home from 'components/Home';
+import Home from './components/Home';
 
 const routes = [
   {
     path: '/',
     exact: true,
     component: Home,
-    getInitialProps: await (ctx) => {
+    getInitialData: await (ctx) => {
       return { title: 'Home!' };;
     },
   },
@@ -109,11 +123,17 @@ export default routes;
 ```JavaScript
 // app/components/Home.js
 
-const Home = ({ title }) => (
-  <div>
-    <h1>{title}</h1>
-  </div>
-)
+const Home = ({ loading, error, data }) => {
+  if(loading) return 'Loading...'
+  if(error) return 'Oh no, something went wrong!'
+  if(data) {
+    return (
+      <div>
+        <h1>{data.title}</h1>
+      </div>
+    )
+  }
+};
 
 export default Home;
 ```
@@ -123,8 +143,8 @@ export default Home;
 uni supports parameterized routing from `react-router`. As data fetching is defined on the route, parameterized routing is a breeze, and can be handled very cleanly.
 
 ```JavaScript
-// app/routes.js
-import Home from 'components/Home';
+// ./app/routes.js
+import Home from './components/Home';
 
 const routes = [
   {
@@ -134,9 +154,9 @@ const routes = [
     getInitialProps: await ({ match }) => {
       const { id } = match.params;
       const response = await fetch(`/someApi/${id}`);
-      const data = await response.json();
-      
-      return { title: 'Home!', data };;
+      const apiResponse = await response.json();
+
+      return { title: 'Home!', apiResponse };;
     },
   },
 ];
@@ -145,200 +165,71 @@ export default routes;
 ```
 
 ```JavaScript
-// app/components/Home.js
+// ./app/components/Home.js
 
-const Home = ({ title }) => (
-  <div>
-    <h1>{title}</h1>
-    {
-      data.map(({ title, description }) => (
-        <div>
-          <h2>{title}</h2>
-          <p>{description}</p>
-        </div>
-      )
-    }
-  </div>
-)
-
-export default Home;
-```
-
-#### Links
-
-uni provides a wrapper around [`react-router-dom`'s `Link` component](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/Link.md#link) for navigation around your application.
-
-```JavaScript
-// app/components/Home.js
-
-import { Link } from '@jtart/uni';
-
-const Home = ({ title }) => (
-  <div>
-    <h1>{title}</h1>
-    {
-      data.map(({ title, description }) => (
-        <div>
-          <h2>{title}</h2>
-          <p>{description}</p>
-        </div>
-      )
-    }
-    <Link to='/another-page'>Another page</Link>
-  </div>
-)
+const Home = ({ loading, error, data }) => {
+  if(loading) return 'Loading...'
+  if(error) return 'Oh no, something went wrong!'
+  if(data) {
+    const { title, apiResponse } = data;
+    return (
+      <div>
+        <h1>{title}</h1>
+        {
+          apiResponse.map(({ title, description }) => (
+            <div>
+              <h2>{title}</h2>
+              <p>{description}</p>
+            </div>
+          ))
+        }
+      </div>
+    )
+  }
+};
 
 export default Home;
 ```
-
-In the example above, the path in the `Link` matches the route defined above in [Parameterized Routing](#parameterized-routing). Internally uni will call `getInitialProps` on that route with the `another-page` id param.
-
-#### Managing the document head
-
-uni delegates to [`react-helmet`](https://github.com/nfl/react-helmet) for managing the head elements of the document. uni manages server-side render and injection of `react-helmet` head elements, so all you need to do is create the elements! `react-helmet` magic will take care of all client-side head management.
-
-```JavaScript
-// app/components/Home.js
-
-import Helmet from 'react-helmet';
-
-const Home = ({ title }) => (
-  <div>
-    <Helmet>
-      <title>{title}</title>
-    </Helmet>
-    <h1>{title}</h1>
-    {
-      data.map(({ title, description }) => (
-        <div>
-          <h2>{title}</h2>
-          <p>{description}</p>
-        </div>
-      )
-    }
-  </div>
-)
-
-export default Home;
-```
-
 
 ### Server
 
-uni doesn't make assumptions about what your server setup will look like, and which gives you the power to setup as you please. It provides you with a single API for the server, `render`, which will return a statusCode and HTML.
+For rendering your app on a server, uni provides you a React component and a data-fetching API. uni _could_ fetch the initial data internally for you if it was more opinionated. However, uni doesn't make any assumptions about how or where you will render your React application on the server, so it can't! Read [Client](#client) for a clear example of why not.
 
-#### `await render(url, routes, scripts, ?serverWrapper): { statusCode, html }`
+Then, take a look at [`ReactDOMServers`'s methods](https://reactjs.org/docs/react-dom-server.html) for rendering a React application on a server!
 
-`render` is an asynchronous function that will render your React application and return a status code and HTML. If uni fails to render, a status code and `null` HTML will be returned.
+#### await loadInitialData(url, routes): { data }
 
-`render` accepts the following arguments:
-- `url` - a [Node.JS HTTP URL-like object](https://nodejs.org/api/http.html#http_message_url)
-- `routes` - an array of React Router routes
-- `scripts` - an array of URLs that that will be used to create deferred script elements, injected below the main body of the page. These scripts likely contain a client-side bundle of the React application, but don't have to
-- `?serverWrapper` - an optional HOC that wraps the React application in the server-side render. See [plugging in libraries](#plugging-in-libraries) for more information on wrappers
+`loadInitialData` is an **optional** asynchronous function that matches the route based on the passed URL, calls `getInitialData`, and returns the response. If the route does not have a `getInitialData` an empty object will be returned. Takes the following arguments:
 
-```JavaScript
-  // server.js
+- `url` (`string`) - a [Node.JS HTTP URL-like object](https://nodejs.org/api/http.html#http_message_url)
+- `routes` (`array`) - React Router routes
 
-  import { render } from '@jtart/uni';
-  import routes from './app/routes';
-  import serverWrapper from './wrappers/server';
+#### <ServerUni />
 
-  ...
-  get('/*', async ({ url }, res) => {
-    const scripts = [ 'https://example.com/bundle.js' ];
+A React component that renders a route with some initial data. Takes the following props:
 
-    const { statusCode, html } = await render(url, routes, scripts, serverWrapper);
-
-    res.status(statusCode).send(html);
-  });
-  ...
-```
+- `url` (`string`) - a [Node.JS HTTP URL-like object](https://nodejs.org/api/http.html#http_message_url)
+- `routes` (`array`) - React Router routes
+- `data` (`object`) - **optional** initial data from `loadInitialData` that is passed to the route's component
+- `routerContext` (`object`) - React Router's [StaticRouter `context` object](https://reacttraining.com/react-router/web/guides/server-rendering)
 
 ### Client
 
-To hydrate your React application on the client, uni exposes a `hydrateClient` function. Hydration will take data that was used on the server for the server-side render, and inject it as initial data into the client-side React application.
+To hydrate your React application on a client, uni provides a React component. You must then call `react-dom`'s `hydrate` method
 
-#### `hydrateClient(routes, ?clientWrapper)`
-`hydrateClient` is a synchronous function that will hydrate your React application that was rendered on the server by `render`. `hydrateClient` is optional if you don't want to build a single-page application.
-
-`hydrateClient` accepts the following arguments:
-- `routes` - an array of React Router routes
-- `?clientWrapper` - an optional HOC that wraps the client-side React application. See [plugging in libraries](#plugging-in-libraries) for more information on wrappers
+The client-side application needs access to the data that was used to render the application on the server, and so should be injected into the HTML document that the server wrapped the rendered React application in and sent to the client. This data could be inside a `script` tag, that injects the data onto the global `window` object, like so:
 
 ```JavaScript
-  // client.js
-
-  import { hydrateClient } from "@jtart/uni";
-  import routes from "./app/routes";
-  import clientWrapper from "./wrappers/client";
-
-  hydrateClient(routes, clientWrapper);
+<script>
+  window.__UNI__ = data;
+</script>
 ```
 
-### Plugging in libraries
+Then, take a look at [`ReactDOM`'s methods](https://reactjs.org/docs/react-dom.html) for hydrating a React application on a client!
 
-uni allows you to plugin libraries into the lifecycle of the uni application through interfaces known as `wrappers`. A wrapper is a higher-order component that extends the functionality of the main React application, usually through the integration of libraries or state management tools. There are two types of wrappers: `server` and `client`.
+#### <ClientUni />
 
-#### Server
+A React component that renders your routes and application on the client. Takes the following props:
 
-A server wrapper is an asynchronous HOC that is used on a server-side render. An example use-case could be the creation of some inital state, styles, etc, which can be injected into the `head` of the HTML Document on the server-side render, through the `getAdditionalHeadProps` function.
-
-##### `getAdditionalHeadProps: [data]`
-
-`getAdditionalHeadProps` is a synchronous function that is called after the React application has been rendered, but before it is injected into the main HTML document.
-
-`getAdditionalHeadProps` serves as an optional escape hatch for injecting additional elements into the `head` of the document that are generated within the server wrapper. For most head elements, you should see [managing the docunent head](#managing-the-document-head).
-
-These elements might be script elements containing initial JSON data. For these purposes, uni exposes a `ServerData` component, which serialises passed JSON data - pass the JSON in the `data` prop, and give it an `id`, which can be used in the client wrapper to return the initial server-side fetched data.
-
-```JavaScript
-// ./wrappers/server.jsx
-
-import { SomeLibraryClient, SomeLibraryProvider } from 'some-library';
-import { ServerData } from '@jtart/uni';
-
-async function serverWrapper(App) {
-  this.someLibraryClient = new SomeLibraryClient();
-  
-  try {
-    await this.someLibraryClient.fetchSomeInitialState(App);
-  } catch (error) {
-    // handle errors;
-  }
-  
-  return <SomeLibraryProvider client={this.someLibraryClient}>{App}</SomeLibraryProvider>
-}
-
-serverWrapper.getAdditionalHeadProps = function() {
-  const initialState = this.client.getInitialState();
-
-  return [<ServerData key={'someKey'} id="__INITIAL_STATE__" data={initialState} />];
-};
-
-export default serverWrapper;
-```
-
-**NOTE: the server wrapper and `getAdditionalHeadProps` functions must not be arrow functions if you wish to bind objects to `this`.**
-
-### Client
-
-A client wrapper is a synchronous HOC that wraps the main React application when it is being hydrated on the client, after it was rendered on the server. An example use-case could be wrapping the app in a state management library, and hydrating the client-side application with some initial state that was created on the server.
-
-```JavaScript
-// ./wrappers/client.jsx
-
-import { SomeLibraryClient, SomeLibraryProvider } from 'some-library';
-
-const clientWrapper = App => {
-  const initialState = JSON.parse(
-    window.document.getElementById('__INITIAL_STATE__').textContent,
-  );
-
-  const someLibraryClient = new SomeLibraryClient(initialState);
-
-  return <SomeLibraryProvider client={someLibraryClient}>{App}</SomeLibraryProvider>;
-};
-
-export default clientWrapper;
-```
+- `routes` (`array`) - React Router routes
+- `data` (`object`) - **optional** initial data from `loadInitialData` that is passed to the route's component
