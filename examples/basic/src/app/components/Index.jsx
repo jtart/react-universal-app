@@ -1,19 +1,17 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import { Link } from '@jtart/uni';
+import { Link } from 'react-router-dom';
 
-const Index = ({ title, link }) => (
-  <div>
-    <Helmet>
-      <html lang="en-GB" />
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="description" content="Page description" />
-      {title ? <title>{title}</title> : null}
-    </Helmet>
-    <h1>{title ? title : 'Loading...'}</h1>
-    <Link to={link.to}>{link.text} page</Link>
-  </div>
-);
+const Index = ({ loading, error, data }) => {
+  if (loading) return 'Loading!';
+  if (error) return 'Error!';
+  if (data) {
+    return (
+      <div>
+        <h1>{data.title}</h1>
+        <Link to={data.link.to}>{data.link.text} page</Link>
+      </div>
+    );
+  }
+};
 
 export default Index;
