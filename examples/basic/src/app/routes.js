@@ -6,7 +6,7 @@ const routes = [
     path: '/',
     exact: true,
     component: Index,
-    getInitialProps: async () => ({
+    getInitialData: async () => ({
       title: 'Basic app example',
       link: {
         to: '/about',
