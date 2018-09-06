@@ -38,7 +38,7 @@ Alternatively, follow the steps below to get started.
 ### Installation
 
 ```bash
-npm install @jtart/uni react react-dom
+npm install @jtart/uni react
 ```
 
 ### App
