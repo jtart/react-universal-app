@@ -15,6 +15,7 @@ The goals of uni are very simple:
 - Flexibility in building an SPA with universal React components
 
 **Simplicity**
+
 uni provides 2 React components:
 
 1. for the server, just pass it some initial data and routes, and render the thing
@@ -23,6 +24,7 @@ uni provides 2 React components:
 It also provides a single data-fetching API. This data-fetching API is defined next to your your routes.
 
 **Flexibility**
+
 uni doesn't do much.
 
 It gives you a couple of React components for rendering your routes, and doesn't force you to render or hydrate your app in any particular way. You can render however you want!
