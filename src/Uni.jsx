@@ -42,6 +42,7 @@ export class Uni extends Component {
         });
       } catch (error) {
         this.setState({
+          data: null,
           loading: false,
           error: error,
           loadInitialDataPromise: null,
