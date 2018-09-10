@@ -72,12 +72,14 @@ describe('Uni', () => {
           });
 
           expect(setStateSpy).toHaveBeenNthCalledWith(2, {
+            data: null,
             error,
             loadInitialDataPromise: null,
             loading: false,
           });
 
           expect(setStateSpy).toHaveBeenNthCalledWith(2, {
+            data: null,
             error,
             loadInitialDataPromise: null,
             loading: false,
