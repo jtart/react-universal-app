@@ -25,7 +25,7 @@ jobs:
           root: ~/jtart-uni
           paths:
             - ./*
-  appTests:
+  app-tests:
     <<: *defaults
     docker:
       - image: circleci/node:10
@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Run application tests
           command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
-  integrationTests:
+  integration-tests:
     <<: *defaults
     docker:
       - image: cypress/base:10
@@ -60,12 +60,12 @@ jobs:
           command: npm run test:e2e
 workflows:
   version: 2
-  build_and_test:
+  build-and-test:
     jobs:
       - build
-      - appTests:
+      - app-tests:
           requires:
             - build
-      - integrationTests:
+      - integration-tests:
           requires:
             - build
