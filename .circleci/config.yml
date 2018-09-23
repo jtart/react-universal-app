@@ -5,7 +5,16 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
+      - restore_cache:
+          key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
+          key: appTests-{{ .Branch }}
+          key: appTests
       - run: npm ci
+      - save_cache:
+          key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
       - run:
           name: Run application tests
           command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
@@ -14,7 +23,16 @@ jobs:
       - image: cypress/base:10
     steps:
       - checkout
+      - restore_cache:
+          key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
+          key: appTests-{{ .Branch }}
+          key: appTests
       - run: npm ci
+      - save_cache:
+          key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
       - run:
           name: Run integration tests
           command: npm run test:e2e:ci
