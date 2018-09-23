@@ -1,6 +1,6 @@
 import React from 'react';
 import express from 'express';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+import { ServerStyleSheet } from 'styled-components';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
@@ -20,56 +20,51 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', async ({ url }, res) => {
-    let data;
-
     try {
-      data = await loadInitialData(url, routes);
-    } catch (error) {
-      res.sendStatus(404);
-      return;
-    }
+      const data = await loadInitialData(url, routes);
 
-    const sheet = new ServerStyleSheet();
+      const sheet = new ServerStyleSheet();
 
-    const client = new ApolloClient({
-      ssrMode: true,
-      link: createHttpLink({
-        uri: 'https://fakerql.com/graphql',
-        fetch: fetch,
-      }),
-      cache: new InMemoryCache(),
-    });
+      const client = new ApolloClient({
+        ssrMode: true,
+        link: createHttpLink({
+          uri: 'https://fakerql.com/graphql',
+          fetch: fetch,
+        }),
+        cache: new InMemoryCache(),
+      });
 
-    const helmetContext = {};
-    const App = (
-      <HelmetProvider context={helmetContext}>
-        <ApolloProvider client={client}>
-          <StyleSheetManager sheet={sheet.instance}>
-            <ServerUni url={url} routes={routes} data={data} />
-          </StyleSheetManager>
-        </ApolloProvider>
-      </HelmetProvider>
-    );
-
-    getDataFromTree(App).then(() => {
-      const renderedApp = renderToString(App);
-
-      const { helmet } = helmetContext;
-      const scripts = [assets.client.js];
-      const styles = sheet.getStyleTags();
-      const apolloData = client.extract();
-
-      const document = Document(
-        helmet,
-        renderedApp,
-        data,
-        scripts,
-        styles,
-        apolloData,
+      const helmetContext = {};
+      const App = sheet.collectStyles(
+        <HelmetProvider context={helmetContext}>
+          <ApolloProvider client={client}>
+            <ServerUni data={data} routes={routes} location={url} />
+          </ApolloProvider>
+        </HelmetProvider>,
       );
 
-      res.send(document);
-    });
+      getDataFromTree(App).then(() => {
+        const renderedApp = renderToString(App);
+
+        const { helmet } = helmetContext;
+        const scripts = [assets.client.js];
+        const styles = sheet.getStyleTags();
+        const apolloData = client.extract();
+
+        const document = Document(
+          helmet,
+          renderedApp,
+          data,
+          scripts,
+          styles,
+          apolloData,
+        );
+
+        res.send(document);
+      });
+    } catch (error) {
+      res.sendStatus(404);
+    }
   });
 
 export default server;
