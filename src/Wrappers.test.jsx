@@ -16,9 +16,10 @@ describe('ServerUni', () => {
     it('should render as exepcted', () => {
       const wrapper = shallow(
         <ServerUni
-          url="someUrl"
+          location="someUrl"
           routes={['someRoute']}
           data="somePassedData"
+          context={{}}
         />,
       );
 
@@ -29,10 +30,10 @@ describe('ServerUni', () => {
   it('should render as exepcted', () => {
     const wrapper = shallow(
       <ServerUni
-        url="someUrl"
+        location="someUrl"
         routes={['someRoute']}
         data="somePassedData"
-        routerContext={{ context: 'someRouterContext' }}
+        context={{ context: 'someRouterContext' }}
       />,
     );
 
