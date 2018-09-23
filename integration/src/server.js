@@ -32,10 +32,9 @@ server
         cache: new InMemoryCache(),
       });
 
-      const helmetContext = {};
-
       const sheet = new ServerStyleSheet();
 
+      const helmetContext = {};
       const App = sheet.collectStyles(
         <HelmetProvider context={helmetContext}>
           <ApolloProvider client={client}>
