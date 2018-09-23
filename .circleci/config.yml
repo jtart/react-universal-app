@@ -12,7 +12,7 @@ jobs:
           key: v1-deps
       - run:
           name: Install node packages
-          command: npm ci --ignore-scripts
+          command: npm ci
       - save_cache:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
