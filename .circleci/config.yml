@@ -18,3 +18,6 @@ jobs:
       - run:
           name: Run tests
           command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
+      - run:
+          name: Run integration tests
+          command: npm run test:e2e:ci
