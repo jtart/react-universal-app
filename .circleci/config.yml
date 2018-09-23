@@ -20,7 +20,6 @@ jobs:
           paths:
             - ~/.npm
             - ~/.cache
-            - ~/jtart-uni/node_modules
       - persist_to_workspace:
           root: ~/jtart-uni
           paths:
