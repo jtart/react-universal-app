@@ -6,7 +6,7 @@ describe('loadInitialData', () => {
   const match = { match: true };
 
   describe('no matched route', () => {
-    it('should throw an error', async () => {
+    it('should return an empty object', async () => {
       reactRouterConfig.matchRoutes = jest.fn().mockReturnValue([]);
 
       try {
@@ -18,7 +18,7 @@ describe('loadInitialData', () => {
   });
 
   describe('no getInitialData function on route', () => {
-    it('should return null', async () => {
+    it('should return an empty object', async () => {
       reactRouterConfig.matchRoutes = jest
         .fn()
         .mockReturnValue([
@@ -27,7 +27,7 @@ describe('loadInitialData', () => {
 
       const initialData = await loadInitialData('url', ['url']);
 
-      expect(initialData).toEqual(null);
+      expect(initialData).toEqual({});
     });
   });
 
