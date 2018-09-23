@@ -16,7 +16,6 @@ jobs:
       - save_cache:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
-            - ~/jtart-uni/node_modules
             - ~/.npm
             - ~/.cache
       - run:
