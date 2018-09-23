@@ -7,14 +7,18 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}
+          key: v1-deps
       - run:
           name: Install node packages
           command: npm ci --ignore-scripts
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
-            - ./node_modules
+            - ~/jtart-uni/node_modules
+            - ~/.npm
+            - ~/.cache
       - run:
           name: Run tests
           command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
