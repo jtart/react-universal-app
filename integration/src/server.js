@@ -23,6 +23,8 @@ server
     try {
       const data = await loadInitialData(url, routes);
 
+      const sheet = new ServerStyleSheet();
+
       const client = new ApolloClient({
         ssrMode: true,
         link: createHttpLink({
@@ -31,8 +33,6 @@ server
         }),
         cache: new InMemoryCache(),
       });
-
-      const sheet = new ServerStyleSheet();
 
       const helmetContext = {};
       const App = sheet.collectStyles(
