@@ -6,7 +6,7 @@ describe('loadInitialData', () => {
   const match = { match: true };
 
   describe('no matched route', () => {
-    it('should return an empty object', async () => {
+    it('should throw an error', async () => {
       reactRouterConfig.matchRoutes = jest.fn().mockReturnValue([]);
 
       try {
