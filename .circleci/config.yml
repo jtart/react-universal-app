@@ -24,12 +24,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
-          key: appTests-{{ .Branch }}
-          key: appTests
+          key: integrationTests-{{ .Branch }}-{{ checksum "package.json" }}
+          key: integrationTests-{{ .Branch }}
+          key: integrationTests
       - run: npm ci
       - save_cache:
-          key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
+          key: integrationTests-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.npm
             - ~/.cache
