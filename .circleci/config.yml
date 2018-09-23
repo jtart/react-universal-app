@@ -9,7 +9,7 @@ jobs:
           key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
           key: appTests-{{ .Branch }}
           key: appTests
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - save_cache:
           key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
@@ -27,7 +27,7 @@ jobs:
           key: integrationTests-{{ .Branch }}-{{ checksum "package.json" }}
           key: integrationTests-{{ .Branch }}
           key: integrationTests
-      - run: npm ci
+      - run: npm install
       - save_cache:
           key: integrationTests-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
