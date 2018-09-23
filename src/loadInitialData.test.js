@@ -18,7 +18,7 @@ describe('loadInitialData', () => {
   });
 
   describe('no getInitialData function on route', () => {
-    it('should return an empty object', async () => {
+    it('should return null', async () => {
       reactRouterConfig.matchRoutes = jest
         .fn()
         .mockReturnValue([
@@ -27,7 +27,7 @@ describe('loadInitialData', () => {
 
       const initialData = await loadInitialData('url', ['url']);
 
-      expect(initialData).toEqual({});
+      expect(initialData).toEqual(null);
     });
   });
 

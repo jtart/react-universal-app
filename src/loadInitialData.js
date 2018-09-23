@@ -10,7 +10,7 @@ const loadInitialData = async (url, routes) => {
   const { route, match } = matchedRoutes[0];
 
   if (!route.getInitialData) {
-    return {};
+    return null;
   }
 
   try {
