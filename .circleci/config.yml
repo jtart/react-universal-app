@@ -14,7 +14,9 @@ jobs:
           key: build
       - run: npm ci
       - save_cache:
-          key: appTests-{{ .Branch }}-{{ checksum "package.json" }}
+          key: build-{{ .Branch }}-{{ checksum "package.json" }}
+          key: build-{{ .Branch }}
+          key: build
           paths:
             - ~/.npm
             - ~/.cache
