@@ -42,19 +42,9 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/jtart-uni
-      - restore_cache:
-          key: integration-{{ .Branch }}-{{ checksum "package.json" }}
-          key: integration-{{ .Branch }}
-          key: integration
       - run:
           name: Install integration app packages
           command: cd integration && npm ci
-      - save_cache:
-          key: integration-{{ .Branch }}-{{ checksum "package.json" }}
-          key: integration-{{ .Branch }}
-          key: integration
-          paths:
-            - ~/jtart-uni/integration/node_modules
       - run:
           name: Run integration tests
           command: npm run test:e2e
