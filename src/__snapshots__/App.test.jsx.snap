@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Uni should return rendered routes 1`] = `
+exports[`App should return rendered routes 1`] = `
 <h1>
   Some initial data
 </h1>

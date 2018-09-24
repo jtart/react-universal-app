@@ -1,15 +1,15 @@
 import React from 'react';
 import { StaticRouter, BrowserRouter } from 'react-router-dom';
-import Uni from './Uni.jsx';
+import App from './App.jsx';
 
-export const ClientUni = props => (
+export const ClientApp = props => (
   <BrowserRouter {...props}>
-    <Uni initialData={props.data} routes={props.routes} />
+    <App initialData={props.data} routes={props.routes} />
   </BrowserRouter>
 );
 
-export const ServerUni = props => (
+export const ServerApp = props => (
   <StaticRouter {...props}>
-    <Uni initialData={props.data} routes={props.routes} />
+    <App initialData={props.data} routes={props.routes} />
   </StaticRouter>
 );

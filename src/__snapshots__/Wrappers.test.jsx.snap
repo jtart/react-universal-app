@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ClientUni should render as exepcted 1`] = `
+exports[`ClientApp should render as exepcted 1`] = `
 <BrowserRouter
   data="someData!"
   routes={
@@ -9,7 +9,7 @@ exports[`ClientUni should render as exepcted 1`] = `
     ]
   }
 >
-  <withRouter(Uni)
+  <withRouter(App)
     initialData="someData!"
     routes={
       Array [
@@ -20,7 +20,7 @@ exports[`ClientUni should render as exepcted 1`] = `
 </BrowserRouter>
 `;
 
-exports[`ServerUni no passed routerContext should render as exepcted 1`] = `
+exports[`ServerApp no passed routerContext should render as exepcted 1`] = `
 <StaticRouter
   basename=""
   context={Object {}}
@@ -32,7 +32,7 @@ exports[`ServerUni no passed routerContext should render as exepcted 1`] = `
     ]
   }
 >
-  <withRouter(Uni)
+  <withRouter(App)
     initialData="somePassedData"
     routes={
       Array [
@@ -43,7 +43,7 @@ exports[`ServerUni no passed routerContext should render as exepcted 1`] = `
 </StaticRouter>
 `;
 
-exports[`ServerUni should render as exepcted 1`] = `
+exports[`ServerApp should render as exepcted 1`] = `
 <StaticRouter
   basename=""
   context={
@@ -59,7 +59,7 @@ exports[`ServerUni should render as exepcted 1`] = `
     ]
   }
 >
-  <withRouter(Uni)
+  <withRouter(App)
     initialData="somePassedData"
     routes={
       Array [
