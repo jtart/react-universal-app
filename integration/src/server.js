@@ -8,7 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import fetch from 'node-fetch';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
-import { ServerUni, loadInitialData } from '@jtart/uni';
+import { ServerApp, loadInitialData } from '@jtart/uni';
 
 import Document from './Document';
 import routes from './app/routes';
@@ -38,7 +38,7 @@ server
       const App = sheet.collectStyles(
         <HelmetProvider context={helmetContext}>
           <ApolloProvider client={client}>
-            <ServerUni
+            <ServerApp
               data={data}
               routes={routes}
               location={url}

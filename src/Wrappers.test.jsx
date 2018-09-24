@@ -1,21 +1,21 @@
 import React from 'react';
-import { ClientUni, ServerUni } from './Wrappers';
+import { ClientApp, ServerApp } from './Wrappers';
 
-describe('ClientUni', () => {
+describe('ClientApp', () => {
   it('should render as exepcted', () => {
     const wrapper = shallow(
-      <ClientUni data="someData!" routes={['someRoute']} />,
+      <ClientApp data="someData!" routes={['someRoute']} />,
     );
 
     expect(wrapper).toMatchSnapshot();
   });
 });
 
-describe('ServerUni', () => {
+describe('ServerApp', () => {
   describe('no passed routerContext', () => {
     it('should render as exepcted', () => {
       const wrapper = shallow(
-        <ServerUni
+        <ServerApp
           location="someUrl"
           routes={['someRoute']}
           data="somePassedData"
@@ -29,7 +29,7 @@ describe('ServerUni', () => {
 
   it('should render as exepcted', () => {
     const wrapper = shallow(
-      <ServerUni
+      <ServerApp
         location="someUrl"
         routes={['someRoute']}
         data="somePassedData"

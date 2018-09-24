@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import loadInitialData from './loadInitialData.js';
 
-export class Uni extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
 
@@ -60,4 +60,4 @@ export class Uni extends Component {
   }
 }
 
-export default withRouter(Uni);
+export default withRouter(App);

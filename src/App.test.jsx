@@ -1,9 +1,9 @@
 import React from 'react';
-import { Uni } from './Uni';
+import { App } from './App';
 import * as reactRouterConfig from 'react-router-config';
 import * as loadInitialData from './loadInitialData';
 
-describe('Uni', () => {
+describe('App', () => {
   let wrapper;
   let setStateSpy;
   let loadInitialDataSpy;
@@ -15,7 +15,7 @@ describe('Uni', () => {
 
   beforeAll(() => {
     wrapper = shallow(
-      <Uni
+      <App
         location={{ pathname: 'pathnameOne' }}
         routes={[]}
         initialData={initialData}

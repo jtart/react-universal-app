@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClientUni } from '@jtart/uni';
+import { ClientApp } from '@jtart/uni';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
@@ -22,7 +22,7 @@ const data = window.__UNI_DATA__;
 const App = (
   <HelmetProvider>
     <ApolloProvider client={client}>
-      <ClientUni data={data} routes={routes} />
+      <ClientApp data={data} routes={routes} />
     </ApolloProvider>
   </HelmetProvider>
 );
