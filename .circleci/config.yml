@@ -31,7 +31,7 @@ jobs:
           key: integration-{{ .Branch }}-{{ checksum "package.json" }}
           key: integration-{{ .Branch }}-
           key: integration-
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - save_cache:
           key: integration-{{ .Branch }}-{{ checksum "package.json" }}
           key: integration-{{ .Branch }}-
@@ -41,7 +41,7 @@ jobs:
             - ~/.cache
       - run:
           name: Install integration app packages
-          command: cd integration && npm install
+          command: npm run build && cd integration && npm ci
       - run:
           name: Run integration tests
           command: npm run test:e2e
