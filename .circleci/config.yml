@@ -41,7 +41,7 @@ jobs:
             - ~/.cache
       - run:
           name: Install integration app packages
-          command: cd integration && npm ci
+          command: cd integration && npm install
       - run:
           name: Run integration tests
           command: npm run test:e2e
