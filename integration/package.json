@@ -8,19 +8,19 @@
   },
   "dependencies": {
     "@jtart/uni": "file:../",
-    "apollo-cache-inmemory": "^1.2.7",
-    "apollo-client": "^2.3.8",
-    "apollo-link-http": "^1.5.4",
+    "apollo-cache-inmemory": "^1.2.10",
+    "apollo-client": "^2.4.2",
+    "apollo-link-http": "^1.5.5",
     "express": "^4.16.3",
-    "graphql": "^14.0.0",
+    "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
     "node-fetch": "^2.2.0",
     "razzle": "^2.4.0",
-    "react": "^16.4.2",
+    "react": "^16.5.2",
     "react-apollo": "^2.1.11",
-    "react-dom": "^16.4.2",
-    "react-helmet-async": "0.1.0",
+    "react-dom": "^16.5.2",
+    "react-helmet-async": "^0.1.0",
     "react-router-dom": "^4.3.1",
-    "styled-components": "^3.4.0"
+    "styled-components": "^3.4.9"
   }
 }
