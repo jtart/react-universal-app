@@ -1,20 +1,53 @@
 version: 2
 jobs:
-  build:
+  app-tests:
     working_directory: ~/jtart-uni
     docker:
       - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install node packages
-          command: npm install --ignore-scripts
+          key: app-{{ .Branch }}-{{ checksum "package.json" }}
+          key: app-{{ .Branch }}-
+          key: app-
+      - run: npm ci --ignore-scripts
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: app-{{ .Branch }}-{{ checksum "package.json" }}
+          key: app-{{ .Branch }}-
+          key: app-
           paths:
-            - ./node_modules
+            - ~/.npm
+            - ~/.cache
       - run:
-          name: Run tests
+          name: Run application tests
           command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
+  integration-tests:
+    working_directory: ~/jtart-uni
+    docker:
+      - image: cypress/base:10
+    steps:
+      - checkout
+      - restore_cache:
+          key: integration-{{ .Branch }}-{{ checksum "package.json" }}
+          key: integration-{{ .Branch }}-
+          key: integration-
+      - run: npm ci --ignore-scripts
+      - save_cache:
+          key: integration-{{ .Branch }}-{{ checksum "package.json" }}
+          key: integration-{{ .Branch }}-
+          key: integration-
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run:
+          name: Install integration app packages
+          command: npm run build && cd integration && npm ci
+      - run:
+          name: Run integration tests
+          command: npm run test:e2e
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - app-tests
+      - integration-tests
