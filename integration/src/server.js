@@ -38,7 +38,12 @@ server
       const App = sheet.collectStyles(
         <HelmetProvider context={helmetContext}>
           <ApolloProvider client={client}>
-            <ServerUni data={data} routes={routes} location={url} />
+            <ServerUni
+              data={data}
+              routes={routes}
+              location={url}
+              context={{}}
+            />
           </ApolloProvider>
         </HelmetProvider>,
       );
