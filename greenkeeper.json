@@ -1,6 +1,6 @@
 {
   "groups": {
-    "uni": {
+    "react-universal-app": {
       "packages": ["package.json"]
     },
     "integration": {
@@ -8,12 +8,6 @@
     },
     "example-basic": {
       "packages": ["examples/basic/package.json"]
-    },
-    "example-with-apollo": {
-      "packages": ["examples/with-apollo/package.json"]
-    },
-    "example-with-styled-components": {
-      "packages": ["examples/with-styled-components/package.json"]
     }
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClientApp } from '@jtart/uni';
+import { ClientApp } from 'react-universal-app';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
@@ -17,7 +17,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache().restore(window.__APOLLO_DATA__),
 });
 
-const data = window.__UNI_DATA__;
+const data = window.__APP_DATA__;
 
 const App = (
   <HelmetProvider>
@@ -27,7 +27,7 @@ const App = (
   </HelmetProvider>
 );
 
-hydrate(App, document.getElementById('__uni__'));
+hydrate(App, document.getElementById('root'));
 
 if (module.hot) {
   module.hot.accept();

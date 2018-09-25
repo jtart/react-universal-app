@@ -7,8 +7,8 @@ const Document = (app, data, scripts) => {
       <head>
       </head>
       <body>
-        <div id="__uni__">${app}</div>
-        <script>window.__UNI_DATA__ = ${serialisedData}</script>
+        <div id="root">${app}</div>
+        <script>window.__APP_DATA__ = ${serialisedData}</script>
         ${scripts
           .map(script => `<script src="${script}" defer></script>`)
           .join('')}

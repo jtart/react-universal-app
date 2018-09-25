@@ -8,7 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import fetch from 'node-fetch';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
-import { ServerApp, loadInitialData } from '@jtart/uni';
+import { ServerApp, loadInitialData } from 'react-universal-app';
 
 import Document from './Document';
 import routes from './app/routes';

@@ -1,7 +1,7 @@
 import React from 'react';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
-import { ServerUni, loadInitialData } from '@jtart/uni';
+import { ServerApp, loadInitialData } from 'react-universal-app';
 
 import Document from './Document';
 import routes from './app/routes';
@@ -23,7 +23,7 @@ server
     }
 
     const app = renderToString(
-      <ServerUni url={url} routes={routes} data={data} />,
+      <ServerApp location={url} routes={routes} data={data} context={{}} />,
     );
 
     const scripts = [assets.client.js];
