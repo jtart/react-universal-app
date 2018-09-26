@@ -1,12 +1,12 @@
 {
-  "name": "@jtart/uni",
+  "name": "react-universal-app",
   "author": "Jordan Tart <jordan.tart3@gmail.com> (https://github.com/jtart)",
   "description": "Tiny library offering Universal React using React Router.",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/jtart/uni",
+  "homepage": "https://github.com/jtart/react-universal-app",
   "bugs": {
-    "url": "https://github.com/jtart/uni/issues",
+    "url": "https://github.com/jtart/react-universal-app/issues",
     "email": "jordan.tart3@gmail.com"
   },
   "scripts": {
@@ -51,9 +51,9 @@
   "peerDependencies": {
     "react": "^16.4.2"
   },
-  "main": "dist/uni.js",
-  "umd:main": "dist/uni.umd.js",
-  "module": "dist/uni.es.js",
+  "main": "dist/react-universal-app.js",
+  "umd:main": "dist/react-universal-app.umd.js",
+  "module": "dist/react-universal-app.es.js",
   "files": [
     "dist/*"
   ]

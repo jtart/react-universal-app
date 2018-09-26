@@ -1,14 +1,14 @@
 import React from 'react';
-import { ClientUni } from '@jtart/uni';
+import { ClientApp } from 'react-universal-app';
 import { hydrate } from 'react-dom';
 
 import routes from './app/routes';
 
-const data = window.__UNI_DATA__;
+const data = window.__APP_DATA__;
 
-const App = <ClientUni data={data} routes={routes} />;
+const App = <ClientApp data={data} routes={routes} />;
 
-hydrate(App, document.getElementById('__uni__'));
+hydrate(App, document.getElementById('root'));
 
 if (module.hot) {
   module.hot.accept();

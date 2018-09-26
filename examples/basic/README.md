@@ -1,13 +1,13 @@
 # Basic Example
 
-This example shows a basic application with uni.
+This example shows a basic application with `react-universal-app`.
 
 ## Usage
 
-Clone uni, or download this directory:
+Clone `react-universal-app`, or download this directory:
 
 ```bash
-curl https://codeload.github.com/jtart/uni/tar.gz/master | tar -xz --strip=2 uni-master/examples/basic
+curl https://codeload.github.com/jtart/react-universal-app/tar.gz/master | tar -xz --strip=2 react-universal-app-master/examples/basic
 cd basic
 ```
 

@@ -14,8 +14,8 @@ const Document = (helmet, app, data, scripts, styles, apolloData) => {
         ${styles}
       </head>
       <body ${helmet.bodyAttributes.toString()}>
-        <div id="__uni__">${app}</div>
-        <script>window.__UNI_DATA__ = ${serialisedData}</script>
+        <div id="root">${app}</div>
+        <script>window.__APP_DATA__ = ${serialisedData}</script>
         <script>window.__APOLLO_DATA__ = ${serialisedApolloData}</script>
         ${scripts
           .map(script => `<script src="${script}" defer></script>`)

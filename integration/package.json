@@ -1,5 +1,5 @@
 {
-  "name": "uni-example",
+  "name": "integration",
   "scripts": {
     "dev": "razzle start",
     "build": "razzle build",
@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
-    "@jtart/uni": "file:../",
+    "react-universal-app": "file:../",
     "apollo-cache-inmemory": "^1.2.10",
     "apollo-client": "^2.4.2",
     "apollo-link-http": "^1.5.5",
