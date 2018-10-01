@@ -196,7 +196,7 @@ export default Home;
 
 ### Server
 
-For rendering your app on a server, `react-universal-app` provides you a React component and a data-fetching API. `react-universal-app` _could_ fetch the initial data internally for you if it was more opinionated. However, `react-universal-app` doesn't make any assumptions about how or where you will render your React application on the server, so it can't! Read [Client](#client) for a clear example of why not.
+For rendering your app on a server, `react-universal-app` provides you a React component (`ServerApp`) and a data-fetching API (`loadInitialData`). `react-universal-app` _could_ fetch the initial data internally for you if it was more opinionated. However, `react-universal-app` doesn't make any assumptions about how or where you will render your React application on the server, so it can't! Read [Client](#client) for a clear example of why not.
 
 Then, take a look at [`ReactDOMServers`'s methods](https://reactjs.org/docs/react-dom-server.html) for rendering a React application on a server!
 
@@ -209,16 +209,15 @@ Then, take a look at [`ReactDOMServers`'s methods](https://reactjs.org/docs/reac
 
 #### <ServerApp />
 
-A React component that renders a route with some initial data. Takes the following props:
+A React component that renders a route with some initial data. It can take the following props:
 
-- `url` (`string`) - a [Node.JS HTTP URL-like object](https://nodejs.org/api/http.html#http_message_url)
 - `routes` (`array`) - React Router routes
 - `data` (`object`) - **optional** initial data from `loadInitialData` that is passed to the route's component
-- `routerContext` (`object`) - React Router's [StaticRouter `context` object](https://reacttraining.com/react-router/web/guides/server-rendering)
+- all of React Router's [StaticRouter props](https://reacttraining.com/react-router/web/api/StaticRouter) - `location` is a key one, which you can pass a [Node.JS HTTP URL-like object](https://nodejs.org/api/http.html#http_message_url)
 
 ### Client
 
-To hydrate your React application on a client, `react-universal-app` provides a React component. You must then call `react-dom`'s `hydrate` method
+To hydrate your React application on a client, `react-universal-app` provides a React component called `ClientApp`. You must then call `react-dom`'s `hydrate` method.
 
 The client-side application needs access to the data that was used to render the application on the server, and so should be injected into the HTML document that the server wrapped the rendered React application in and sent to the client. This data could be inside a `script` tag, that injects the data onto the global `window` object, like so:
 
@@ -230,9 +229,10 @@ The client-side application needs access to the data that was used to render the
 
 Then, take a look at [`ReactDOM`'s methods](https://reactjs.org/docs/react-dom.html) for hydrating a React application on a client!
 
-#### <ClientAPp />
+#### <ClientApp />
 
 A React component that renders your routes and application on the client. Takes the following props:
 
 - `routes` (`array`) - React Router routes
 - `data` (`object`) - **optional** initial data from `loadInitialData` that is passed to the route's component
+- all of React Router's [BrowserRouter props](https://reacttraining.com/react-router/web/api/BrowserRouter)
