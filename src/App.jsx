@@ -1,63 +1,44 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 
 import loadInitialData from './loadInitialData.js';
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
+function App({ initialData, location, routes }) {
+  const [data, setData] = useState(initialData);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [dataFetch, setDataFetch] = useState(null);
 
-    this.state = {
-      data: this.props.initialData,
-      loading: false,
-      error: null,
-      loadInitialDataPromise: null,
-    };
-  }
+  useEffect(
+    () => {
+      const dataFetch = loadInitialData(location.pathname, routes);
 
-  async componentDidUpdate({ location: prevLocation }) {
-    if (this.props.location.pathname !== prevLocation.pathname) {
-      const initialData = loadInitialData(
-        this.props.location.pathname,
-        this.props.routes,
-      );
+      setDataFetch(dataFetch);
+      setLoading(true);
+    },
+    [location.pathname],
+  );
 
-      this.setState({
-        data: null,
-        loading: true,
-        error: null,
-        loadInitialDataPromise: initialData,
-      });
-    }
-
-    if (this.state.loading) {
+  useEffect(
+    async () => {
       try {
-        const data = await this.state.loadInitialDataPromise;
-        this.setState({
-          data,
-          loading: false,
-          error: null,
-          loadInitialDataPromise: null,
-        });
-      } catch (error) {
-        this.setState({
-          data: null,
-          loading: false,
-          error: error,
-          loadInitialDataPromise: null,
-        });
-      }
-    }
-  }
+        const data = await dataFetch;
 
-  render() {
-    return renderRoutes(this.props.routes, {
-      data: this.state.data,
-      loading: this.state.loading,
-      error: this.state.error,
-    });
-  }
+        setData(data);
+        setLoading(false);
+        setError(null);
+        setDataFetch(null);
+      } catch (error) {
+        setLoading(false);
+        setError(error);
+        setDataFetch(null);
+      }
+    },
+    [loading],
+  );
+
+  return renderRoutes(routes, { data, loading, error });
 }
 
 export default withRouter(App);
