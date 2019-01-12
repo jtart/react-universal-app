@@ -1,6 +1,5 @@
 import Index from './components/Index';
 import StyledComponents from './components/StyledComponents';
-import Apollo from './components/Apollo';
 
 const routes = [
   {
@@ -19,10 +18,6 @@ const routes = [
     path: '/styledComponents',
     component: StyledComponents,
     getInitialData: async () => ({ link: { to: '/', text: 'Home' } }),
-  },
-  {
-    path: '/apollo',
-    component: Apollo,
   },
 ];
 

@@ -25,28 +25,4 @@ describe('Client', () => {
       cy.get('h1').should('contain', 'Index');
     });
   });
-
-  describe('click apollo link', () => {
-    before(() => {
-      cy.contains('Apollo page').click();
-    });
-
-    it('should render apollo route HTML', () => {
-      cy.get('h1').should('contain', 'GraphQL w/ Apollo');
-
-      cy.get('ul')
-        .children()
-        .should('have.length', 5);
-    });
-  });
-
-  describe('click home link', () => {
-    before(() => {
-      cy.contains('Home').click();
-    });
-
-    it('should render index route HTML', () => {
-      cy.get('h1').should('contain', 'Index');
-    });
-  });
 });

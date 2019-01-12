@@ -22,9 +22,6 @@ const Index = ({ loading, error, data }) => {
               <Link to={data.link.to}>{data.link.text} page</Link>
             </li>
           ) : null}
-          <li>
-            <Link to="/apollo">Apollo page</Link>
-          </li>
         </ul>
       </div>
     );

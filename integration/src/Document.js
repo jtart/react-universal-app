@@ -1,8 +1,7 @@
 const serialise = data => JSON.stringify(data).replace(/</g, '\\u003c');
 
-const Document = (helmet, app, data, scripts, styles, apolloData) => {
+const Document = (helmet, app, data, scripts, styles) => {
   const serialisedData = serialise(data);
-  const serialisedApolloData = serialise(apolloData);
 
   return `
     <!DOCTYPE html>
@@ -16,7 +15,6 @@ const Document = (helmet, app, data, scripts, styles, apolloData) => {
       <body ${helmet.bodyAttributes.toString()}>
         <div id="root">${app}</div>
         <script>window.__APP_DATA__ = ${serialisedData}</script>
-        <script>window.__APOLLO_DATA__ = ${serialisedApolloData}</script>
         ${scripts
           .map(script => `<script src="${script}" defer></script>`)
           .join('')}

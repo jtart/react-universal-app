@@ -18,18 +18,6 @@ describe('Server', () => {
     });
   });
 
-  describe('apollo route', () => {
-    it('should return HTML', () => {
-      cy.visit('/apollo');
-
-      cy.get('h1').should('contain', 'GraphQL w/ Apollo');
-
-      cy.get('ul')
-        .children()
-        .should('have.length', 5);
-    });
-  });
-
   describe('non-existent route', () => {
     it('should return a 404', () => {
       cy.request({

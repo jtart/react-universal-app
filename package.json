@@ -25,7 +25,7 @@
     "wait-for-3000": "wait-on http://localhost:3000"
   },
   "dependencies": {
-    "react-router-config": "^1.0.0-beta.4",
+    "react-router-config": "^4.4.0-beta.6",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
@@ -33,20 +33,19 @@
     "babel-jest": "^23.6.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "concurrently": "^4.0.1",
+    "concurrently": "^4.1.0",
     "coveralls": "^3.0.2",
-    "cypress": "^3.1.0",
-    "enzyme": "^3.6.0",
-    "enzyme-adapter-react-16": "^1.5.0",
-    "enzyme-to-json": "^3.3.4",
+    "cypress": "^3.1.4",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "enzyme-to-json": "^3.3.5",
     "jest": "^23.6.0",
-    "microbundle": "^0.6.0",
-    "prettier": "^1.14.3",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-test-renderer": "^16.5.2",
-    "regenerator-runtime": "^0.12.1",
-    "wait-on": "^3.0.1"
+    "microbundle": "^0.9.0",
+    "prettier": "^1.15.3",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-test-renderer": "^16.7.0",
+    "wait-on": "^3.2.0"
   },
   "peerDependencies": {
     "react": "^16.4.2"
