@@ -8,6 +8,7 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
+      - run: npm ci --ignore-scripts
       - run:
           name: Run application tests
           command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
