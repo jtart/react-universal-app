@@ -8,18 +8,6 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - restore_cache:
-          key: app-{{ .Branch }}-{{ checksum "package.json" }}
-          key: app-{{ .Branch }}-
-          key: app-
-      - run: npm ci --ignore-scripts
-      - save_cache:
-          key: app-{{ .Branch }}-{{ checksum "package.json" }}
-          key: app-{{ .Branch }}-
-          key: app-
-          paths:
-            - ~/.npm
-            - ~/.cache
       - run:
           name: Run application tests
           command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
