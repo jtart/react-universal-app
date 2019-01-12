@@ -1,11 +1,6 @@
 import React from 'react';
 import express from 'express';
 import { ServerStyleSheet } from 'styled-components';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import fetch from 'node-fetch';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { ServerApp, loadInitialData } from 'react-universal-app';
@@ -25,48 +20,22 @@ server
 
       const sheet = new ServerStyleSheet();
 
-      const client = new ApolloClient({
-        ssrMode: true,
-        link: createHttpLink({
-          uri: 'https://fakerql.com/graphql',
-          fetch: fetch,
-        }),
-        cache: new InMemoryCache(),
-      });
-
       const helmetContext = {};
       const App = sheet.collectStyles(
         <HelmetProvider context={helmetContext}>
-          <ApolloProvider client={client}>
-            <ServerApp
-              data={data}
-              routes={routes}
-              location={url}
-              context={{}}
-            />
-          </ApolloProvider>
+          <ServerApp data={data} routes={routes} location={url} context={{}} />
         </HelmetProvider>,
       );
 
-      getDataFromTree(App).then(() => {
-        const renderedApp = renderToString(App);
+      const renderedApp = renderToString(App);
 
-        const { helmet } = helmetContext;
-        const scripts = [assets.client.js];
-        const styles = sheet.getStyleTags();
-        const apolloData = client.extract();
+      const { helmet } = helmetContext;
+      const scripts = [assets.client.js];
+      const styles = sheet.getStyleTags();
 
-        const document = Document(
-          helmet,
-          renderedApp,
-          data,
-          scripts,
-          styles,
-          apolloData,
-        );
+      const document = Document(helmet, renderedApp, data, scripts, styles);
 
-        res.send(document);
-      });
+      res.send(document);
     } catch (error) {
       res.sendStatus(404);
     }
