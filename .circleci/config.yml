@@ -23,15 +23,14 @@ jobs:
       - run:
           name: Run application tests
           command: npm run test:ci | ./node_modules/coveralls/bin/coveralls.js
-  cypress/install:
-    build: 'npm run build && cd integration && npm ci'
-  cypress/run:
-    requires:
-      - cypress/install
-    start: 'npm run integration:start'
-    wait-on: 'http://localhost:3000'
 workflows:
   tests:
     jobs:
       - app-tests
-      - integration-tests
+      - cypress/install:
+          build: 'npm run build && cd integration && npm ci'
+      - cypress/run:
+          requires:
+            - cypress/install
+          start: 'npm run integration:start'
+          wait-on: 'http://localhost:3000'
