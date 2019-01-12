@@ -13,11 +13,7 @@ const loadInitialData = async (url, routes) => {
     return {};
   }
 
-  try {
-    return await route.getInitialData({ match });
-  } catch (error) {
-    throw error;
-  }
+  return await route.getInitialData({ match });
 };
 
 export default loadInitialData;
