@@ -17,5 +17,6 @@ workflows:
     jobs:
       - app-tests
       - cypress/run:
+          name: 'integration-tests'
           start: npm run build && cd integration && npm ci && npm run build && npm run start
           wait-on: 'http://localhost:3000'
