@@ -17,7 +17,7 @@ workflows:
     jobs:
       - app-tests
       - cypress/install:
-          build: 'npm run build && cd integration && npm ci'
+          build: 'pwd && ls -al && npm run build && cd integration && npm ci'
       - cypress/run:
           requires:
             - cypress/install
