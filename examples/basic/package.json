@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "react-universal-app": "latest",
-    "express": "^4.16.3",
-    "razzle": "^2.4.0",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "express": "^4.16.4",
+    "razzle": "^2.4.1",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1"
   }
 }
