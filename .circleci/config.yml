@@ -17,9 +17,9 @@ workflows:
     jobs:
       - app-tests
       - cypress/install:
-          build: 'npm run build'
+          build: npm run build
       - cypress/run:
           requires:
             - cypress/install
-          start: 'cd integration && npm ci && npm run build && npm run start'
+          start: ls -al && pwd && cd integration && npm ci && npm run build && npm run start
           wait-on: 'http://localhost:3000'
