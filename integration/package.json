@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "react-universal-app": "file:../",
-    "express": "^4.16.4",
+    "express": "^4.17.0",
     "razzle": "^2.4.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
