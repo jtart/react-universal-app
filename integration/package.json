@@ -9,7 +9,7 @@
   "dependencies": {
     "react-universal-app": "file:../",
     "express": "^4.16.4",
-    "razzle": "^2.4.1",
+    "razzle": "^3.1.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-helmet-async": "^0.2.0",
